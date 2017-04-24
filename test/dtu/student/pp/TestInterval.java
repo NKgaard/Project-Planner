@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import dtu.student.pp.activity.AbstractActivity;
-import dtu.student.pp.interval.IntervalTree;
+import dtu.student.pp.interval.IntervalSet;
 
 public class TestInterval {
 	//TestState
@@ -43,8 +43,8 @@ public class TestInterval {
 		test4.setStart(later);
 		test5.setEnd(later);
 		
-		IntervalTree<AbstractActivity> tree = 
-				new IntervalTree<AbstractActivity>(state.getActivities());
+		IntervalSet<AbstractActivity> tree = 
+				new IntervalSet<AbstractActivity>(state.getActivities());
 		for(AbstractActivity act:tree.getValues()) {
 			System.out.print(act.getName());
 			if(act.getStart()!=null)

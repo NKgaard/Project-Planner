@@ -1,6 +1,5 @@
 package dtu.student.pp.exception;
 
-@SuppressWarnings("serial")
 public class NotProjectLeaderException extends Exception {
 	public NotProjectLeaderException() {
 		//Maybe add the logged in user, the project and the current project leader to error message?

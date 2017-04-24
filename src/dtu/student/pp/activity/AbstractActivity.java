@@ -25,7 +25,8 @@ public abstract class AbstractActivity extends IntervalAble implements Serializa
 		return activityID;
 	}
 	
-	//Return true if this person is a staff/assistant, and can register hours.
+	public abstract void close();
+	
 	public abstract boolean isStaff(Developer developer);
 	
 	public boolean isNoWorkRegistered() {
@@ -43,10 +44,10 @@ public abstract class AbstractActivity extends IntervalAble implements Serializa
 		return result;
 	}
 	
-	public final void registerHours(Developer developer, float hours) throws UserNotStaffException {
+	public final void registerHours(Developer developer, float hours) {
 		//Can maybe notify observers when hours are registered.
-		if(!isStaff(developer))
-			throw new UserNotStaffException();
+		
+		//TODO: Check if staff here instead?
 		
 		WorkHours accumulator = workHours.get(developer);
 		if(accumulator==null)

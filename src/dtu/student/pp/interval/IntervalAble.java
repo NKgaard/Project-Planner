@@ -4,11 +4,10 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Observable;
 
-
-public abstract class IntervalAble implements Comparable<IntervalAble>, Serializable {
-	private transient List<IntervalObserver> observers = new ArrayList<IntervalObserver>();
+public abstract class IntervalAble implements Comparable<IntervalAble> {
 	private Calendar start, end; //Calendar, Date or Instant!
 	private String name; //It is the responsibility of everyone implementing this to set a name.
 	
@@ -16,12 +15,8 @@ public abstract class IntervalAble implements Comparable<IntervalAble>, Serializ
 		this.name = name;
 	}
 	
-	public boolean isSetInterval() {
-		return start!=null && end!=null;
-	}
-	
 	public Duration getDuration() {
-		if(!isSetInterval()) return Duration.ZERO;
+		if(start==null || end==null) return Duration.ZERO;
 		return Duration.between(start.toInstant(), end.toInstant());
 	}
 	
@@ -31,8 +26,6 @@ public abstract class IntervalAble implements Comparable<IntervalAble>, Serializ
 	
 	public final void setName(String name) {
 		this.name = name;
-		this.setChanged();
-		this.notifyObservers("NameChange: "+name);
 	}
 	
 	public boolean isEndBefore(IntervalAble other) {
@@ -49,16 +42,12 @@ public abstract class IntervalAble implements Comparable<IntervalAble>, Serializ
 	
 	public void setStart(Calendar startDate) {
 		this.start = (Calendar) startDate.clone();
-		this.setChanged();
 		verifyTime();
-		this.notifyObservers("StartDateChange: "+startDate);
 	}
 
 	public void setEnd(Calendar endDate) {
 		this.end = (Calendar) endDate.clone();
 		verifyTime();
-		this.setChanged();
-		this.notifyObservers("EndDateChange: "+endDate);
 	}
 	
 	private void verifyTime() {

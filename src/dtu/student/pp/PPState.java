@@ -17,7 +17,7 @@ import dtu.student.pp.activity.AbstractActivity;
 import dtu.student.pp.activity.NormalActivity;
 import dtu.student.pp.activity.SpecialActivity;
 import dtu.student.pp.exception.UserNotStaffException;
-import dtu.student.pp.interval.IntervalTree;
+import dtu.student.pp.interval.IntervalSet;
 import dtu.student.pp.project.Project;
 import dtu.student.pp.project.ProjectNumber;
 
@@ -25,7 +25,6 @@ public class PPState implements Serializable {
 	/**
 	 * A class to hold the state of the ProjectPlanner, so it can be stored easily.
 	 */
-	//private static final long serialVersionUID = -6074556352167281955L;
 	
 	private final Calendar theTime;
 	//To create ID numbers for activities and projects.
@@ -73,39 +72,46 @@ public class PPState implements Serializable {
 			return new ProjectNumber(year, projectNr + 1);
 		}
 	}
+	
 	private int getNewActivityID() {
 		return activityCounter++;
 	}
+	
+	public SpecialActivity createSpecialActivity(String name) {
+		SpecialActivity a = new SpecialActivity(name, getNewActivityID());
+		activities.add(a);
+		return a;
+	}
+	
+	//Contract - parent has set of activities. Activities have a link to the parent.
+	public NormalActivity createActivity(Project parent) {
+		NormalActivity act = new NormalActivity(getNewActivityID(), parent);
+		activities.add(act);
+		return act;
+	}
+	public void removeActivity(AbstractActivity act) {
+		act.close();
+		if(act.isNoWorkRegistered())
+			activities.remove(act);
+	}
+	
 	public Project createProject() {
 		//If the state was passed to the project, we could enable it to remove activities.
 		Project p = new Project(getNewProjectNumber());
-		addProject(p);
+		projects.add(p);
 		return p;
 	}
-	public NormalActivity createActivity() {
-		NormalActivity a = new NormalActivity(getNewActivityID());
-		addActivity(a);
-		return a;
-	}
-	public SpecialActivity createSpecialActivity(String name) {
-		SpecialActivity a = new SpecialActivity(name, getNewActivityID());
-		addActivity(a);
-		return a;
-	}
-	public Developer createDeveloper(char[] initials) {
-		Developer d = new Developer(initials);
-		addDeveloper(d);
-		return d;
-	}
-	private void addProject(Project p) {
-		projects.add(p); //Should always return true btw.
+	
+	public void removeProject(Project p) {
+		for(NormalActivity act:p.getActivities())
+			removeActivity(act);
+		projects.remove(p);
 	}
 	
-	private void addActivity(AbstractActivity a) {
-		activities.add(a); //Should always return true btw.
-	}
-	private void addDeveloper(Developer d) {
-		developers.add(d); //Should always return true btw.
+	public Developer createDeveloper(char[] initials) {
+		Developer d = new Developer(initials);
+		developers.add(d);
+		return d;
 	}
 	public Set<Project> getProjects() {
 		return Collections.unmodifiableSet(projects);
@@ -114,29 +120,7 @@ public class PPState implements Serializable {
 	public Set<AbstractActivity> getActivities() {
 		return Collections.unmodifiableSet(activities);
 	}
-	public void removeProject(Project p) {
-		//When removing in projectplanner, ensure user is leader.
-		
-		//If this project had any activities that had no work registered, -
-		// they're redundant and can be removed.
-		for(NormalActivity act:p.getActivities())
-			if(act.isNoWorkRegistered())
-				activities.remove(act);
-			else
-				act.removeAllStaff();
-		
-		projects.remove(p);
-	}
-	public void removeActivity(Project p, NormalActivity act) {
-		//When removing in projectplanner, ensure user is leader. and that this poroject containsv act
-		
-		p.removeActivity(act);
-		if(act.isNoWorkRegistered())
-			activities.remove(act);
-		else
-			act.removeAllStaff();
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

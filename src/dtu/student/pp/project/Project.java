@@ -11,7 +11,7 @@ import dtu.student.pp.PPState;
 import dtu.student.pp.activity.NormalActivity;
 import dtu.student.pp.exception.NotProjectLeaderException;
 import dtu.student.pp.interval.IntervalAble;
-import dtu.student.pp.interval.IntervalTree;
+import dtu.student.pp.interval.IntervalSet;
 
 public class Project extends IntervalAble implements Serializable {
 	//private final static String DEFAULT_NAME = "UNNAMED PROJECT";
@@ -32,9 +32,8 @@ public class Project extends IntervalAble implements Serializable {
 	}
 	
 	public boolean removeActivity(NormalActivity activity) {
-		ensureActivityCanBeRemoved(activity);
-		
-		activity.removeAllStaff();
+		if(!this.equals(activity.getParent())) //Not generally possible as long as contract is kept.
+			throw new AssertionError("An activity was removed from a project, that it wasn't part of.");
 		return activities.remove(activity);
 	}
 	
@@ -42,7 +41,7 @@ public class Project extends IntervalAble implements Serializable {
 		//TODO If an activity has staffing with registered work hours, it should probably not be removed.
 	}
 	
-	public boolean isUserLeader(Developer user) {
+	public boolean isLeader(Developer user) {
 		if(projectLeader==null)
 			return false;
 		return projectLeader.equals(user);
@@ -67,10 +66,6 @@ public class Project extends IntervalAble implements Serializable {
 
 	public ProjectNumber getProjectNumber() {
 		return number;
-	}
-
-	public void makeUserLeader() {
-		//this.projectLeader = planner.getUser();
 	}
 
 	public Developer getLeader() {

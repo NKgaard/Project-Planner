@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import dtu.student.pp.activity.AbstractActivity;
-import dtu.student.pp.interval.IntervalTree;
+import dtu.student.pp.interval.IntervalSet;
 
 public class Developer implements Serializable{
 	private final static int MAX_INITIAL_LETTERS = 4;

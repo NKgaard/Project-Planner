@@ -8,17 +8,20 @@ import dtu.student.pp.Developer;
 import dtu.student.pp.project.Project;
 
 public class NormalActivity extends AbstractActivity implements Serializable {
-	/**
-	 * 
-	 */
-	
 	private final Set<Developer> staffing = new HashSet<Developer>();
 	private final Set<Developer> assistants = new HashSet<Developer>();
+	private final Project parent;
 	
 	private float timeBudget = 0; //Positive number.
 	
-	public NormalActivity(int ID) {
+	public NormalActivity(int ID, Project parent) {
 		super(Integer.toString(ID), ID); //Default name is just the ID.
+		this.parent = parent;
+		parent.addActivity(this);
+	}
+	
+	public Project getParent() {
+		return parent;
 	}
 	
 	public float workEstimate() {
@@ -66,8 +69,9 @@ public class NormalActivity extends AbstractActivity implements Serializable {
 		this.timeBudget = time;
 	}
 
-	public void removeAllStaff() {
+	public void close() {
 		staffing.clear();
 		assistants.clear();
+		parent.removeActivity(this);
 	}
 }
