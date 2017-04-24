@@ -25,7 +25,7 @@ public class PPState implements Serializable {
 	/**
 	 * A class to hold the state of the ProjectPlanner, so it can be stored easily.
 	 */
-	private static final long serialVersionUID = -6074556352167281955L;
+	//private static final long serialVersionUID = -6074556352167281955L;
 	
 	private final Calendar theTime;
 	//To create ID numbers for activities and projects.

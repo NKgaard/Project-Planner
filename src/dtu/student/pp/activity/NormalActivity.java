@@ -11,7 +11,6 @@ public class NormalActivity extends AbstractActivity implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6272571577342245020L;
 	
 	private final Set<Developer> staffing = new HashSet<Developer>();
 	private final Set<Developer> assistants = new HashSet<Developer>();

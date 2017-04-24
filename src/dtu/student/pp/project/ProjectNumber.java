@@ -1,8 +1,10 @@
 package dtu.student.pp.project;
 
+import java.io.Serializable;
+
 import org.junit.Ignore;
 
-public class ProjectNumber {
+public class ProjectNumber implements Serializable{
 	
 	final int year;
 	final int projectNumber;

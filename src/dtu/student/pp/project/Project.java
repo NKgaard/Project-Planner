@@ -1,5 +1,6 @@
 package dtu.student.pp.project;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,7 +13,7 @@ import dtu.student.pp.exception.NotProjectLeaderException;
 import dtu.student.pp.interval.IntervalAble;
 import dtu.student.pp.interval.IntervalTree;
 
-public class Project extends IntervalAble {
+public class Project extends IntervalAble implements Serializable {
 	//private final static String DEFAULT_NAME = "UNNAMED PROJECT";
 	//private ProjectPlanner planner;
 	

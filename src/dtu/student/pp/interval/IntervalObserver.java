@@ -1,9 +1,10 @@
 package dtu.student.pp.interval;
 
+import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
 
-public abstract class IntervalObserver<D extends IntervalAble> implements Observer {
+public abstract class IntervalObserver<D extends IntervalAble> implements Observer, Serializable {
 	
 	public abstract void intervalChanged(IntervalAble o);
 	

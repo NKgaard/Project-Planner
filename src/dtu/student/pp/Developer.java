@@ -1,5 +1,6 @@
 package dtu.student.pp;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,7 +8,7 @@ import java.util.Set;
 import dtu.student.pp.activity.AbstractActivity;
 import dtu.student.pp.interval.IntervalTree;
 
-public class Developer {
+public class Developer implements Serializable{
 	private final static int MAX_INITIAL_LETTERS = 4;
 	private final String initials;
 	

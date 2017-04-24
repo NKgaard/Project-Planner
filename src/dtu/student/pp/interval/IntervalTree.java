@@ -1,5 +1,6 @@
 package dtu.student.pp.interval;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.NavigableSet;
 import java.util.Set;
@@ -7,7 +8,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 //Using generic class D extends IntervalAble instead of Interval with D as satellite data.
-public class IntervalTree<D extends IntervalAble> extends IntervalObserver<D> {
+public class IntervalTree<D extends IntervalAble> extends IntervalObserver<D> implements Serializable {
 	private NavigableSet<D> intervalTree = new TreeSet<D>();
 	private D firstStart, lastStart, lastEnd;
 	
