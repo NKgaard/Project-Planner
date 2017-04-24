@@ -1,5 +1,6 @@
 package dtu.student.pp.activity;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ import dtu.student.pp.exception.UserNotStaffException;
 import dtu.student.pp.interval.IntervalAble;
 
 
-public abstract class AbstractActivity extends IntervalAble {
+public abstract class AbstractActivity extends IntervalAble implements Serializable  {
 	//private final static String DEFAULT_NAME = "UNNAMED ACTIVITY";
 	//Map to hold work hours.
 	private final Map<Developer, WorkHours> workHours = new HashMap<Developer, WorkHours>();

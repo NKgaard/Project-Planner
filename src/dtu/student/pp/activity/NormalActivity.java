@@ -1,12 +1,18 @@
 package dtu.student.pp.activity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import dtu.student.pp.Developer;
 import dtu.student.pp.project.Project;
 
-public class NormalActivity extends AbstractActivity {
+public class NormalActivity extends AbstractActivity implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6272571577342245020L;
+	
 	private final Set<Developer> staffing = new HashSet<Developer>();
 	private final Set<Developer> assistants = new HashSet<Developer>();
 	

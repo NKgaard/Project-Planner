@@ -1,9 +1,11 @@
 package dtu.student.pp.activity;
 
+import java.io.Serializable;
+
 import dtu.student.pp.Developer;
 
 
-public class SpecialActivity extends AbstractActivity {
+public class SpecialActivity extends AbstractActivity implements Serializable {
 	
 	
 	public SpecialActivity(String name, int ID) {

@@ -67,18 +67,20 @@ public abstract class IntervalAble extends Observable implements Comparable<Inte
 	@Override //TODO Assert that x.compareTo(y) == -y.compareTo(x) in all cases?
 	public int compareTo(IntervalAble o) {
 		//The order is:
-		//First - Objects with null start.
+		//  Null end values.
+		//  Values with both start and end.
+		//  Null start values.
 		
 		
 		if(start==null && o.start != null)
-			return 1; //Null start values first.
+			return 1;
 		if(start!=null && o.start == null)
 			return -1;
 		
 		if(end==null && o.end != null)
-			return -1;//Null end values last. (Inverted order)
-		if(end!=null && o.end == null)
 			return 1;
+		if(end!=null && o.end == null)
+			return -1;
 		
 		int result = 0;
 		if(start != null && o.start != null)
@@ -91,7 +93,7 @@ public abstract class IntervalAble extends Observable implements Comparable<Inte
 		
 		//This case both start or end fields were null.
 		result = getName().compareTo(o.getName());
-		if(result!=0) throw new AssertionError( //Should never happen.
+		if(result == 0 && !equals(o)) throw new AssertionError( //TODO: Should never happen.
 				  "The intervals are nonunique."
 				+ " (Same start and end-date, and name)");
 		return result;

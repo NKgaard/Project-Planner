@@ -1,6 +1,8 @@
 package dtu.student.pp.activity;
 
-public class WorkHours {
+import java.io.Serializable;
+
+public class WorkHours implements Serializable {
 	private float work = 0;
 	
 	public void registerHours(float hours) {
