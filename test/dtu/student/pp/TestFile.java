@@ -7,38 +7,27 @@ import org.junit.Test;
 
 import java.util.Map;
 import java.util.Set;
-
-import dtu.student.pp.PPState;
 import dtu.student.pp.project.Project;
 
 public class TestFile {
-	PPState state;
-	
-	@Before
-	public void Initialize(){
-		//Create PPstate
-		state = new PPState(); 
-		
-		//Create test information
- 		state.createDeveloper("NKA".toCharArray());
-		state.createProject();
-		state.createActivity();
-		state.createSpecialActivity("TEST");
-	}
 	
 	@Test
-	public void TestFileSave(){
+	public void TestFileLoad(){
+		String filepath = "testdb.txt";
 		
-
+		//Create PPState with data and save to file
+		PPState savestate = new PPState();
+		savestate.createProject();
+		savestate.createActivity();
+		savestate.createDeveloper("TEST0".toCharArray());
+		savestate.createSpecialActivity("TEST0");
+		Main.save(savestate,filepath);
 		
-		Set<Project> halloj = state.getProjects();
-		for ( Project p : halloj ) {
-			p.setLead);
-		}
+		//Create new PPState based on file
+		PPState loadstate = new PPState(); 
+		loadstate = Main.load(filepath);
 		
-		
-		
-		assertTrue(state.getProjects().contains(project));
-		assertEquals(project,state.getProjects());
+		//Test if PPStates are equal
+		assertEquals(savestate,loadstate);
 	}
 }

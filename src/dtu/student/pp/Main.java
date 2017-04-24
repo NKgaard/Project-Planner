@@ -21,10 +21,7 @@ public class Main {
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		if(args.length != 0) {FILEPATH = args[0];}
-		
-		File f = new File(FILEPATH);
-		if(f.exists()) { load(); } 
-		else { state = new PPState(); }
+		state = load(FILEPATH);
 
 		state.createDeveloper("NKA".toCharArray());
 		state.createProject();
@@ -56,25 +53,40 @@ public class Main {
 		test4.setStart(later);
 		test5.setEnd(later);
 		
-		save();
+		save(state);
 		
 		
 	}
 	
-	public static void save() throws IOException{
-		FileOutputStream fos = new FileOutputStream(FILEPATH);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(state);
-		oos.close();
-		fos.close();
+	public static void save(PPState state, String filepath) {
+		
+
+		try {
+			FileOutputStream fos = new FileOutputStream(filepath);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(state);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
-	public static void load() throws IOException, ClassNotFoundException{
-		FileInputStream fis = new FileInputStream(FILEPATH);
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		state = (PPState) ois.readObject();
-		ois.close();
-		fis.close();
+	public static PPState load(String filepath) {
+		PPState result;
+		
+		try {
+			FileInputStream fis = new FileInputStream(filepath);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			result = (PPState) ois.readObject();
+			ois.close();
+			fis.close();
+		} catch (IOException | ClassNotFoundException e) {
+			result = new PPState();
+		}
+		
+		return result;
 	}
 
 }
