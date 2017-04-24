@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Observable;
 
-public abstract class IntervalAble implements Comparable<IntervalAble> {
+public abstract class IntervalAble implements Comparable<IntervalAble>, Serializable {
 	private Calendar start, end; //Calendar, Date or Instant!
 	private String name; //It is the responsibility of everyone implementing this to set a name.
 	

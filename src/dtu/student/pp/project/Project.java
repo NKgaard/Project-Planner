@@ -28,6 +28,8 @@ public class Project extends IntervalAble implements Serializable {
 	}
 	
 	public void addActivity(NormalActivity activity) {
+		if(!this.equals(activity.getParent())) //Not generally possible as long as contract is kept.
+			throw new AssertionError("An activity was added to the project, but it isn't it's parent.");
 		activities.add(activity);
 	}
 	
@@ -78,6 +80,11 @@ public class Project extends IntervalAble implements Serializable {
 
 	public void setLeader(Developer user) {
 		this.projectLeader = user;
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
 	}
 	
 }

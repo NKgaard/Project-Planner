@@ -60,7 +60,6 @@ public class Main {
 	
 	public static void save(PPState state, String filepath) {
 		
-
 		try {
 			FileOutputStream fos = new FileOutputStream(filepath);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -70,11 +69,23 @@ public class Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 	}
 	
 	public static PPState load(String filepath) {
 		PPState result;
+		
+//		try (	FileInputStream fis = new FileInputStream(filepath);
+//				ObjectInputStream ois = new ObjectInputStream(fis)) {
+//			
+//			result = (PPState) ois.readObject();
+//			
+//		} catch (IOException | ClassNotFoundException e) {
+//			e.printStackTrace();
+//			
+//			result = new PPState();
+//			
+//		}
 		
 		try {
 			FileInputStream fis = new FileInputStream(filepath);
@@ -83,6 +94,8 @@ public class Main {
 			ois.close();
 			fis.close();
 		} catch (IOException | ClassNotFoundException e) {
+			//TODO: Please do print stack trace. (It caused an error, hard to debug)
+			e.printStackTrace();
 			result = new PPState();
 		}
 		

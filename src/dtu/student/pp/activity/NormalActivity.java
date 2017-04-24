@@ -17,7 +17,7 @@ public class NormalActivity extends AbstractActivity implements Serializable {
 	public NormalActivity(int ID, Project parent) {
 		super(Integer.toString(ID), ID); //Default name is just the ID.
 		this.parent = parent;
-		parent.addActivity(this);
+		this.parent.addActivity(this);
 	}
 	
 	public Project getParent() {

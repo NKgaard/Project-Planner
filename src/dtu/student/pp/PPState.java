@@ -83,10 +83,16 @@ public class PPState implements Serializable {
 		return a;
 	}
 	
-	//Contract - parent has set of activities. Activities have a link to the parent.
+	//TODO: Rewrite the assertion errors to assert (keyword) statements.
+	//Contract 1 - parent has set of activities. Activities have a link to the parent.
+	// So an activity may only have one parent. This is illustrated in the Project.addActivity assertions.
+	
+	//Contract 2 - All activities and projects must be unique.
+	// Therefore throw an assertion error if it already is present.
 	public NormalActivity createActivity(Project parent) {
 		NormalActivity act = new NormalActivity(getNewActivityID(), parent);
-		activities.add(act);
+		boolean alreadyExists = !activities.add(act);
+		if(alreadyExists) throw new AssertionError("This project already exists!");
 		return act;
 	}
 	public void removeActivity(AbstractActivity act) {
@@ -98,7 +104,8 @@ public class PPState implements Serializable {
 	public Project createProject() {
 		//If the state was passed to the project, we could enable it to remove activities.
 		Project p = new Project(getNewProjectNumber());
-		projects.add(p);
+		boolean alreadyExists = !projects.add(p);
+		if(alreadyExists) throw new AssertionError("This project already exists!");
 		return p;
 	}
 	
