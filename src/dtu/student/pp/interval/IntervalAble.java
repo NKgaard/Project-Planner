@@ -2,11 +2,13 @@ package dtu.student.pp.interval;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Observable;
 
 
-public abstract class IntervalAble extends Observable implements Comparable<IntervalAble>, Serializable {
+public abstract class IntervalAble implements Comparable<IntervalAble>, Serializable {
+	private transient List<IntervalObserver> observers = new ArrayList<IntervalObserver>();
 	private Calendar start, end; //Calendar, Date or Instant!
 	private String name; //It is the responsibility of everyone implementing this to set a name.
 	
@@ -61,7 +63,7 @@ public abstract class IntervalAble extends Observable implements Comparable<Inte
 	
 	private void verifyTime() {
 		if(start!=null && end!=null)
-			if(end.before(start))
+			if(!end.after(start))
 				throw new IllegalArgumentException("The end of interval should be before the beginning!");
 	}
 	
@@ -71,7 +73,6 @@ public abstract class IntervalAble extends Observable implements Comparable<Inte
 		//  Null end values.
 		//  Values with both start and end.
 		//  Null start values.
-		
 		
 		if(start==null && o.start != null)
 			return 1;
@@ -100,7 +101,6 @@ public abstract class IntervalAble extends Observable implements Comparable<Inte
 		return result;
 	}
 	
-	//TODO check if treeSet calls this when replacing values. If so, how to implement it.
 	@Override public abstract boolean equals(Object other);
 	
 }

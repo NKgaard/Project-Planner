@@ -136,6 +136,58 @@ public class PPState implements Serializable {
 		else
 			act.removeAllStaff();
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((activities == null) ? 0 : activities.hashCode());
+		result = prime * result + activityCounter;
+		result = prime * result + ((developers == null) ? 0 : developers.hashCode());
+		result = prime * result + ((projectCounts == null) ? 0 : projectCounts.hashCode());
+		result = prime * result + ((projects == null) ? 0 : projects.hashCode());
+		result = prime * result + ((theTime == null) ? 0 : theTime.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PPState other = (PPState) obj;
+		if (activities == null) {
+			if (other.activities != null)
+				return false;
+		} else if (!activities.equals(other.activities))
+			return false;
+		if (activityCounter != other.activityCounter)
+			return false;
+		if (developers == null) {
+			if (other.developers != null)
+				return false;
+		} else if (!developers.equals(other.developers))
+			return false;
+		if (projectCounts == null) {
+			if (other.projectCounts != null)
+				return false;
+		} else if (!projectCounts.equals(other.projectCounts))
+			return false;
+		if (projects == null) {
+			if (other.projects != null)
+				return false;
+		} else if (!projects.equals(other.projects))
+			return false;
+		if (theTime == null) {
+			if (other.theTime != null)
+				return false;
+		} else if (!theTime.equals(other.theTime))
+			return false;
+		return true;
+	}
 		
 	//public Calendar getTime() {
 	//	return (Calendar) theTime.clone();
