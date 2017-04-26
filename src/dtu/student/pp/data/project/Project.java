@@ -28,19 +28,15 @@ public class Project extends IntervalAble implements Serializable {
 	}
 	
 	public void addActivity(NormalActivity activity) {
-		if(!this.equals(activity.getParent())) //Not generally possible as long as contract is kept.
-			throw new AssertionError("An activity was added to the project, but it isn't it's parent.");
+		assert !this.equals(activity.getParent()) : //Not generally possible as long as contract is kept.
+			"An activity was added to the project, but it isn't it's parent.";
 		activities.add(activity);
 	}
 	
 	public boolean removeActivity(NormalActivity activity) {
-		if(!this.equals(activity.getParent())) //Not generally possible as long as contract is kept.
-			throw new AssertionError("An activity was removed from a project, that it wasn't part of.");
+		assert !this.equals(activity.getParent()) ://Not generally possible as long as contract is kept.
+			"An activity was removed from a project, that it wasn't part of.";
 		return activities.remove(activity);
-	}
-	
-	private void ensureActivityCanBeRemoved(NormalActivity activity) {
-		//TODO If an activity has staffing with registered work hours, it should probably not be removed.
 	}
 	
 	public boolean isLeader(Developer user) {
