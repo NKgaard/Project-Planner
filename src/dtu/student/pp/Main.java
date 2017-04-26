@@ -16,16 +16,17 @@ import dtu.student.pp.data.activity.AbstractActivity;
 public class Main {
 	
 	private static String FILEPATH = "database.txt";
-	private static PPState state;
+	private final PPState state;
 	private static ProjectPlanner pp;
+	
+	Main(PPState state) {
+		this.state = state;
+	}
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		if(args.length != 0) {FILEPATH = args[0];}
-		state = load(FILEPATH);
 		
-		
-		
-		//save(state);
+		new Main(load(FILEPATH));
 		
 		
 	}
