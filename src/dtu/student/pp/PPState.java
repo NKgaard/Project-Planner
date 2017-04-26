@@ -92,7 +92,7 @@ public class PPState implements Serializable {
 	public NormalActivity createActivity(Project parent) {
 		NormalActivity act = new NormalActivity(getNewActivityID(), parent);
 		boolean alreadyExists = !activities.add(act);
-		if(alreadyExists) throw new AssertionError("This project already exists!");
+		assert alreadyExists : "This activity already exists!";
 		return act;
 	}
 	public void removeActivity(AbstractActivity act) {
@@ -105,7 +105,7 @@ public class PPState implements Serializable {
 		//If the state was passed to the project, we could enable it to remove activities.
 		Project p = new Project(getNewProjectNumber());
 		boolean alreadyExists = !projects.add(p);
-		if(alreadyExists) throw new AssertionError("This project already exists!");
+		assert alreadyExists : "This project already exists!";
 		return p;
 	}
 	
