@@ -20,11 +20,18 @@ public class ProjectPlanner {
 		this.state = ppState;
 	}
 	
+	public void removePersonal(NormalActivity act, Developer staff) throws NotProjectLeaderException {
+		if(!act.getParent().isLeader(user))
+			throw new NotProjectLeaderException();
+		act.removeStaff(staff);
+	}
+	
 	public void registerStaff(NormalActivity act, Developer staff) throws NotProjectLeaderException {
 		if(!act.getParent().isLeader(user))
 			throw new NotProjectLeaderException();
 		act.registerStaff(staff);
 	}
+	
 	
 	public void registerAssistance(NormalActivity act, Developer assistant) throws UserNotStaffException {
 		if(!act.isStaff(user)) 

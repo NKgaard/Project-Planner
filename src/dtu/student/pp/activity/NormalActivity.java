@@ -40,7 +40,7 @@ public class NormalActivity extends AbstractActivity implements Serializable {
 		if(timeBudget == 0)
 			return 0; //No budget set.
 		
-		return timeBudget - hoursRegistered();
+		return timeBudget - this.hoursRegistered();
 	}
 	
 	public void registerStaff(Developer developer) {
@@ -50,7 +50,7 @@ public class NormalActivity extends AbstractActivity implements Serializable {
 	
 	public void registerAssistance(Developer developer) {
 		if(staffing.contains(developer))
-			return;//If they're staff, don't demote them.
+			return; //If they're staff, don't demote them.
 		assistants.add(developer);
 	}
 	
