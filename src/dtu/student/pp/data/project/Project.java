@@ -1,4 +1,4 @@
-package dtu.student.pp.project;
+package dtu.student.pp.data.project;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -8,10 +8,10 @@ import java.util.Set;
 
 import dtu.student.pp.Developer;
 import dtu.student.pp.PPState;
-import dtu.student.pp.activity.NormalActivity;
+import dtu.student.pp.data.activity.NormalActivity;
+import dtu.student.pp.data.comparators.IntervalAble;
+import dtu.student.pp.data.comparators.IntervalSet;
 import dtu.student.pp.exception.NotProjectLeaderException;
-import dtu.student.pp.interval.IntervalAble;
-import dtu.student.pp.interval.IntervalSet;
 
 public class Project extends IntervalAble implements Serializable {
 	//private final static String DEFAULT_NAME = "UNNAMED PROJECT";

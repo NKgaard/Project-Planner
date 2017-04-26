@@ -2,12 +2,12 @@ package dtu.student.pp;
 
 import java.util.stream.Stream;
 
-import dtu.student.pp.activity.AbstractActivity;
-import dtu.student.pp.activity.NormalActivity;
-import dtu.student.pp.activity.SpecialActivity;
+import dtu.student.pp.data.activity.AbstractActivity;
+import dtu.student.pp.data.activity.NormalActivity;
+import dtu.student.pp.data.activity.SpecialActivity;
+import dtu.student.pp.data.project.Project;
 import dtu.student.pp.exception.NotProjectLeaderException;
 import dtu.student.pp.exception.UserNotStaffException;
-import dtu.student.pp.project.Project;
 
 public class ProjectPlanner {
 	//As the state and data classes don't perform checks.

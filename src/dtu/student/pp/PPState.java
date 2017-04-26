@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import dtu.student.pp.activity.AbstractActivity;
-import dtu.student.pp.activity.NormalActivity;
-import dtu.student.pp.activity.SpecialActivity;
+import dtu.student.pp.data.activity.AbstractActivity;
+import dtu.student.pp.data.activity.NormalActivity;
+import dtu.student.pp.data.activity.SpecialActivity;
+import dtu.student.pp.data.comparators.IntervalSet;
+import dtu.student.pp.data.project.Project;
+import dtu.student.pp.data.project.ProjectNumber;
 import dtu.student.pp.exception.UserNotStaffException;
-import dtu.student.pp.interval.IntervalSet;
-import dtu.student.pp.project.Project;
-import dtu.student.pp.project.ProjectNumber;
 
 public class PPState implements Serializable {
 	/**

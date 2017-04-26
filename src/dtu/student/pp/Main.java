@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 import java.util.Calendar;
 
 import dtu.student.pp.PPState;
-import dtu.student.pp.activity.AbstractActivity;
+import dtu.student.pp.data.activity.AbstractActivity;
 
 
 public class Main {

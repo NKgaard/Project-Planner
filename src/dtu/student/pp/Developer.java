@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import dtu.student.pp.activity.AbstractActivity;
-import dtu.student.pp.interval.IntervalSet;
+import dtu.student.pp.data.activity.AbstractActivity;
+import dtu.student.pp.data.comparators.IntervalSet;
 
 public class Developer implements Serializable{
 	private final static int MAX_INITIAL_LETTERS = 4;

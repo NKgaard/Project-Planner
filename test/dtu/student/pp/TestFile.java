@@ -9,8 +9,8 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
 
-import dtu.student.pp.activity.NormalActivity;
-import dtu.student.pp.project.Project;
+import dtu.student.pp.data.activity.NormalActivity;
+import dtu.student.pp.data.project.Project;
 
 public class TestFile {
 	public final static String TESTFILE_PATH = "testdb.txt";

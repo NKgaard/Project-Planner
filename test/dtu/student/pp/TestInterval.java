@@ -6,8 +6,8 @@ import java.util.Calendar;
 import org.junit.Before;
 import org.junit.Test;
 
-import dtu.student.pp.activity.AbstractActivity;
-import dtu.student.pp.interval.IntervalSet;
+import dtu.student.pp.data.activity.AbstractActivity;
+import dtu.student.pp.data.comparators.IntervalSet;
 
 public class TestInterval {
 	//TestState

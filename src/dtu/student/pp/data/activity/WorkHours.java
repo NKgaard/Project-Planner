@@ -1,4 +1,4 @@
-package dtu.student.pp.activity;
+package dtu.student.pp.data.activity;
 
 import java.io.Serializable;
 

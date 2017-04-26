@@ -1,4 +1,4 @@
-package dtu.student.pp.interval;
+package dtu.student.pp.data.comparators;
 
 import java.io.Serializable;
 import java.util.Calendar;

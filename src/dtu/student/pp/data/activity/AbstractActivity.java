@@ -1,12 +1,12 @@
-package dtu.student.pp.activity;
+package dtu.student.pp.data.activity;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import dtu.student.pp.Developer;
+import dtu.student.pp.data.comparators.IntervalAble;
 import dtu.student.pp.exception.UserNotStaffException;
-import dtu.student.pp.interval.IntervalAble;
 
 
 public abstract class AbstractActivity extends IntervalAble implements Serializable  {

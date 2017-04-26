@@ -1,11 +1,11 @@
-package dtu.student.pp.activity;
+package dtu.student.pp.data.activity;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import dtu.student.pp.Developer;
-import dtu.student.pp.project.Project;
+import dtu.student.pp.data.project.Project;
 
 public class NormalActivity extends AbstractActivity implements Serializable {
 	private final Set<Developer> staffing = new HashSet<Developer>();

@@ -1,4 +1,4 @@
-package dtu.student.pp.project;
+package dtu.student.pp.data.project;
 
 import java.io.Serializable;
 
