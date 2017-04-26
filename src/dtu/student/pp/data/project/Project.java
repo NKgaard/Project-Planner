@@ -40,9 +40,7 @@ public class Project extends IntervalAble implements Serializable {
 	}
 	
 	public boolean isLeader(Developer user) {
-		if(projectLeader==null)
-			return false;
-		return projectLeader.equals(user);
+		return projectLeader != null && projectLeader.equals(user);
 	}
 	
 	@Override
