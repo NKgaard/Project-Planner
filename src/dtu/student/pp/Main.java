@@ -22,40 +22,16 @@ public class Main {
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		if(args.length != 0) {FILEPATH = args[0];}
 		state = load(FILEPATH);
-
-		state.createDeveloper("NKA".toCharArray());
-		state.createProject();
-		state.createActivity().setStart(Calendar.getInstance());
-		
-		System.out.println(state.getActivities().size());		
-		System.out.println(state.getProjects().size());
-		
-		//////MERE TING//////
-		AbstractActivity test0 = state.createSpecialActivity("Test0");
-		AbstractActivity test1 = state.createSpecialActivity("Test1");
-		AbstractActivity test2 = state.createSpecialActivity("Test2");
-		AbstractActivity test3 = state.createSpecialActivity("Test3");
-		AbstractActivity test4 = state.createSpecialActivity("Test4");
-		AbstractActivity test5 = state.createSpecialActivity("Test5");
-		
-		Calendar early = Calendar.getInstance();
-		Calendar late = (Calendar) early.clone();
-		late.add(Calendar.HOUR_OF_DAY, 1);
-		Calendar later = (Calendar) late.clone();
-		later.add(Calendar.HOUR_OF_DAY, 5);
-		
-		test1.setStart(early);
-		test2.setEnd(early);
-		
-		test3.setStart(early);
-		test3.setEnd(late);
-		
-		test4.setStart(later);
-		test5.setEnd(later);
-		
-		save(state);
 		
 		
+		
+		//save(state);
+		
+		
+	}
+	
+	public static void exit(PPState state) {
+		save(state, FILEPATH);
 	}
 	
 	public static void save(PPState state, String filepath) {

@@ -9,10 +9,6 @@ public class IntervalComparator implements Comparator<IntervalAble> {
 
 	@Override
 	public int compare(IntervalAble o1, IntervalAble o2) {
-		// The order is:
-		//  Null end values.
-		//  Values with both start and end.
-		//  Null start values.
 
 		if(o1.getStart()==null && o2.getStart() != null)
 			return 1;
