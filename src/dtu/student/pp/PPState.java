@@ -1,6 +1,7 @@
 package dtu.student.pp;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -26,7 +27,7 @@ public class PPState implements Serializable {
 	 * A class to hold the state of the ProjectPlanner, so it can be stored easily.
 	 */
 	
-	private final Calendar theTime;
+	//private final Calendar theTime;
 	//To create ID numbers for activities and projects.
 	private final Map<Integer, Integer> projectCounts;
 	private int activityCounter = 0; //Activities are not removed so activities.size() could be used instead.
@@ -35,12 +36,12 @@ public class PPState implements Serializable {
 	private final Set<Project> projects;
 	private final Set<Developer> developers;
 	
-	PPState(Map<Integer, Integer> pCounts, int aCounts, Calendar time,
+	PPState(Map<Integer, Integer> pCounts, int aCounts,
 			Set<AbstractActivity> activities, Set<Project> projects,
 			Set<Developer> developers) {
 		this.projectCounts = pCounts;
 		this.activityCounter = aCounts;
-		this.theTime = time;
+		//this.theTime = time;
 		this.activities = activities;
 		this.projects = projects;
 		this.developers = developers;
@@ -51,14 +52,14 @@ public class PPState implements Serializable {
 		this(
 				new HashMap<Integer, Integer>(), //Empty map of project counts for the year.
 				0, //Activity counts at 0.
-				GregorianCalendar.getInstance(), //Load the time right now.
+				//GregorianCalendar.getInstance(), //Load the time right now.
 				new HashSet<AbstractActivity>(), //Empty set of activities.
-				new HashSet<Project>(),//Empty set of projects.
+				new HashSet<Project>(), //Empty set of projects.
 				new HashSet<Developer>()); //Empty set of developers.
 	}
 	
-	private ProjectNumber getNewProjectNumber() {
-		int year = theTime.get(Calendar.YEAR);
+	private ProjectNumber getNewProjectNumber(Calendar time) {
+		int year = time.get(Calendar.YEAR);
 		
 		Integer projectNr = projectCounts.get(year);
 		
@@ -103,7 +104,7 @@ public class PPState implements Serializable {
 	
 	public Project createProject() {
 		//If the state was passed to the project, we could enable it to remove activities.
-		Project p = new Project(getNewProjectNumber());
+		Project p = new Project(getNewProjectNumber(Calendar.getInstance()));
 		boolean alreadyExists = !projects.add(p);
 		assert alreadyExists : "This project already exists!";
 		return p;
@@ -137,7 +138,7 @@ public class PPState implements Serializable {
 		result = prime * result + ((developers == null) ? 0 : developers.hashCode());
 		result = prime * result + ((projectCounts == null) ? 0 : projectCounts.hashCode());
 		result = prime * result + ((projects == null) ? 0 : projects.hashCode());
-		result = prime * result + ((theTime == null) ? 0 : theTime.hashCode());
+		//result = prime * result + ((theTime == null) ? 0 : theTime.hashCode());
 		return result;
 	}
 
@@ -172,11 +173,11 @@ public class PPState implements Serializable {
 				return false;
 		} else if (!projects.equals(other.projects))
 			return false;
-		if (theTime == null) {
-			if (other.theTime != null)
-				return false;
-		} else if (!theTime.equals(other.theTime))
-			return false;
+//		if (theTime == null) {
+//			if (other.theTime != null)
+//				return false;
+//		} else if (!theTime.equals(other.theTime))
+//			return false;
 		return true;
 	}
 		
