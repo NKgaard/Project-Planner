@@ -28,13 +28,13 @@ public class Project extends IntervalAble implements Serializable {
 	}
 	
 	public void addActivity(NormalActivity activity) {
-		assert !this.equals(activity.getParent()) : //Not generally possible as long as contract is kept.
+		assert this.equals(activity.getParent()) : //Not generally possible as long as contract is kept.
 			"An activity was added to the project, but it isn't it's parent.";
 		activities.add(activity);
 	}
 	
 	public boolean removeActivity(NormalActivity activity) {
-		assert !this.equals(activity.getParent()) ://Not generally possible as long as contract is kept.
+		assert this.equals(activity.getParent()) ://Not generally possible as long as contract is kept.
 			"An activity was removed from a project, that it wasn't part of.";
 		return activities.remove(activity);
 	}

@@ -18,20 +18,20 @@ public class Main {
 	private static String FILEPATH = "database.txt";
 	private final PPState state;
 	private static ProjectPlanner pp;
-	
+
 	Main(PPState state) {
 		this.state = state;
-		
+
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		if(args.length != 0) {FILEPATH = args[0];}
 		
 		new Main(load(FILEPATH));
-		
+
 		
 	}
-	
+
 	public static void exit(PPState state) {
 		save(state, FILEPATH);
 	}
