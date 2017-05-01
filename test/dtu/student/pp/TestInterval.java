@@ -21,38 +21,38 @@ public class TestInterval {
 	@Test
 	public void testEmptyState() {
 		
-		AbstractActivity test0 = state.createSpecialActivity("Test0");
-		AbstractActivity test1 = state.createSpecialActivity("Test1");
-		AbstractActivity test2 = state.createSpecialActivity("Test2");
-		AbstractActivity test3 = state.createSpecialActivity("Test3");
-		AbstractActivity test4 = state.createSpecialActivity("Test4");
-		AbstractActivity test5 = state.createSpecialActivity("Test5");
+//		AbstractActivity test0 = state.createSpecialActivity("Test0");
+//		AbstractActivity test1 = state.createSpecialActivity("Test1");
+//		AbstractActivity test2 = state.createSpecialActivity("Test2");
+//		AbstractActivity test3 = state.createSpecialActivity("Test3");
+//		AbstractActivity test4 = state.createSpecialActivity("Test4");
+//		AbstractActivity test5 = state.createSpecialActivity("Test5");
+//
+//		Calendar early = Calendar.getInstance();
+//		Calendar late = (Calendar) early.clone();
+//		late.add(Calendar.HOUR_OF_DAY, 1);
+//		Calendar later = (Calendar) late.clone();
+//		later.add(Calendar.HOUR_OF_DAY, 5);
+//
+//		test1.setStart(early);
+//		test2.setEnd(early);
+//
+//		test3.setStart(early);
+//		test3.setEnd(late);
+//
+//		test4.setStart(later);
+//		test5.setEnd(later);
 		
-		Calendar early = Calendar.getInstance();
-		Calendar late = (Calendar) early.clone();
-		late.add(Calendar.HOUR_OF_DAY, 1);
-		Calendar later = (Calendar) late.clone();
-		later.add(Calendar.HOUR_OF_DAY, 5);
-		
-		test1.setStart(early);
-		test2.setEnd(early);
-		
-		test3.setStart(early);
-		test3.setEnd(late);
-		
-		test4.setStart(later);
-		test5.setEnd(later);
-		
-		IntervalSet<AbstractActivity> tree = 
-				new IntervalSet<AbstractActivity>(state.getActivities());
-		for(AbstractActivity act:tree.getValues()) {
-			System.out.print(act.getName());
-			if(act.getStart()!=null)
-				System.out.print(" S "+act.getStart().get(Calendar.HOUR_OF_DAY)+" ");
-			if(act.getEnd()!=null)
-				System.out.print(" E "+act.getEnd().get(Calendar.HOUR_OF_DAY));
-			System.out.println();
-		}
+//		IntervalSet<AbstractActivity> tree =
+//				new IntervalSet<AbstractActivity>(state.getActivities());
+//		for(AbstractActivity act:tree.getValues()) {
+//			System.out.print(act.getName());
+//			if(act.getStart()!=null)
+//				System.out.print(" S "+act.getStart().get(Calendar.HOUR_OF_DAY)+" ");
+//			if(act.getEnd()!=null)
+//				System.out.print(" E "+act.getEnd().get(Calendar.HOUR_OF_DAY));
+//			System.out.println();
+//		}
 		
 	}
 }

@@ -1,5 +1,9 @@
 package dtu.student.pp;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 import dtu.student.pp.data.activity.AbstractActivity;
@@ -20,7 +24,7 @@ public class ProjectPlanner {
 		this.state = ppState;
 	}
 	
-	public void removePersonal(NormalActivity act, String staff) throws NotProjectLeaderException {
+	public void removeStaff(NormalActivity act, String staff) throws NotProjectLeaderException {
 		if(!act.getParent().isLeader(user))
 			throw new NotProjectLeaderException();
 		act.removeStaff(staff);
@@ -53,8 +57,8 @@ public class ProjectPlanner {
 		//Maybe make it so the leader must be null, before a new can be assigned.
 		project.setLeader(user);
 	}
-	
-	public AbstractActivity createActivity(Project project) throws NotProjectLeaderException {
+
+    public NormalActivity createActivity(Project project) throws NotProjectLeaderException {
 		if(!project.isLeader(user))
 			throw new NotProjectLeaderException();
 		return state.createActivity(project);
@@ -79,14 +83,23 @@ public class ProjectPlanner {
 		return state.getActivities().stream() //Grab the activities where this dev is staff.
 				.filter( a -> a.isStaff(staff) );
 	}
-	
+
+	public String getUser(){
+		return this.user;
+	}
+
 	public void editProject(Project project, String leader, String name, String startDate, String endDate) {
-		if ( name.length() > 0 ) 
+		if ( name.length() > 0 )
 			project.setName(name);
-		
+
 		if ( leader.length() > 0 ) {
-			
+
 		}
+
+	public void editProject(Project project, String name, int startweeknumber, int startyear, int endweeknumber, int endyear) {
+		project.setName(name);
+		project.setStart(startweeknumber,startyear);
+		project.setEnd(endweeknumber, endyear);
 	}
 	
 }
