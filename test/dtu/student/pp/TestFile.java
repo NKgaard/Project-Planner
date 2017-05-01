@@ -41,7 +41,7 @@ public class TestFile {
 		activity.setStart(Calendar.getInstance());
 		activity.setTimeEstimate(20);
 		
-		Developer developer = saveState.createDeveloper("DEV1".toCharArray());
+		String developer = saveState.createDeveloper("DEV1".toCharArray());
 		activity.registerStaff(developer);
 		activity.registerHours(developer, 5);
 		

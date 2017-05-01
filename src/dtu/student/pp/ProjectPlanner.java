@@ -13,27 +13,27 @@ public class ProjectPlanner {
 	//As the state and data classes don't perform checks.
 	//View of projects and activities.
 	private final PPState state;
-	private final Developer user;
+	private final String user;
 	
-	ProjectPlanner(Developer user, PPState ppState) {
+	ProjectPlanner(String user, PPState ppState) {
 		this.user = user;
 		this.state = ppState;
 	}
 	
-	public void removePersonal(NormalActivity act, Developer staff) throws NotProjectLeaderException {
+	public void removePersonal(NormalActivity act, String staff) throws NotProjectLeaderException {
 		if(!act.getParent().isLeader(user))
 			throw new NotProjectLeaderException();
 		act.removeStaff(staff);
 	}
 	
-	public void registerStaff(NormalActivity act, Developer staff) throws NotProjectLeaderException {
+	public void registerStaff(NormalActivity act, String staff) throws NotProjectLeaderException {
 		if(!act.getParent().isLeader(user))
 			throw new NotProjectLeaderException();
 		act.registerStaff(staff);
 	}
 	
 	
-	public void registerAssistance(NormalActivity act, Developer assistant) throws UserNotStaffException {
+	public void registerAssistance(NormalActivity act, String assistant) throws UserNotStaffException {
 		if(!act.isStaff(user)) 
 			throw new UserNotStaffException();
 		act.registerAssistance(assistant);
@@ -70,12 +70,12 @@ public class ProjectPlanner {
 		state.removeActivity(activity);
 	}
 	
-	public Stream<Project> getProjectsLeading(Developer leader) {
+	public Stream<Project> getProjectsLeading(String leader) {
 		return state.getProjects().stream() //Grab the projects where this dev is leader.
 		.filter( p -> p.isLeader(leader) );
 	}
 	
-	public Stream<AbstractActivity> getActivitiesStaffing(Developer staff) {
+	public Stream<AbstractActivity> getActivitiesStaffing(String staff) {
 		return state.getActivities().stream() //Grab the activities where this dev is staff.
 				.filter( a -> a.isStaff(staff) );
 	}

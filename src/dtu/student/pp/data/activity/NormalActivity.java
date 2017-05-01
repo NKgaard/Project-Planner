@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import dtu.student.pp.Developer;
+import dtu.student.pp.String;
 import dtu.student.pp.data.project.Project;
 
 public class NormalActivity extends AbstractActivity implements Serializable {
-	private final Set<Developer> staffing = new HashSet<Developer>();
-	private final Set<Developer> assistants = new HashSet<Developer>();
+	private final Set<String> staffing = new HashSet<String>();
+	private final Set<String> assistants = new HashSet<String>();
 	private final Project parent;
 	
 	private float timeBudget = 0; //Positive number.
@@ -43,24 +43,24 @@ public class NormalActivity extends AbstractActivity implements Serializable {
 		return timeBudget - this.hoursRegistered();
 	}
 	
-	public void registerStaff(Developer developer) {
+	public void registerStaff(String developer) {
 		assistants.remove(developer);//If they're already assistants, promote to staff.
 		staffing.add(developer);
 	}
 	
-	public void registerAssistance(Developer developer) {
+	public void registerAssistance(String developer) {
 		if(staffing.contains(developer))
 			return; //If they're staff, don't demote them.
 		assistants.add(developer);
 	}
 	
-	public void removeStaff(Developer developer) {
+	public void removeStaff(String developer) {
 		staffing.remove(developer);
 		assistants.remove(developer);
 	}
 	
 	@Override
-	public boolean isStaff(Developer developer) {
+	public boolean isStaff(String developer) {
 		return staffing.contains(developer) ||
 				assistants.contains(developer);
 	}

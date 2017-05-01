@@ -53,7 +53,7 @@ public class Main {
 				break;
 			} else if (initials.length()==0)
 				text = "The login must contain at least one character.";
-			else if (initials.length() > Developer.MAX_INITIAL_LETTERS) {
+			else if (initials.length() > String.MAX_INITIAL_LETTERS) {
 				text = "Maximum 4 characters allowed";
 			} else if (!state.hasDeveloper(initials)){
 				int option = JOptionPane.showConfirmDialog(null,

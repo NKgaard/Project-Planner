@@ -2,7 +2,7 @@ package dtu.student.pp.data.activity;
 
 import java.io.Serializable;
 
-import dtu.student.pp.Developer;
+import dtu.student.pp.String;
 
 
 public class SpecialActivity extends AbstractActivity implements Serializable {
@@ -14,7 +14,7 @@ public class SpecialActivity extends AbstractActivity implements Serializable {
 	}
 	
 	@Override
-	public boolean isStaff(Developer developer) {
+	public boolean isStaff(String developer) {
 		//Everyone can register hours in specialActivities.
 		return !closed;
 	}

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import dtu.student.pp.Developer;
+import dtu.student.pp.String;
 import dtu.student.pp.PPState;
 import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.data.comparators.IntervalAble;
@@ -18,7 +18,7 @@ public class Project extends IntervalAble implements Serializable {
 	//private ProjectPlanner planner;
 	
 	private Set<NormalActivity> activities = new HashSet<NormalActivity>();
-	private Developer projectLeader;
+	private String projectLeader;
 	private final ProjectNumber number;
 	//private String client = "";
 	
@@ -39,7 +39,7 @@ public class Project extends IntervalAble implements Serializable {
 		return activities.remove(activity);
 	}
 	
-	public boolean isLeader(Developer user) {
+	public boolean isLeader(String user) {
 		return projectLeader != null && projectLeader.equals(user);
 	}
 	
@@ -64,7 +64,7 @@ public class Project extends IntervalAble implements Serializable {
 		return number;
 	}
 
-	public Developer getLeader() {
+	public String getLeader() {
 		return projectLeader;
 	}
 
@@ -72,7 +72,7 @@ public class Project extends IntervalAble implements Serializable {
 		return Collections.unmodifiableSet(activities);
 	}
 
-	public void setLeader(Developer user) {
+	public void setLeader(String user) {
 		this.projectLeader = user;
 	}
 	

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import dtu.student.pp.Developer;
+import dtu.student.pp.String;
 import dtu.student.pp.data.comparators.IntervalAble;
 import dtu.student.pp.exception.UserNotStaffException;
 
@@ -12,7 +12,7 @@ import dtu.student.pp.exception.UserNotStaffException;
 public abstract class AbstractActivity extends IntervalAble implements Serializable  {
 	//private final static String DEFAULT_NAME = "UNNAMED ACTIVITY";
 	//Map to hold work hours.
-	private final Map<Developer, WorkHours> workHours = new HashMap<Developer, WorkHours>();
+	private final Map<String, WorkHours> workHours = new HashMap<String, WorkHours>();
 	private final int activityID; //Always increment.
 	//private String name;
 	
@@ -27,7 +27,7 @@ public abstract class AbstractActivity extends IntervalAble implements Serializa
 	
 	public abstract void close();
 	
-	public abstract boolean isStaff(Developer developer);
+	public abstract boolean isStaff(String developer);
 	
 	public boolean isNoWorkRegistered() {
 		return workHours.isEmpty();
@@ -44,7 +44,7 @@ public abstract class AbstractActivity extends IntervalAble implements Serializa
 		return result;
 	}
 	
-	public final void registerHours(Developer developer, float hours) {
+	public final void registerHours(String developer, float hours) {
 		//Can maybe notify observers when hours are registered.
 		
 		//TODO: Check if staff here instead?
@@ -56,7 +56,7 @@ public abstract class AbstractActivity extends IntervalAble implements Serializa
 		accumulator.registerHours(hours);
 	}
 	
-	public float getHours(Developer developer) {
+	public float getHours(String developer) {
 		WorkHours accumulator = workHours.get(developer);
 		if(accumulator==null)
 			return 0;

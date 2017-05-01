@@ -52,7 +52,7 @@ public class TestProject {
     @Test
     public void testSetProjectLeader() {
         Project project = state.createProject();
-        Developer dev = state.createDeveloper("DVLP".toCharArray());
+        String dev = state.createDeveloper("DVLP".toCharArray());
         assertFalse(project.isLeader(dev));
 
         project.setLeader(dev);
@@ -63,7 +63,7 @@ public class TestProject {
     @Test
     public void testAddActivity() {
         Project project = state.createProject();
-        Developer dev = state.createDeveloper("DVLP".toCharArray());
+        String dev = state.createDeveloper("DVLP".toCharArray());
         project.setLeader(dev);
         NormalActivity activity = state.createActivity(project);
 
@@ -80,7 +80,7 @@ public class TestProject {
     @Test
     public void testActivityNumber() {
         Project project = state.createProject();
-        Developer dev = state.createDeveloper("DVLP".toCharArray());
+        String dev = state.createDeveloper("DVLP".toCharArray());
         project.setLeader(dev);
 
         NormalActivity activity1 = state.createActivity(project);
@@ -94,7 +94,7 @@ public class TestProject {
     @Test
     public void testRemoveActivity() {
         Project project = state.createProject();
-        Developer dev = state.createDeveloper("DVLP".toCharArray());
+        String dev = state.createDeveloper("DVLP".toCharArray());
         project.setLeader(dev);
 
         NormalActivity activity = state.createActivity(project);

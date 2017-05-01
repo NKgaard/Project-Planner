@@ -2,13 +2,13 @@ package dtu.student.pp.comparators;
 
 import java.util.Comparator;
 
-import dtu.student.pp.Developer;
+import dtu.student.pp.String;
 import dtu.student.pp.data.activity.AbstractActivity;
 
 public class ActivityByHoursUser implements Comparator<AbstractActivity> {
-	private final Developer user;
+	private final String user;
 	
-	public ActivityByHoursUser(Developer user) {
+	public ActivityByHoursUser(String user) {
 		this.user = user;
 	}
 	
