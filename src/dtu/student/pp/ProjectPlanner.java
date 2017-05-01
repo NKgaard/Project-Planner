@@ -1,5 +1,9 @@
 package dtu.student.pp;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 import dtu.student.pp.data.activity.AbstractActivity;
@@ -80,13 +84,10 @@ public class ProjectPlanner {
 				.filter( a -> a.isStaff(staff) );
 	}
 	
-	public void editProject(Project project, String leader, String name, String startDate, String endDate) {
-		if ( name.length() > 0 ) 
-			project.setName(name);
-		
-		if ( leader.length() > 0 ) {
-			
-		}
+	public void editProject(Project project, String name, int startweeknumber, int startyear, int endweeknumber, int endyear) {
+		project.setName(name);
+		project.setStart(startweeknumber,startyear);
+		project.setEnd(endweeknumber, endyear);
 	}
 	
 }

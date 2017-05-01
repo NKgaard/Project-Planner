@@ -36,21 +36,44 @@ public abstract class Interval implements Serializable {
 		return end;
 	}
 	
-	public void setStart(Calendar startDate) {
-		assert verifyTime(startDate, this.end);
-		this.start = (Calendar) startDate.clone();
+	public void setStart(int weeknumber, int year) {
+		assert verifyTimeFormat(weeknumber,year);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.WEEK_OF_YEAR, weeknumber);
+		
+		this.start = cal;
 	}
 
-	public void setEnd(Calendar endDate) {
-		assert verifyTime(this.start, endDate);
-		this.end = (Calendar) endDate.clone();
+	public void setEnd(int weeknumber, int year) {
+		assert verifyTimeFormat(weeknumber,year);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.WEEK_OF_YEAR, weeknumber);
+		
+		this.end = cal;
 	}
 	
-	public static boolean verifyTime(Calendar start, Calendar end) {
+	public static boolean verifyTime(int startweeknumber, int startyear, int endweeknumber, int endyear) {
+		Calendar start = Calendar.getInstance();
+		Calendar end = Calendar.getInstance();
+		start.set(Calendar.YEAR, startyear);
+		end.set(Calendar.YEAR, endyear);
+		start.set(Calendar.WEEK_OF_YEAR, startweeknumber);
+		end.set(Calendar.WEEK_OF_YEAR, endweeknumber);
+		
 		if(start!=null && end!=null)
 			if(!end.after(start))
 				return false;
 		return true;
+	}
+	
+	public static boolean verifyTimeFormat(int weeknumber, int year){
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, year);
+		return ( weeknumber <= cal.getActualMaximum(Calendar.WEEK_OF_YEAR) );
 	}
 	
 	@Override public abstract boolean equals(Object other);
