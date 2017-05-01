@@ -29,16 +29,17 @@ public class PPState implements Serializable {
 	
 	//private final Calendar theTime;
 	//To create ID numbers for activities and projects.
+	private final static int MAX_INITIAL_LETTERS = 4;
 	private final Map<Integer, Integer> projectCounts;
 	private int activityCounter = 0; //Activities are not removed so activities.size() could be used instead.
 	
 	private final Set<AbstractActivity> activities;
 	private final Set<Project> projects;
-	private final Set<Developer> developers;
+	private final Set<String> developers;
 	
 	PPState(Map<Integer, Integer> pCounts, int aCounts,
 			Set<AbstractActivity> activities, Set<Project> projects,
-			Set<Developer> developers) {
+			Set<String> developers) {
 		this.projectCounts = pCounts;
 		this.activityCounter = aCounts;
 		//this.theTime = time;
@@ -55,7 +56,7 @@ public class PPState implements Serializable {
 				//GregorianCalendar.getInstance(), //Load the time right now.
 				new HashSet<AbstractActivity>(), //Empty set of activities.
 				new HashSet<Project>(), //Empty set of projects.
-				new HashSet<Developer>()); //Empty set of developers.
+				new HashSet<String>()); //Empty set of developers.
 	}
 	
 	private ProjectNumber getNewProjectNumber(Calendar time) {
@@ -120,11 +121,10 @@ public class PPState implements Serializable {
 		return developers.contains(initials);
 	}
 	
-	public Developer createDeveloper(char[] initials) {
-		Developer d = new Developer(initials);
-		developers.add(d);
-		return d;
+	public boolean createDeveloper(String initials) {
+		return developers.add(initials);
 	}
+	
 	public Set<Project> getProjects() {
 		return Collections.unmodifiableSet(projects);
 	}
