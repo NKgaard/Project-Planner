@@ -116,6 +116,10 @@ public class PPState implements Serializable {
 		projects.remove(p);
 	}
 	
+	public boolean hasDeveloper(String initials) {
+		return developers.contains(initials);
+	}
+	
 	public Developer createDeveloper(char[] initials) {
 		Developer d = new Developer(initials);
 		developers.add(d);

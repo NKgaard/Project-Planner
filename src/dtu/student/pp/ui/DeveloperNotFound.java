@@ -1,4 +1,4 @@
-package dtu.student.pp;
+package dtu.student.pp.ui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Dialog.ModalityType;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,11 @@ public class DeveloperNotFound extends JDialog {
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.pack();
 			dialog.setVisible(true);
+			//final JOptionPane optionPane = new JOptionPane("<html><body>These initials are not registered in the system.<br>Want to create a new developer account?</body></html>",
+			//		JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+			
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

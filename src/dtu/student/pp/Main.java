@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Calendar;
 
+import javax.swing.JOptionPane;
+
 import dtu.student.pp.PPState;
 import dtu.student.pp.data.activity.AbstractActivity;
 
@@ -17,18 +19,61 @@ public class Main {
 	
 	private static String FILEPATH = "database.txt";
 	private final PPState state;
+	private ProjectPlanner planner;
 	private static ProjectPlanner pp;
 
 	Main(PPState state) {
 		this.state = state;
+		String initials = getInitials();
+		
+		if(initials==null)
+			return;
+		
+		planner = new ProjectPlanner(
+				state.createDeveloper(initials.toCharArray()),
+				state);
+		
+	}
 
+	private String getInitials() {
+		String initials = null;
+		
+		boolean success = false;
+		String defaultText = "Input your initials";
+		String text = defaultText;
+		
+		while(!success) {
+			initials = JOptionPane.showInputDialog(null,
+					text,
+					"Project Planner",
+					JOptionPane.PLAIN_MESSAGE);
+			
+			if(initials == null) {
+				exit(state);
+				break;
+			} else if (initials.length()==0)
+				text = "The login must contain at least one character.";
+			else if (initials.length() > Developer.MAX_INITIAL_LETTERS) {
+				text = "Maximum 4 characters allowed";
+			} else if (!state.hasDeveloper(initials)){
+				int option = JOptionPane.showConfirmDialog(null,
+						"<html><body>These initials are not registered in the system."
+						+ "<br>Want to create a new developer account?</body></html>",
+						"Create new account?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				success = option == JOptionPane.YES_OPTION;
+				text = defaultText;
+			}
+		}
+		
+		return initials;
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		if(args.length != 0) {FILEPATH = args[0];}
 		
 		new Main(load(FILEPATH));
-
+		
+		
 		
 	}
 
@@ -51,31 +96,22 @@ public class Main {
 	}
 	
 	public static PPState load(String filepath) {
-		PPState result;
+		PPState result = null;
+		if(new File(filepath).exists())
+			try {
+				FileInputStream fis = new FileInputStream(filepath);
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				result = (PPState) ois.readObject();
+				ois.close();
+				fis.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 		
-//		try (	FileInputStream fis = new FileInputStream(filepath);
-//				ObjectInputStream ois = new ObjectInputStream(fis)) {
-//			
-//			result = (PPState) ois.readObject();
-//			
-//		} catch (IOException | ClassNotFoundException e) {
-//			e.printStackTrace();
-//			
-//			result = new PPState();
-//			
-//		}
-		
-		try {
-			FileInputStream fis = new FileInputStream(filepath);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			result = (PPState) ois.readObject();
-			ois.close();
-			fis.close();
-		} catch (IOException | ClassNotFoundException e) {
-			//TODO: Please do print stack trace. (It caused an error, hard to debug)
-			e.printStackTrace();
+		if(result == null)
 			result = new PPState();
-		}
 		
 		return result;
 	}
