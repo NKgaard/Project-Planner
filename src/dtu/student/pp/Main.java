@@ -1,5 +1,6 @@
 package dtu.student.pp;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,6 +16,8 @@ import dtu.student.pp.PPState;
 import dtu.student.pp.data.activity.AbstractActivity;
 
 
+
+
 public class Main {
 	
 	private static String FILEPATH = "database.txt";
@@ -25,7 +28,7 @@ public class Main {
 	Main(PPState state) {
 		this.state = state;
 		String initials = getInitials();
-		//Jonaslaver en test
+		
 		if(initials==null)
 			return;
 		state.createDeveloper(initials);
@@ -33,6 +36,11 @@ public class Main {
 		planner = new ProjectPlanner(
 				initials,
 				state);
+		
+		//Åbner Hovedvinduet
+		ControlWindow.main(null);
+		
+		
 		exit(state);
 	}
 
