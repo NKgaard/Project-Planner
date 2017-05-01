@@ -28,11 +28,12 @@ public class Main {
 		
 		if(initials==null)
 			return;
+		state.createDeveloper(initials);
 		
 		planner = new ProjectPlanner(
-				state.createDeveloper(initials.toCharArray()),
+				initials,
 				state);
-		
+		exit(state);
 	}
 
 	private String getInitials() {
@@ -53,7 +54,7 @@ public class Main {
 				break;
 			} else if (initials.length()==0)
 				text = "The login must contain at least one character.";
-			else if (initials.length() > String.MAX_INITIAL_LETTERS) {
+			else if (initials.length() > PPState.MAX_INITIAL_LETTERS) {
 				text = "Maximum 4 characters allowed";
 			} else if (!state.hasDeveloper(initials)){
 				int option = JOptionPane.showConfirmDialog(null,
@@ -62,6 +63,8 @@ public class Main {
 						"Create new account?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				success = option == JOptionPane.YES_OPTION;
 				text = defaultText;
+			} else {
+				success = true;
 			}
 		}
 		

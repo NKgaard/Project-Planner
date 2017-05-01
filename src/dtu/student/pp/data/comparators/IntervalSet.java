@@ -9,7 +9,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 //Using generic class D extends IntervalAble instead of Interval with D as satellite data.
-public class IntervalSet<D extends IntervalAble> {
+public class IntervalSet<D extends Interval> {
 	private final NavigableSet<D> intervalTree = new TreeSet<D>();
 	private Calendar first, last;
 	

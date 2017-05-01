@@ -9,7 +9,8 @@ public class SpecialActivity extends AbstractActivity implements Serializable {
 	private boolean closed = false;
 	
 	public SpecialActivity(String name, int ID) {
-		super(name, ID);
+		super(ID);
+		this.setName(name);
 		//SpecialActivity.specialActivites.add(this);
 	}
 	

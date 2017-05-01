@@ -3,12 +3,12 @@ package dtu.student.pp.comparators;
 import java.util.Comparator;
 
 import dtu.student.pp.data.activity.AbstractActivity;
-import dtu.student.pp.data.comparators.IntervalAble;
+import dtu.student.pp.data.comparators.Interval;
 
-public class IntervalComparator implements Comparator<IntervalAble> {
+public class IntervalComparator implements Comparator<Interval> {
 
 	@Override
-	public int compare(IntervalAble o1, IntervalAble o2) {
+	public int compare(Interval o1, Interval o2) {
 
 		if(o1.getStart()==null && o2.getStart() != null)
 			return 1;

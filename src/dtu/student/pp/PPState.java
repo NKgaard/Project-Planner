@@ -29,7 +29,7 @@ public class PPState implements Serializable {
 	
 	//private final Calendar theTime;
 	//To create ID numbers for activities and projects.
-	private final static int MAX_INITIAL_LETTERS = 4;
+	public final static int MAX_INITIAL_LETTERS = 4;
 	private final Map<Integer, Integer> projectCounts;
 	private int activityCounter = 0; //Activities are not removed so activities.size() could be used instead.
 	

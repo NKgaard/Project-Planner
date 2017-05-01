@@ -5,19 +5,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-import dtu.student.pp.data.comparators.IntervalAble;
+import dtu.student.pp.data.comparators.Interval;
 import dtu.student.pp.exception.UserNotStaffException;
 
 
-public abstract class AbstractActivity extends IntervalAble implements Serializable  {
+public abstract class AbstractActivity extends Interval implements Serializable  {
 	//private final static String DEFAULT_NAME = "UNNAMED ACTIVITY";
 	//Map to hold work hours.
 	private final Map<String, WorkHours> workHours = new HashMap<String, WorkHours>();
 	private final int activityID; //Always increment.
 	//private String name;
 	
-	AbstractActivity(String name, int activityID) {
-		super(name);
+	AbstractActivity(int activityID) {
 		this.activityID = activityID;
 	}
 	

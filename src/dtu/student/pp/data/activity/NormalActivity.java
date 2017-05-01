@@ -15,7 +15,7 @@ public class NormalActivity extends AbstractActivity implements Serializable {
 	private float timeBudget = 0; //Positive number.
 	
 	public NormalActivity(int ID, Project parent) {
-		super(Integer.toString(ID), ID); //Default name is just the ID.
+		super(ID);
 		this.parent = parent;
 		this.parent.addActivity(this);
 	}
