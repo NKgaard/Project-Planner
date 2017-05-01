@@ -80,4 +80,13 @@ public class ProjectPlanner {
 				.filter( a -> a.isStaff(staff) );
 	}
 	
+	public void editProject(Project project, String leader, String name, String startDate, String endDate) {
+		if ( name.length() > 0 ) 
+			project.setName(name);
+		
+		if ( leader.length() > 0 ) {
+			
+		}
+	}
+	
 }
