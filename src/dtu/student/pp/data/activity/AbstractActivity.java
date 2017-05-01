@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import dtu.student.pp.String;
+
 import dtu.student.pp.data.comparators.IntervalAble;
 import dtu.student.pp.exception.UserNotStaffException;
 

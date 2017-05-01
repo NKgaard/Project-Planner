@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import dtu.student.pp.String;
+
 import dtu.student.pp.PPState;
 import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.data.comparators.IntervalAble;

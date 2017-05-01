@@ -2,7 +2,7 @@ package dtu.student.pp.data.activity;
 
 import java.io.Serializable;
 
-import dtu.student.pp.String;
+
 
 
 public class SpecialActivity extends AbstractActivity implements Serializable {

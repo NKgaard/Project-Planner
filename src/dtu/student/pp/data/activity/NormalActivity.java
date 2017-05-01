@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import dtu.student.pp.String;
+
 import dtu.student.pp.data.project.Project;
 
 public class NormalActivity extends AbstractActivity implements Serializable {
