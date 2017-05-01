@@ -9,7 +9,7 @@ import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.comparators.IntervalSet;
 
 public class Developer implements Serializable{
-	private final static int MAX_INITIAL_LETTERS = 4;
+	public final static int MAX_INITIAL_LETTERS = 4;
 	private final String initials;
 	
 	Developer(char[] developerInitials) {
