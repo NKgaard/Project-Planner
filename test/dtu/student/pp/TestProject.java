@@ -38,33 +38,20 @@ public class TestProject {
     }
 
     @Test
-    public void testCreateActivityNotLeader() {
-//        Project project = state.createProject();
-//        state.createActivity(project);
-//        try {
-//            fail("Should throw NotProjectLeaderException");
-//        } catch (NotProjectLeaderException e) {
-//            assertNotNull("Failed to assert", e.getMessage());
-//            assertEquals("Failed to assert", "User must be the project leader to perform this action!", e.getMessage());
-//        }
-    }
-
-    @Test
     public void testSetProjectLeader() {
         Project project = state.createProject();
-        String dev = state.createDeveloper("DVLP".toCharArray());
-        assertFalse(project.isLeader(dev));
+        state.createDeveloper("DVLP");
+        assertFalse(project.isLeader("DVLP"));
 
-        project.setLeader(dev);
-        assertTrue(project.isLeader(dev));
-        assertEquals(dev, project.getLeader());
+        project.setLeader("DVLP");
+        assertTrue(project.isLeader("DVLP"));
+        assertEquals("DVLP", project.getLeader());
     }
 
     @Test
     public void testAddActivity() {
         Project project = state.createProject();
-        String dev = state.createDeveloper("DVLP".toCharArray());
-        project.setLeader(dev);
+
         NormalActivity activity = state.createActivity(project);
 
         project.addActivity(activity);
@@ -80,29 +67,23 @@ public class TestProject {
     @Test
     public void testActivityNumber() {
         Project project = state.createProject();
-        String dev = state.createDeveloper("DVLP".toCharArray());
-        project.setLeader(dev);
 
         NormalActivity activity1 = state.createActivity(project);
         NormalActivity activity2 = state.createActivity(project);
+
         //The activity number should increment.
         assertTrue(activity1.getActivityID() < activity2.getActivityID());
     }
 
-    //Since there is no log out capability, we won't test removing activity while not logged in for now.
-
     @Test
     public void testRemoveActivity() {
         Project project = state.createProject();
-        String dev = state.createDeveloper("DVLP".toCharArray());
-        project.setLeader(dev);
 
         NormalActivity activity = state.createActivity(project);
         state.removeActivity(activity);
 
         assertFalse(state.getActivities().contains(activity));
         assertFalse(project.getActivities().contains(activity));
-
     }
 
    @Test
