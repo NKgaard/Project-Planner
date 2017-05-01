@@ -25,7 +25,7 @@ public class Main {
 	Main(PPState state) {
 		this.state = state;
 		String initials = getInitials();
-		
+		//Jonaslaver en test
 		if(initials==null)
 			return;
 		state.createDeveloper(initials);
