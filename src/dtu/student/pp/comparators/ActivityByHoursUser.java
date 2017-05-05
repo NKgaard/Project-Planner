@@ -1,8 +1,6 @@
 package dtu.student.pp.comparators;
 
 import java.util.Comparator;
-
-
 import dtu.student.pp.data.activity.AbstractActivity;
 
 public class ActivityByHoursUser implements Comparator<AbstractActivity> {

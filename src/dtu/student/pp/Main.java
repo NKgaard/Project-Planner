@@ -14,6 +14,9 @@ import javax.swing.JOptionPane;
 
 import dtu.student.pp.PPState;
 import dtu.student.pp.data.activity.AbstractActivity;
+import dtu.student.pp.data.activity.NormalActivity;
+import dtu.student.pp.data.project.Project;
+import dtu.student.pp.exception.NotProjectLeaderException;
 
 
 
@@ -36,9 +39,20 @@ public class Main {
 		planner = new ProjectPlanner(
 				initials,
 				state);
+		state.createSpecialActivity("Sick");
+		state.createSpecialActivity("Test");
+		Project p = planner.createProject();
+		p.setLeader(initials);
+		try {
+			NormalActivity activ = planner.createActivity(p);
+			activ.setStart(5, 2017);
+		} catch (NotProjectLeaderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//Åbner Hovedvinduet
-		ControlWindow.main(null);
+		ControlWindow.main(planner);
 		
 		
 		exit(state);
