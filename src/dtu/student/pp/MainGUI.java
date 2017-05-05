@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -40,12 +41,25 @@ public class MainGUI extends JPanel implements ActionListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	//Komponenter til fane 1
 	private JButton OpretProjektKnap = new JButton("Opret Projekt");
-	private JTextField OpretProjektFelt = new JTextField();
-	private Component tabbedPane;
+	private JButton SletProjektKnap = new JButton("Slet Projekt");
+	private JButton SetProjektLederKnap = new JButton("Set Projekt Leder");
+	private JTextField OpretProjektFelt = new JTextField(20);
+	private JTextField SletProjektFelt = new JTextField(20);
+	private JTextField SetProjektLederFelt = new JTextField(20);
+	
+	//Layout kontrol til fane 1
+	JPanel opretProjekt = new JPanel();
+	JPanel sletProjekt = new JPanel();
+	JPanel setLeder = new JPanel();
+	
+	
+	//private Component tabbedPane;
 
 	 public MainGUI(ProjectPlanner planner) {
-		 super(new GridLayout(1, 1));
+		 //super(new GridLayout(1, 1));
 		//Create and set up the window.
 	     
 	    
@@ -55,6 +69,8 @@ public class MainGUI extends JPanel implements ActionListener{
 	        Font font = OpretProjektKnap.getFont();
 	        Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize()+5);
 	        OpretProjektKnap.setFont(boldFont);
+	        SletProjektKnap.setFont(boldFont);
+	        SetProjektLederKnap.setFont(boldFont);
 	       
 	        //Ikoner til tabs
 	        ImageIcon icon = createImageIcon("images/test2.png");
@@ -63,23 +79,37 @@ public class MainGUI extends JPanel implements ActionListener{
 	        //Tab #1     
 	        JTabbedPane tabbedPane = new JTabbedPane();
 	        JComponent panel1 = makePanel();
-	        panel1.setLayout(new GridLayout(1, 3));
+	        panel1.setLayout(new GridLayout(0,1));
+	        
+	        panel1.add(opretProjekt);
+	        panel1.add(sletProjekt);
+	        panel1.add(setLeder);
 	        	      
 	        tabbedPane.addTab("Projects", icon, panel1,"Manage Projects");
 	        panel1.setPreferredSize(new Dimension(800, 600));
+	        
 	        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 	        
 	        
+	        sletProjekt.setLayout(new FlowLayout());
+	        opretProjekt.setLayout(new FlowLayout());
+	        setLeder.setLayout(new FlowLayout());
 	        //Opret projektknap og felter
 	        OpretProjektKnap.setHorizontalTextPosition(SwingConstants.LEADING);
-	        panel1.add(OpretProjektKnap);
-	        panel1.add(OpretProjektFelt);
+	        opretProjekt.add(OpretProjektKnap);
+	        opretProjekt.add(OpretProjektFelt);
+	        sletProjekt.add(SletProjektKnap);
+	        sletProjekt.add(SletProjektFelt);
+	        setLeder.add(SetProjektLederKnap);
+	        setLeder.add(SetProjektLederFelt);
+	        
+	       
+	       
+	        //Funktionalitet Tab#1
 	        OpretProjektKnap.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	                OpretProjektFelt.setText("I was clicked");
-	               
-	                
+	            	OpretProjektFelt.setText("Projekt nr: " + planner.createProject().getProjectNumber().toString() + " oprettet.");
 	                
 	            }
 	        });
