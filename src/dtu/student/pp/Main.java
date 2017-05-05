@@ -38,8 +38,7 @@ public class Main {
 				state);
 		
 		//Åbner Hovedvinduet
-		ControlWindow.main(null);
-		
+		MainGUI.main(null);
 		
 		exit(state);
 	}
