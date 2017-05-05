@@ -23,7 +23,7 @@ public class Main {
 	private static String FILEPATH = "database.txt";
 	private final PPState state;
 	private ProjectPlanner planner;
-	private static ProjectPlanner pp;
+	public ProjectPlanner pp;
 
 	Main(PPState state) {
 		this.state = state;
@@ -37,12 +37,13 @@ public class Main {
 				initials,
 				state);
 		
-		//Åbner Hovedvinduet
-		//ingen funktionalitet endnu
-		MainGUI.main(null);
-		
 		
 		exit(state);
+		
+		//Åbner Hovedvinduet
+		//ingen funktionalitet endnu
+		
+		MainGUI.main(planner);
 	}
 
 	private String getInitials() {
@@ -126,6 +127,13 @@ public class Main {
 			result = new PPState();
 		
 		return result;
+	}
+	
+	public PPState getPPState(){
+		return state;
+	}
+	public ProjectPlanner getProjectPlanner(){
+		return planner;
 	}
 
 }

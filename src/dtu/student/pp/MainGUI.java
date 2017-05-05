@@ -29,6 +29,7 @@ import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.Color;
+import java.awt.Component;
 
 public class MainGUI extends JPanel implements ActionListener{
 
@@ -41,33 +42,13 @@ public class MainGUI extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JButton OpretProjektKnap = new JButton("Opret Projekt");
 	private JTextField OpretProjektFelt = new JTextField();
+	private Component tabbedPane;
 
 	 public MainGUI(ProjectPlanner planner) {
 		 super(new GridLayout(1, 1));
 		//Create and set up the window.
 	     
 	    
-	        
-	        JTabbedPane tabbedPane = new JTabbedPane();
-	        JFrame frame = new JFrame("Project Planner");
-	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	      
-	        frame.setTitle("Project Planner V1.0");
-			frame.setSize(800, 600);
-	        //Add content to the window.
-	        frame.add(tabbedPane, BorderLayout.CENTER);
-	        
-	        //Icon for the whole java app
-	        try {
-	            frame.setIconImage(ImageIO.read(new File("Pictures/ICON.png")));
-	        }
-	        catch (IOException exc) {
-	            exc.printStackTrace();
-	        }
-	        
-	        //Display the window.
-	        frame.pack();
-	        frame.setVisible(true);
 	        
 	       
 	        //Skrifttype til knapper
@@ -80,13 +61,14 @@ public class MainGUI extends JPanel implements ActionListener{
 	        
 	      
 	        //Tab #1     
-	        
+	        JTabbedPane tabbedPane = new JTabbedPane();
 	        JComponent panel1 = makePanel();
 	        panel1.setLayout(new GridLayout(1, 3));
 	        	      
 	        tabbedPane.addTab("Projects", icon, panel1,"Manage Projects");
 	        panel1.setPreferredSize(new Dimension(800, 600));
 	        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+	        
 	        
 	        //Opret projektknap og felter
 	        OpretProjektKnap.setHorizontalTextPosition(SwingConstants.LEADING);
@@ -136,6 +118,31 @@ public class MainGUI extends JPanel implements ActionListener{
 	        
 	        //Scroll enable
 	        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+	        
+	        
+
+	        
+	        
+	        JFrame frame = new JFrame("Project Planner");
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        frame.add(tabbedPane, BorderLayout.CENTER);
+	        frame.setTitle("Project Planner V1.0");
+			frame.setSize(800, 600);
+			frame.add(tabbedPane, BorderLayout.CENTER);
+	        //Add content to the window.
+	        
+	        
+	        //Icon for the whole java app
+	        try {
+	            frame.setIconImage(ImageIO.read(new File("Pictures/ICON.png")));
+	        }
+	        catch (IOException exc) {
+	            exc.printStackTrace();
+	        }
+	        
+	        //Display the window.
+	        frame.pack();
+	        frame.setVisible(true);
 	    }
 	    
 	
@@ -165,28 +172,7 @@ public class MainGUI extends JPanel implements ActionListener{
 	    }
 	    
 	    
-	    private static void createAndShowGUI() {
-	        //Create and set up the window.
-	        JFrame frame = new JFrame("Project Planner");
-	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	      
-	        frame.setTitle("Project Planner V1.0");
-			frame.setSize(800, 600);
-	        //Add content to the window.
-	        frame.add(new MainGUI(), BorderLayout.CENTER);
-	        
-	        //Icon for the whole java app
-	        try {
-	            frame.setIconImage(ImageIO.read(new File("Pictures/ICON.png")));
-	        }
-	        catch (IOException exc) {
-	            exc.printStackTrace();
-	        }
-	        
-	        //Display the window.
-	        frame.pack();
-	        frame.setVisible(true);
-	    }
+	
 	    
 	    public static void main(ProjectPlanner planner){
 			MainGUI GUI = new MainGUI(planner);
