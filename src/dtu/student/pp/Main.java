@@ -38,7 +38,9 @@ public class Main {
 				state);
 		
 		//Åbner Hovedvinduet
+		//ingen funktionalitet endnu
 		MainGUI.main(null);
+		
 		
 		exit(state);
 	}
