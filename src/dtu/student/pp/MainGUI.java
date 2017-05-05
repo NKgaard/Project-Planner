@@ -2,6 +2,7 @@ package dtu.student.pp;
 
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,10 +13,17 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.Color;
 
 public class MainGUI extends JPanel implements ActionListener{
@@ -27,12 +35,17 @@ public class MainGUI extends JPanel implements ActionListener{
 	        super(new GridLayout(1, 1));
 	        
 	        JTabbedPane tabbedPane = new JTabbedPane();
-	        ImageIcon icon = createImageIcon("images/middle.gif");
+	        //Ikoner til tabs
+	        ImageIcon icon = createImageIcon("images/test2.png");
+	        
+	      
+	      
+	      
 	        
 	        
 	        JComponent panel1 = makeTextPanel("Panel #1");
 	        	        panel1.setBackground(Color(100,100,100));
-	        tabbedPane.addTab("Hej", icon, panel1,"Does nothing");
+	        tabbedPane.addTab("Tab 1", icon, panel1,"Does nothing");
 	        panel1.setPreferredSize(new Dimension(800, 600));
 	        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 	        
@@ -40,8 +53,6 @@ public class MainGUI extends JPanel implements ActionListener{
 	        panel1.add(TestKnap);
 	        panel1.add(TestKnaplol);
 	        
-	        panel1.add(new JButton("hej"));
-	        panel1.add(new JButton("hej"));
 	        panel1.add(new JButton("hej"));
 	        panel1.add(new JButton("hej"));
 	        panel1.add(new JButton("hejhvaså"));
@@ -79,7 +90,9 @@ public class MainGUI extends JPanel implements ActionListener{
 	        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 	    }
 	    
-	    private Color Color(int i, int j, int k) {
+	
+
+		private Color Color(int i, int j, int k) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -89,7 +102,7 @@ public class MainGUI extends JPanel implements ActionListener{
 	        JLabel filler = new JLabel(text);
 	        filler.setHorizontalAlignment(JLabel.LEFT);
 	        filler.setVerticalAlignment(JLabel.TOP);
-	        panel.setLayout(new GridLayout(0, 2));
+	        panel.setLayout(new GridLayout(2, 3));
 	        panel.add(filler);
 	        return panel;
 	    }
@@ -115,6 +128,14 @@ public class MainGUI extends JPanel implements ActionListener{
 			frame.setSize(800, 600);
 	        //Add content to the window.
 	        frame.add(new MainGUI(), BorderLayout.CENTER);
+	        
+	        //Icon for the whole java app
+	        try {
+	            frame.setIconImage(ImageIO.read(new File("Pictures/ICON.png")));
+	        }
+	        catch (IOException exc) {
+	            exc.printStackTrace();
+	        }
 	        
 	        //Display the window.
 	        frame.pack();
