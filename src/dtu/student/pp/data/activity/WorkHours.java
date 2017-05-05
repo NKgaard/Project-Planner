@@ -6,7 +6,7 @@ public class WorkHours implements Serializable {
 	private float work = 0;
 	
 	public void registerHours(float hours) {
-		work += hours;
+		work = hours;
 	}
 	
 	@Override
