@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Observable;
 
 public abstract class Interval implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7398468513255847602L;
 	private Calendar start, end; //Calendar, Date or Instant!
 	private String name; //It is the responsibility of everyone implementing this to set a name.
 	

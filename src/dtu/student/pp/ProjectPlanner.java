@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import dtu.student.pp.data.activity.AbstractActivity;
@@ -87,6 +88,11 @@ public class ProjectPlanner {
 	public String getUser(){
 		return this.user;
 	}
+	
+	public Set<AbstractActivity> getAllActivities() {
+		return state.getActivities();
+	}
+	
 
 	public void editProject(Project project, String leader, String name, String startDate, String endDate) {
 		if ( name.length() > 0 )
@@ -95,6 +101,7 @@ public class ProjectPlanner {
 		if ( leader.length() > 0 ) {
 
 		}
+	}
 
 	public void editProject(Project project, String name, int startweeknumber, int startyear, int endweeknumber, int endyear) {
 		project.setName(name);

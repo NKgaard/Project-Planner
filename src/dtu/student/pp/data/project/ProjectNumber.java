@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.junit.Ignore;
 
-public class ProjectNumber implements Serializable{
+public class ProjectNumber implements Serializable {
 	
 	final int year;
 	final int projectNumber;
