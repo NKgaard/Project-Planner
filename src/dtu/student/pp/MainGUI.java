@@ -1,6 +1,7 @@
 package dtu.student.pp;
 
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -13,6 +14,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -28,82 +30,93 @@ import java.awt.Color;
 
 public class MainGUI extends JPanel implements ActionListener{
 	
-	private JButton TestKnap = new JButton("Testknap");
+	private JButton OpretProjektKnap = new JButton("Opret Projekt");
 	private JButton TestKnaplol = new JButton("Testknap");
+	
+	private JTextField OpretProjektFelt = new JTextField();
 
 	 public MainGUI() {
 	        super(new GridLayout(1, 1));
-	        
 	        JTabbedPane tabbedPane = new JTabbedPane();
+	       
+	        //Skrifttype til knapper
+	        Font font = OpretProjektKnap.getFont();
+	        Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize()+5);
+	        OpretProjektKnap.setFont(boldFont);
+	       
 	        //Ikoner til tabs
 	        ImageIcon icon = createImageIcon("images/test2.png");
 	        
 	      
-	      
-	      
+	        //Tab #1     
 	        
-	        
-	        JComponent panel1 = makeTextPanel("Panel #1");
-	        	        panel1.setBackground(Color(100,100,100));
-	        tabbedPane.addTab("Tab 1", icon, panel1,"Does nothing");
+	        JComponent panel1 = makePanel();
+	        panel1.setLayout(new GridLayout(1, 3));
+	        	      
+	        tabbedPane.addTab("Projects", icon, panel1,"Manage Projects");
 	        panel1.setPreferredSize(new Dimension(800, 600));
 	        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 	        
-	        TestKnap.setHorizontalTextPosition(SwingConstants.LEADING);
-	        panel1.add(TestKnap);
-	        panel1.add(TestKnaplol);
-	        
-	        panel1.add(new JButton("hej"));
-	        panel1.add(new JButton("hej"));
-	        panel1.add(new JButton("hejhvaså"));
+	        //Opret projektknap og felter
+	        OpretProjektKnap.setHorizontalTextPosition(SwingConstants.LEADING);
+	        panel1.add(OpretProjektKnap);
+	        panel1.add(OpretProjektFelt);
+	        OpretProjektKnap.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                OpretProjektFelt.setText("I was clicked");
+	                
+	            }
+	        });
 	       
 	        
 	        
 	        
+	        //Tab #2
 	        
+	        JComponent panel2 = makePanel();
 	        
-	        JComponent panel2 = makeTextPanel("Panel #2");
-	        panel2.setBackground(Color(100,100,100));
 	        
 	        tabbedPane.addTab("Tab 2", icon, panel2,
 	                "Does twice as much nothing");
 	        tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 	        
-	        JComponent panel3 = makeTextPanel("Panel #3");
-	        panel3.setBackground(Color(100,100,100));
+	        
+	        //Tab #3
+	        JComponent panel3 = makePanel();
+	       
 	        tabbedPane.addTab("Tab 3", icon, panel3,
 	                "Still does nothing");
 	        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 	        
-	        JComponent panel4 = makeTextPanel(
-	                "Panel #4.");
-	        panel4.setBackground(Color(100,100,100));
+	        
+	        //Tab #4
+	        JComponent panel4 = makePanel();
+	        
 	       
 	        tabbedPane.addTab("Tab 4", icon, panel4, "Im useless");
 	        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
 	       
 	        
-	        //Add tabs to the JPanel
+	        //Adds the tabs onto the JPanel
 	        add(tabbedPane);
 	        
-	        //The following line enables to use scrolling tabs.
+	        //Scroll enable
 	        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 	    }
 	    
 	
 
-		private Color Color(int i, int j, int k) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	 private Color Color(int i, int j, int k) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
-		protected JComponent makeTextPanel(String text) {
+		protected JComponent makePanel() {
 	        JPanel panel = new JPanel(false);
-	        JLabel filler = new JLabel(text);
-	        filler.setHorizontalAlignment(JLabel.LEFT);
-	        filler.setVerticalAlignment(JLabel.TOP);
-	        panel.setLayout(new GridLayout(2, 3));
-	        panel.add(filler);
+	        //panel.setLayout(new GridLayout(2, 3));
+	        panel.setBackground(Color(100,100,100));
+	       
 	        return panel;
 	    }
 	    
