@@ -44,7 +44,7 @@ public class MainGUI extends JPanel implements ActionListener{
 	        panel1.add(new JButton("hej"));
 	        panel1.add(new JButton("hej"));
 	        panel1.add(new JButton("hej"));
-	        panel1.add(new JButton("hej"));
+	        panel1.add(new JButton("hejhvaså"));
 	       
 	        
 	        

@@ -38,7 +38,8 @@ public class Main {
 				state);
 		
 		//Åbner Hovedvinduet
-		//ingen funktionalitet endnu
+		//ingen funktionalitet endnu.
+		//tjest
 		MainGUI.main(null);
 		
 		
