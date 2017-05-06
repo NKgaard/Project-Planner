@@ -5,6 +5,8 @@ package dtu.student.pp.ui;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import dtu.student.pp.data.activity.NormalActivity;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
@@ -130,7 +132,10 @@ public class ActivityControl extends JDialog {
 		
 		JButton btnNewButton_1 = new JButton("Remove\r\n");
 		
+		JScrollPane scrollPane = new JScrollPane();
 		JList list_1 = new JList();
+		scrollPane.setViewportView(list_1);
+		
 		list_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_1.setModel(new AbstractListModel() {
 			String[] values = new String[] {"DK", "PZ", "SKU", "VR", "ZP", "RD", "PET", "ZET", "KET"};
@@ -141,9 +146,13 @@ public class ActivityControl extends JDialog {
 				return values[index];
 			}
 		});
-		list_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Staff", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		scrollPane.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Staff", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
+		
+		JScrollPane scrollPane1 = new JScrollPane();
 		JList list = new JList();
+		scrollPane1.setViewportView(list);
+		
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"DK", "PZ", "SKU", "VR", "ZP", "RD", "PET", "ZET", "KET"};
@@ -154,28 +163,28 @@ public class ActivityControl extends JDialog {
 				return values[index];
 			}
 		});
-		list.setBorder(new TitledBorder(null, "Assistants", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		scrollPane1.setBorder(new TitledBorder(null, "Assistants", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING)
-						.addComponent(list_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
 						.addComponent(btnNewButton))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addComponent(list, GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+						.addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
 						.addComponent(btnNewButton_1))
 					.addContainerGap())
 		);
 		gl_panel_2.setVerticalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
+			gl_panel_2.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_2.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
-						.addComponent(list_1, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
-						.addComponent(list, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE, false)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNewButton)
