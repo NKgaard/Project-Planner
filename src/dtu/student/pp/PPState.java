@@ -143,6 +143,10 @@ public class PPState implements Serializable {
 		return Collections.unmodifiableSet(activities);
 	}
 	
+	public Set<String> getDevelopers() {
+		return Collections.unmodifiableSet(developers);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

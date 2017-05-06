@@ -56,10 +56,13 @@ public class MainGUI extends JPanel implements ActionListener{
 	private JTextField SletProjektFelt = new JTextField(20);
 	private JTextField SetProjektLederFelt = new JTextField(20);
 	
+	private JButton testKnap = new JButton("TestKnap");
+	
 	//Layout kontrol til fane 1
 	JPanel opretProjekt = new JPanel();
 	JPanel sletProjekt = new JPanel();
 	JPanel setLeder = new JPanel();
+	JPanel test = new JPanel();
 	
 	
 	//private Component tabbedPane;
@@ -90,6 +93,7 @@ public class MainGUI extends JPanel implements ActionListener{
 	        panel1.add(opretProjekt);
 	        panel1.add(sletProjekt);
 	        panel1.add(setLeder);
+	        panel1.add(test);
 	        	      
 	        tabbedPane.addTab("Projects", icon, panel1,"Manage Projects");
 	        panel1.setPreferredSize(new Dimension(800, 600));
@@ -108,6 +112,8 @@ public class MainGUI extends JPanel implements ActionListener{
 	        sletProjekt.add(SletProjektFelt);
 	        setLeder.add(SetProjektLederKnap);
 	        setLeder.add(SetProjektLederFelt);
+	        
+	        test.add(testKnap);
 	        
 	        SletProjektFelt.setText("Indsæt projektnummer");
 	        SetProjektLederFelt.setText("Indsæt Projektnummer");
@@ -205,6 +211,18 @@ public class MainGUI extends JPanel implements ActionListener{
 	            }
 	        });
 	       
+	        
+	        testKnap.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	
+	            	Object[] possibleValues = planner.getState().getDevelopers().toArray();
+	            	Object selectedValue = JOptionPane.showInputDialog(null,
+	            	"Choose a Developer", "Developer",
+	            	JOptionPane.INFORMATION_MESSAGE, null,
+	            	possibleValues, possibleValues[0]);
+	            }
+	        });
 	        
 	        
 	        

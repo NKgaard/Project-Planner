@@ -14,6 +14,9 @@ import javax.swing.JOptionPane;
 
 import dtu.student.pp.PPState;
 import dtu.student.pp.data.activity.AbstractActivity;
+import dtu.student.pp.ui.ActivityControl;
+import dtu.student.pp.ui.ChooseDeveloper;
+
 
 
 
@@ -40,10 +43,10 @@ public class Main {
 		
 		exit(state);
 		
-		//Åbner Hovedvinduet
-		//ingen funktionalitet endnu
-		
-		MainGUI.main(planner);
+		//Åbner aktivitetsvinduet - test
+		//MainGUI.main(planner);
+		//ActivityControl.main(null);
+		ChooseDeveloper.main(null);
 	}
 
 	private String getInitials() {
