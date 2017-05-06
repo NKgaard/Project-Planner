@@ -117,6 +117,16 @@ public class PPState implements Serializable {
 		projects.remove(p);
 	}
 	
+	public boolean projectExistCheck(String check){
+		for (Project p: getProjects()){
+			if (p.getProjectNumber().toString().equals(check)){
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
 	public boolean hasDeveloper(String initials) {
 		return developers.contains(initials);
 	}

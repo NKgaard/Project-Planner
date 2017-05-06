@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JComponent;
@@ -45,6 +46,7 @@ public class MainGUI extends JPanel implements ActionListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	
 	//Komponenter til fane 1
 	private JButton OpretProjektKnap = new JButton("Opret Projekt");
@@ -141,7 +143,7 @@ public class MainGUI extends JPanel implements ActionListener{
 	            public void actionPerformed(ActionEvent e) {
 	            	
 	            		Project p = planner.createProject();
-	            		System.out.println(p.getProjectNumber());
+	            		//System.out.println(p.getProjectNumber());
 	            		OpretProjektFelt.setText("Projekt nr:" + p.getProjectNumber() + " oprettet.");
 	            }
 	        });
@@ -149,14 +151,20 @@ public class MainGUI extends JPanel implements ActionListener{
 	        SletProjektKnap.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	            	
-	            	for(Project p: planner.getState().getProjects()){
-	            		if (p.getProjectNumber().toString().equals(SletProjektFelt.getText())){
+	            	if (planner.getState().projectExistCheck(SletProjektFelt.getText())){
+	            		for(Project p: planner.getState().getProjects()){
+	            			if (p.getProjectNumber().toString().equals(SletProjektFelt.getText())){
 	            			String temp = SletProjektFelt.getText();
 	            			planner.getState().removeProject(p);
 	            			SletProjektFelt.setText("Project " + temp + " removed.");
+	            			
+	            			}
 	            		}
+	            	} else {
+	            		SletProjektFelt.setText("Projektnummer eksisterer ikke!");
 	            	}
+	            
+	            	
 	            }
 	        });
 	        
@@ -165,17 +173,35 @@ public class MainGUI extends JPanel implements ActionListener{
 	        SetProjektLederKnap.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
+	            //	if (planner.getState().projectExistCheck(SletProjektFelt.getText())){	
+	            //		for(Project p: planner.getState().getProjects()){
+	            //		
+	            //			if (p.getProjectNumber().toString().equals(SetProjektLederFelt.getText())){
+	            //			p.setLeader(planner.getUser());
+	            //			SetProjektLederFelt.setText(p.getLeader() + " tilføjet som leder");
+	            //				if (p.getLeader().toString().equals(planner.getUser())){
+	            //				System.out.println("Succes adding leader");
+	            //				}
+	            //			}
+	            //		}
+	            //	} else {
+	            //		SetProjektLederFelt.setText("Projektnummer eksisterer ikke!");
+	            //	}
+	            	String inputValue = JOptionPane.showInputDialog("Please input a Project Number:");
 	            	
-	            	for(Project p: planner.getState().getProjects()){
-	            		
-	            		if (p.getProjectNumber().toString().equals(SetProjektLederFelt.getText())){
-	            			p.setLeader(planner.getUser());
-	            			SetProjektLederFelt.setText(p.getLeader() + " tilføjet som leder");
-	            			if (p.getLeader().toString().equals(planner.getUser())){
-	            				System.out.println("Succes adding leader");
-	            			}
-	            		}
-	            	}
+	            	if (planner.getState().projectExistCheck(inputValue)){	
+	    	            		for(Project p: planner.getState().getProjects()){
+	    	            		
+	    	            			if (p.getProjectNumber().toString().equals(inputValue)){
+	    	            			p.setLeader(planner.getUser());
+	    	            			SetProjektLederFelt.setText(p.getLeader() + " tilføjet som leder");
+	    	            				if (p.getLeader().toString().equals(planner.getUser())){
+	    	            				System.out.println("Succes adding leader");
+	    	            				}
+	    	            			}
+	    	            		}
+	    	            	}
+	            	
 	            }
 	        });
 	       
@@ -298,4 +324,5 @@ public class MainGUI extends JPanel implements ActionListener{
 			// TODO Auto-generated method stub
 			
 		}
+		
 	}
