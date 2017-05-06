@@ -88,6 +88,9 @@ public class ProjectPlanner {
 	public String getUser(){
 		return this.user;
 	}
+	public PPState getState(){
+		return this.state;
+	}
 	
 	public Set<AbstractActivity> getAllActivities() {
 		return state.getActivities();

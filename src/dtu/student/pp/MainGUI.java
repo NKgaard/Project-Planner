@@ -21,6 +21,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -31,6 +33,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.Color;
 import java.awt.Component;
+import dtu.student.pp.data.project.Project;
+import dtu.student.pp.data.project.ProjectNumber;
 
 public class MainGUI extends JPanel implements ActionListener{
 
@@ -103,14 +107,75 @@ public class MainGUI extends JPanel implements ActionListener{
 	        setLeder.add(SetProjektLederKnap);
 	        setLeder.add(SetProjektLederFelt);
 	        
+	        SletProjektFelt.setText("Indsæt projektnummer");
+	        SetProjektLederFelt.setText("Indsæt Projektnummer");
+	       
+	        SetProjektLederFelt.addFocusListener(new FocusListener() {
+
+
+	        	public void focusGained(FocusEvent e) {
+	        	    SetProjektLederFelt.setText(""); 
+	        	}	
+	        	public void focusLost(FocusEvent e) {
+
+	        	}
+
+	        	});   
+	        
+	        SletProjektFelt.addFocusListener(new FocusListener() {
+
+
+	        	public void focusGained(FocusEvent e) {
+	        	    SletProjektFelt.setText(""); 
+	        	}
+	        	public void focusLost(FocusEvent e) {
+
+	        	}
+
+	        	}); 
 	       
 	       
 	        //Funktionalitet Tab#1
 	        OpretProjektKnap.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	            	OpretProjektFelt.setText("Projekt nr: " + planner.createProject().getProjectNumber().toString() + " oprettet.");
-	                
+	            	
+	            		Project p = planner.createProject();
+	            		System.out.println(p.getProjectNumber());
+	            		OpretProjektFelt.setText("Projekt nr:" + p.getProjectNumber() + " oprettet.");
+	            }
+	        });
+	        
+	        SletProjektKnap.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	
+	            	for(Project p: planner.getState().getProjects()){
+	            		if (p.getProjectNumber().toString().equals(SletProjektFelt.getText())){
+	            			String temp = SletProjektFelt.getText();
+	            			planner.getState().removeProject(p);
+	            			SletProjektFelt.setText("Project " + temp + " removed.");
+	            		}
+	            	}
+	            }
+	        });
+	        
+	        
+	        
+	        SetProjektLederKnap.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	
+	            	for(Project p: planner.getState().getProjects()){
+	            		
+	            		if (p.getProjectNumber().toString().equals(SetProjektLederFelt.getText())){
+	            			p.setLeader(planner.getUser());
+	            			SetProjektLederFelt.setText(p.getLeader() + " tilføjet som leder");
+	            			if (p.getLeader().toString().equals(planner.getUser())){
+	            				System.out.println("Succes adding leader");
+	            			}
+	            		}
+	            	}
 	            }
 	        });
 	       
