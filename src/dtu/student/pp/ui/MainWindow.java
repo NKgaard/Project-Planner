@@ -386,7 +386,6 @@ public class MainWindow extends JFrame implements ActionListener {
 				NormalActivity act = (NormalActivity) selectedActivity;
 				
 				ActivityControl control = new ActivityControl(act, act.getParent().isLeader(planner.getUser()));
-				control.get
 				
 			} else currentMenuLabel.setText(noSelect); 
 			break;
