@@ -2,6 +2,7 @@ package dtu.student.pp.ui;
 
 
 
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -54,7 +55,7 @@ public class ActivityControl extends JDialog {
 	 */
 	public ActivityControl(NormalActivity activity){};
 	public ActivityControl() {
-		setTitle("Activity: XXXX Start: Week XX Year XXXX");
+		setTitle("Act: XXXX From: W XX Y XXXX");
 		setBounds(100, 100, 250, 405);
 		
 		JPanel panel = new JPanel();

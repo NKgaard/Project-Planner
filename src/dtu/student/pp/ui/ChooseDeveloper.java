@@ -1,5 +1,6 @@
 package dtu.student.pp.ui;
 
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.lang.reflect.Array;
@@ -10,6 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import dtu.student.pp.ProjectPlanner;
+
 public class ChooseDeveloper extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -17,28 +20,31 @@ public class ChooseDeveloper extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			ChooseDeveloper dialog = new ChooseDeveloper();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	
 	/**
-	 * Create the dialog.
+	 *  Skal formegentlig erstattes - er erstattet af Choose.java
 	 */
-	public ChooseDeveloper() {
-		String[] values = new String[] {"DK", "PZ", "SKU", "VR", "ZP", "RD", "PET", "ZET", "KET"};
-		
-		Object[] possibleValues = values;
+	public ChooseDeveloper(ProjectPlanner planner) {
+		Object[] test = planner.getState().getDevelopers().toArray();
+		Object[] possibleValues = test;
     	Object selectedValue = JOptionPane.showInputDialog(null,
     	"Choose a Developer", "Developer",
     	JOptionPane.INFORMATION_MESSAGE, null,
     	possibleValues, possibleValues[0]);
     	
+    	
 	}
+	public static String choiceDev(ProjectPlanner planner){
+		Object[] test = planner.getState().getDevelopers().toArray();
+		Object[] possibleValues = test;
+    	Object selectedValue = JOptionPane.showInputDialog(null,
+    	"Choose a Developer", "Developer",
+    	JOptionPane.INFORMATION_MESSAGE, null,
+    	possibleValues, possibleValues[0]);
+    	
+    	System.out.println(planner.getState().getDevelopers().contains(selectedValue));
+    	return selectedValue.toString();
+	}
+
 
 }

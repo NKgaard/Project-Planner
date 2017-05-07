@@ -65,7 +65,8 @@ public abstract class AbstractActivity extends Interval implements Serializable 
 	
 	@Override
 	public String toString() {
-		return getName();
+		//return getName();
+		return String.valueOf(this.activityID);
 	}
 	
 	//The id is an unique integer. This means perfect hashing.

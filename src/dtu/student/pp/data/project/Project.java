@@ -77,7 +77,9 @@ public class Project extends Interval implements Serializable {
 	
 	@Override
 	public String toString() {
-		return getName();
+		//return getName();
+		return this.number.toString();
+		
 	}
 	
 }

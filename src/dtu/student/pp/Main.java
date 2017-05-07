@@ -1,21 +1,28 @@
 package dtu.student.pp;
 
 
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Calendar;
+
+
 
 import javax.swing.JOptionPane;
 
 import dtu.student.pp.PPState;
-import dtu.student.pp.data.activity.AbstractActivity;
-import dtu.student.pp.ui.ActivityControl;
-import dtu.student.pp.ui.ChooseDeveloper;
+
+import dtu.student.pp.data.activity.NormalActivity;
+import dtu.student.pp.data.project.Project;
+
+import dtu.student.pp.ui.Choose;
+
+
+
 
 
 
@@ -44,9 +51,39 @@ public class Main {
 		exit(state);
 		
 		//Åbner aktivitetsvinduet - test
-		//MainGUI.main(planner);
+		planner.createProject();
+		planner.createProject();
+		planner.createProject();
+		planner.createProject();
 		//ActivityControl.main(null);
-		ChooseDeveloper.main(null);
+		//ChooseDeveloper hej = new ChooseDeveloper(planner);
+		//DeleteProject dlt = new DeleteProject(planner);
+		//String hej = ChooseDeveloper.choiceDev(planner);
+		
+		//String hej = Choose.developer(planner);
+		//Project hej1 = Choose.project(planner);
+		Project test = planner.createProject();
+		test.setLeader("dr");
+		
+			NormalActivity test1 = planner.getState().createActivity(test);
+			NormalActivity test2 = planner.getState().createActivity(test);
+			NormalActivity test3 = planner.getState().createActivity(test);
+			NormalActivity test13 = planner.getState().createActivity(test);
+			
+		
+		
+		Project test4 = planner.createProject();
+		NormalActivity test5 = planner.getState().createActivity(test4);
+		//Kæmpestor ej ok, det bar en penis
+		//NormalActivity test5 = Choose.activityFromProject(test);
+		NormalActivity test0 = Choose.activity(planner);
+		System.out.println(planner.getState().getActivities());
+		System.out.println(planner.getState().getProjects());
+		//hej.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		
+		
+		
+		
 	}
 
 	private String getInitials() {
