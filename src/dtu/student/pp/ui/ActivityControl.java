@@ -46,19 +46,6 @@ public class ActivityControl extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(NormalActivity temp2, boolean check) {
-		try {
-			ActivityControl dialog = new ActivityControl(temp2, check);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 
 	/**
@@ -66,7 +53,8 @@ public class ActivityControl extends JDialog {
 	 */
 	
 	public ActivityControl(NormalActivity temp2, boolean check) {
-		
+		this.setModal(true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			String name = temp2.toString();
 			int year = temp2.getStart().get(Calendar.YEAR);
 			int week = temp2.getStart().get(Calendar.WEEK_OF_YEAR);
@@ -461,7 +449,7 @@ public class ActivityControl extends JDialog {
 		getContentPane().setLayout(groupLayout);
 		{
 		}
-	
+		setVisible(true);
 			 }	
 
 			 

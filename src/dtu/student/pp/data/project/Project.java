@@ -10,7 +10,6 @@ import java.util.Set;
 import dtu.student.pp.PPState;
 import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.data.comparators.Interval;
-import dtu.student.pp.data.comparators.IntervalSet;
 import dtu.student.pp.exception.NotProjectLeaderException;
 
 public class Project extends Interval implements Serializable {

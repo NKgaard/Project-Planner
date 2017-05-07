@@ -1,6 +1,5 @@
 package dtu.student.pp;
 
-import com.sun.tools.corba.se.idl.constExpr.Not;
 import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.exception.NotProjectLeaderException;

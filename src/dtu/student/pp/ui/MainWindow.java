@@ -330,7 +330,6 @@ public class MainWindow extends JFrame implements ActionListener {
 					}
 				}
 			} else currentMenuLabel.setText(noSelect); 
-			
 			break;
 		case NEW_PROJECT:
 			//Same
@@ -345,7 +344,6 @@ public class MainWindow extends JFrame implements ActionListener {
 						"Success!", JOptionPane.PLAIN_MESSAGE);
 				menuButtons[1].doClick(); //Go back to projects view.
 			}
-			
 			break;
 		case ASSISTANCE:
 			if(selectedActivity!=null && selectedActivity instanceof NormalActivity) {
@@ -383,8 +381,12 @@ public class MainWindow extends JFrame implements ActionListener {
 			} else currentMenuLabel.setText(noSelect); 
 			break;
 		case VIEW_ACTIVITY:
-			if(selectedActivity!=null) {
+			if(selectedActivity!=null && selectedActivity instanceof NormalActivity) {
 				//TODO
+				NormalActivity act = (NormalActivity) selectedActivity;
+				
+				ActivityControl control = new ActivityControl(act, act.getParent().isLeader(planner.getUser()));
+				control.get
 				
 			} else currentMenuLabel.setText(noSelect); 
 			break;
@@ -410,7 +412,9 @@ public class MainWindow extends JFrame implements ActionListener {
 			break;
 		case VIEW_PROJECT:
 			if(selectedProject!=null) {
-				//TODO
+				//TODO better this
+				
+				new ProjectControl(selectedProject, selectedProject.isLeader(planner.getUser()));
 			} else currentMenuLabel.setText(noSelect);
 			break;
 		case BECOME_LEADER:

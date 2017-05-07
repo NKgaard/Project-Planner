@@ -17,7 +17,6 @@ import java.util.stream.Stream;
 import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.data.activity.SpecialActivity;
-import dtu.student.pp.data.comparators.IntervalSet;
 import dtu.student.pp.data.project.Project;
 import dtu.student.pp.data.project.ProjectNumber;
 import dtu.student.pp.exception.UserNotStaffException;

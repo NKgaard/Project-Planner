@@ -35,23 +35,11 @@ public class ProjectControl extends JDialog {
 	private JTextField textField;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(Project p, boolean isLeader) {
-		try {
-			ProjectControl dialog = new ProjectControl(p, isLeader);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * Create the dialog.
 	 */
 	public ProjectControl(Project p, boolean check) {
-		
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setModal(true);
 		String projektNummer = p.toString();
 		setTitle("Projekt: " + projektNummer);
 		setBounds(100, 100, 204, 425);
@@ -191,7 +179,7 @@ public class ProjectControl extends JDialog {
 		
 		textField = new JTextField();
 		textField.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField.setText(p.toString());
+		textField.setText(p.getName());
 		textField.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Project ID", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		textField.setColumns(10);
 		GroupLayout gl_panel = new GroupLayout(panel);
@@ -267,16 +255,13 @@ public class ProjectControl extends JDialog {
 				
 				
 				//Tjek om bruger kan redigere i aktiviteten
-				if (check==false){
-					textField.setEditable(false);
-					btnNewButton.setEnabled(false);
-					btnNewButton_1.setEnabled(false);
-					
-					spinner.setEnabled(false);
-					spinner_1.setEnabled(false);
-					spinner_2.setEnabled(false);
-					spinner_3.setEnabled(false);
-				}
+				textField.setEditable(check);
+				btnNewButton.setEnabled(check);
+				btnNewButton_1.setEnabled(check);
+				spinner.setEnabled(check);
+				spinner_1.setEnabled(check);
+				spinner_2.setEnabled(check);
+				spinner_3.setEnabled(check);
 				
 				btnNewButton_2.addActionListener(new ActionListener() {
 		            @Override
@@ -312,6 +297,7 @@ public class ProjectControl extends JDialog {
 		            	//close window
 		            }
 		        });
-				
+				pack();
+				setVisible(true);
 	}
 }
