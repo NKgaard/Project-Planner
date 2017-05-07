@@ -63,9 +63,11 @@ public class MainWindow extends JFrame implements ActionListener {
 		VIEW_PROJECT("View project", "Edit the selected project, if you're the leader.", 2),
 		NEW_PROJECT("New project", "Create a new project.", 3),
 		NEW_ACTIVITY("New activity", "Create a new activity in this project.", 4, UserType.LEADER),
-		REPORT("Report", "Generate a project report.", 7, UserType.LEADER),
-		BECOME_LEADER("Become leader", "Become the project leader of the selected project.", 8),
-		PROJECT_ACTIVITY("Proj. Activities", "View the activities in your project", 9),
+		REPORT("Report", "Generate a project report.", 8, UserType.LEADER),
+		BECOME_LEADER("Become leader", "Become the project leader of the selected project.", 6),
+		PROJECT_ACTIVITY("Proj. Activities", "View the activities in your project", 7),
+		HELP("Help", "Go back to the starting screen", 9),
+		REG_HOURS("Register hours", "A faster way is to write directly in the table cell to the right.", 5),
 		ERROR("Error", "Should not be added as a menu option", -1);
 		
 		final String itemText;
@@ -94,7 +96,9 @@ public class MainWindow extends JFrame implements ActionListener {
 					Options.VIEW_ACTIVITY,
 					Options.PROJECTS,
 					Options.STAFF,
-					Options.ASSISTANCE);
+					Options.ASSISTANCE,
+					Options.HELP,
+					Options.REG_HOURS);
 	private final static List<Options> projectDefault =
 			Arrays.asList(
 					Options.MY_PROJECTS,
@@ -104,7 +108,8 @@ public class MainWindow extends JFrame implements ActionListener {
 					Options.NEW_ACTIVITY,
 					Options.REPORT,
 					Options.BECOME_LEADER,
-					Options.PROJECT_ACTIVITY);
+					Options.PROJECT_ACTIVITY,
+					Options.HELP);
 	Set<Options> options = new HashSet<Options>(10);
 	
 	JLabel currentMenuLabel = new JLabel("Menu");
@@ -120,6 +125,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	UserType userType = UserType.ALL;
 	private final static String projectViewName = "Project";
 	private final static String activityViewName = "Activity";
+	private final static String helpViewName = "Intro";
 	
 	public MainWindow(ProjectPlanner planner){
 		this.planner = planner;
@@ -194,7 +200,7 @@ public class MainWindow extends JFrame implements ActionListener {
 				+ "<center><h1>Welcome to the project planner!</h1></center>"
 				+ "</body></html>");
 		
-		viewPane.add(introduction, "Intro");
+		viewPane.add(introduction, helpViewName);
 		viewPane.add(new JScrollPane(new ActivityTable(this, aTableModel),
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), activityViewName);
@@ -335,17 +341,16 @@ public class MainWindow extends JFrame implements ActionListener {
 			if(selectedProject!=null) {
 				options.clear();
 				options.addAll(activityDefault);
-				aTableModel.setData(planner.getAllActivities()
-				.stream().filter(a ->
-				a instanceof NormalActivity && 
-				((NormalActivity) a).getParent().equals(selectedProject))
-				.collect(Collectors.toSet()));
+				aTableModel.setData(selectedProject.getActivities());
 				((CardLayout)viewPane.getLayout()).show(viewPane, activityViewName);
 				currentMenuLabel.setText("Act.:"+selectedProject.getProjectNumber().toString());
 			} else currentMenuLabel.setText(noSelect);
 			break;
+		case HELP:
+			((CardLayout)viewPane.getLayout()).show(viewPane, helpViewName);
+			break;
 		default:
-			System.err.println("Unhandled menu option!:" + command);//No selection or unhandled
+			System.err.println("Unhandled menu option!: " + command);//No selection or unhandled
 		}
 		
 		

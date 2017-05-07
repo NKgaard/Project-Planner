@@ -18,22 +18,8 @@ public class ProjectTableModel extends AbstractTableModel {
 	
 	//Formatting hour numbers the correct way.
 	public static final NumberFormat nf = DecimalFormat.getInstance();
-	public final Comparator<String> hoursComparator = new Comparator<String>() {
-		@Override
-		public int compare(String n0, String n1) {
-			try {
-				return Float.compare(
-						nf.parse(n0).floatValue(),
-						nf.parse(n1).floatValue());
-			} catch(ParseException e) {
-				e.printStackTrace();
-			}
-			
-			return 0;
-		}
-	};
 	
-	String[] columnNames = new String[] {"#", "Name", "Start", "End"};//...
+	String[] columnNames = new String[] {"#", "Name", "Start", "End", "Activities", "Sum"};//...
     private Project[] projects = new Project[0];
     
 	public void setData(Set<Project> projects) {
@@ -68,6 +54,8 @@ public class ProjectTableModel extends AbstractTableModel {
             	return project.getStart();
             case 3:
             	return project.getEnd();
+            case 4:
+            	return project.getActivities().size();
             default: return "???";
         }
 
@@ -79,7 +67,8 @@ public class ProjectTableModel extends AbstractTableModel {
     	case 0: return Integer.class;
     	case 1: return String.class;
     	case 2:
-    	case 3: return Calendar.class; 
+    	case 3: return Calendar.class;
+    	case 4: return Integer.class;
     	default:return String.class;
     	}
     }

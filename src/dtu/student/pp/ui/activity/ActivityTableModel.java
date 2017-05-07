@@ -5,6 +5,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
@@ -14,34 +15,16 @@ import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.activity.NormalActivity;
 
 public class ActivityTableModel extends AbstractTableModel {
-	
-	//Formatting hour numbers the correct way.
-	public static final NumberFormat nf = DecimalFormat.getInstance();
 	public final ProjectPlanner planner;
-	public final Comparator<String> hoursComparator = new Comparator<String>() {
-		@Override
-		public int compare(String n0, String n1) {
-			try {
-				return Float.compare(
-						nf.parse(n0).floatValue(),
-						nf.parse(n1).floatValue());
-			} catch(ParseException e) {
-				e.printStackTrace();
-			}
-			
-			return 0;
-		}
-	};
 	
-	String[] columnNames = new String[] {"#", "Name", "Start", "End", "Staff.", "Assist.", "Hours"};
+	String[] columnNames = new String[] {"#", "Name", "Start", "End", "Staff.", "Assist.", "Sum", "Hours"};
     private AbstractActivity[] activities = new AbstractActivity[0];
-    
 	
     public ActivityTableModel(ProjectPlanner planner) {
 		this.planner = planner;
 	}
 
-	public void setData(Set<AbstractActivity> activities) {
+	public void setData(Set<? extends AbstractActivity> activities) {
     	this.activities = activities.toArray(new AbstractActivity[activities.size()]);
     	this.fireTableDataChanged();
     }
@@ -70,27 +53,28 @@ public class ActivityTableModel extends AbstractTableModel {
             case 1:
                 return activity.getName();
             case 2:
-            	return activity.getStart();
+            	if(activity.getStart()!=null)
+            		return activity.getStart().getTime();
+            	else
+            		return null;
             case 3:
-            	return activity.getEnd();
+            	if(activity.getEnd()!=null)
+            		return activity.getEnd().getTime();
+            	else return null;
             case 4:
             	if(activity instanceof NormalActivity) {
-            		return ((NormalActivity) activity).getStaff();
-            	} else {
-            		return null;
-            	}
+            		return ((NormalActivity) activity).getStaff().size();
+            	} else return null;
             case 5:
             	if(activity instanceof NormalActivity) {
-            		return ((NormalActivity) activity).getAssist();
-            	} else {
-            		return null;
-            	}
+            		return ((NormalActivity) activity).getAssist().size();
+            	} else return null;
             case 6:
+            	return activity.getHoursSum();
+            case 7:
             	if(activity.isStaff(planner.getUser())) {
-            		return nf.format(activity.getHours(planner.getUser()));
-            	} else {
-            		return null;
-            	}
+            		return activity.getHours(planner.getUser());
+            	} else return null;
             default: return "???";
         }
 
@@ -102,29 +86,22 @@ public class ActivityTableModel extends AbstractTableModel {
     	case 0: return Integer.class;
     	case 1: return String.class;
     	case 2:
-    	case 3: return Calendar.class;
+    	case 3: return Date.class; //Automatic sorting
     	case 4: 
-    	case 5: return Set.class;
-    	case 6: return String.class; //Handle hours as string to preserve formatting
+    	case 5: return Integer.class;
+    	case 6:
+    	case 7: return Float.class;
     	default:return String.class;
     	}
     }
     
-    //Override this if you want the values to be editable...
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-    	
-    	if(columnIndex==6) {
-			try {
-				float value = nf.parse(aValue.toString()).floatValue();
-				//Do through ppstate
-				getActivityAt(rowIndex).registerHours(planner.getUser(), Math.abs(value));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+    	if(columnIndex==7) {
+			getActivityAt(rowIndex).registerHours(planner.getUser(), Math.abs((Float) aValue));
+			fireTableCellUpdated(rowIndex, columnIndex);
+			fireTableCellUpdated(rowIndex, columnIndex-1); //The sum has also changed
     	}
-    	
-    	fireTableCellUpdated(rowIndex, columnIndex);
     }
     
     public AbstractActivity getActivityAt(int row) {
@@ -133,6 +110,6 @@ public class ActivityTableModel extends AbstractTableModel {
     
     @Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-    	return columnIndex == 6 && getActivityAt(rowIndex).isStaff(planner.getUser());
+    	return columnIndex == 7 && getActivityAt(rowIndex).isStaff(planner.getUser());
 	}
 }

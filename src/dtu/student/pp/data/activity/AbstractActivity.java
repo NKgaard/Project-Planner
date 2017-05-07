@@ -83,5 +83,12 @@ public abstract class AbstractActivity extends Interval implements Serializable 
 			return false;
 		return true;
 	}
+
+	public float getHoursSum() {
+		float sum = 0;
+		for(WorkHours hrs:workHours.values())
+			sum += hrs.getWork();
+		return sum;
+	}
 }
 
