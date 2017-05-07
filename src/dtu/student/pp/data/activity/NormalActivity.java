@@ -25,7 +25,7 @@ public class NormalActivity extends AbstractActivity implements Serializable {
 		return parent;
 	}
 	
-	public float workEstimate() {
+	public float workEstimate(NormalActivity other) {
 		//Get all workers.
 		//Then for each activity in the time window get the time estimate
 		// and add it to all workers matching staffing or assistants.
@@ -33,6 +33,21 @@ public class NormalActivity extends AbstractActivity implements Serializable {
 		
 		//if(isSetInterval()) //Weigh time estimate by the duration to get work load estimate.
 		//	timeEstimate *= getDuration().toMinutes() / 60f;
+		
+		
+		//Ostart,Oend<=Start,End<=OStart,Oend
+		//If the other activity ends before this starts:
+		if(other.getEnd()!=null && this.getStart()!=null)
+			if(other.getEnd().before(this.getStart()))
+				timeEstimate = 0;
+		//If the other activity starts after this has ended
+		if(other.getStart()!=null && this.getEnd()!=null)
+			if(other.getStart().after(this.getEnd()))
+				timeEstimate = 0;
+		
+		//If the other activity has a deadline while this doesn't.
+		if(other.getEnd()!=null && this.getEnd()==null)
+			timeEstimate = 0;
 		
 		return timeEstimate;
 	}

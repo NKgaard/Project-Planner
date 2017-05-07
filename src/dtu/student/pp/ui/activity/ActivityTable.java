@@ -85,7 +85,7 @@ public class ActivityTable extends JTable {
 	@Override //JTable implements listselectionlistener
 	public void valueChanged(ListSelectionEvent e) {
 		super.valueChanged(e);
-		if(getSelectedRow()!=-1) {
+		if(listener!=null && getSelectedRow()!=-1) {
 			AbstractActivity activity = ((ActivityTableModel) this.getModel()).getActivityAt(convertRowIndexToModel(getSelectedRow()));
 			listener.setSelectedActivity(activity);
 		}

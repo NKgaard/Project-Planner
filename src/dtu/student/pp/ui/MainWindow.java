@@ -74,7 +74,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		REPORT("Report", "Generate a project report.", 8, UserType.LEADER),
 		BECOME_LEADER("Become leader", "Become the project leader of the selected project.", 6),
 		PROJECT_ACTIVITY("Project Activ.", "View the activities in your project", 7),
-		HELP("Help", "Go back to the starting screen", 9),
+		START("Start", "Go back to the starting screen", 9),
 		REG_HOURS("Register hours", "A faster way is to write directly in the table cell to the right.", 5),
 		ERROR("Error", "Should not be added as a menu option", -1);
 		
@@ -105,7 +105,7 @@ public class MainWindow extends JFrame implements ActionListener {
 					Options.PROJECTS,
 					Options.STAFF,
 					Options.ASSISTANCE,
-					Options.HELP,
+					Options.START,
 					Options.REG_HOURS);
 	private final static List<Options> projectDefault =
 			Arrays.asList(
@@ -117,7 +117,7 @@ public class MainWindow extends JFrame implements ActionListener {
 					Options.REPORT,
 					Options.BECOME_LEADER,
 					Options.PROJECT_ACTIVITY,
-					Options.HELP);
+					Options.START);
 	Set<Options> options = new HashSet<Options>(10);
 	
 	JLabel currentMenuLabel = new JLabel("Menu");
@@ -215,7 +215,6 @@ public class MainWindow extends JFrame implements ActionListener {
 		viewPane.add(new JScrollPane(new ProjectTable(this, pTableModel),
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), projectViewName);
-		
 		
 		options.addAll(Arrays.asList(Options.ACTIVITIES, Options.PROJECTS));
 		updateOptions();
@@ -369,13 +368,24 @@ public class MainWindow extends JFrame implements ActionListener {
 			} else currentMenuLabel.setText(noSelect);
 			break;
 		case STAFF:
-			if(selectedActivity!=null) {
+			if(selectedActivity!=null && selectedActivity instanceof NormalActivity) {
 				//TODO
+				ChooseStaff choose = new ChooseStaff(planner, (NormalActivity) selectedActivity);
+				for(String dev:choose.selectedDevelopers) {
+					try {
+						planner.registerStaff((NormalActivity)selectedActivity, dev);
+					} catch (NotProjectLeaderException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				aTableModel.fireTableDataChanged();
 			} else currentMenuLabel.setText(noSelect); 
 			break;
 		case VIEW_ACTIVITY:
 			if(selectedActivity!=null) {
 				//TODO
+				
 			} else currentMenuLabel.setText(noSelect); 
 			break;
 		case REG_HOURS:
@@ -385,15 +395,16 @@ public class MainWindow extends JFrame implements ActionListener {
 					input = JOptionPane.showInputDialog(
 							"Set the hours worked on activity " + selectedActivity.getActivityID(),
 							selectedActivity.getHours(planner.getUser()));
-					try {
-						float hours = Float.parseFloat(input);
-						selectedActivity.registerHours(planner.getUser(), Math.abs(hours));
-						aTableModel.fireTableDataChanged();
-						break;
-					} catch(NumberFormatException e1) {
-						JOptionPane.showMessageDialog(this,
-								"Could not parse number. Example input: 1.5", "Parsing error", JOptionPane.ERROR_MESSAGE);
-					}
+					if(input!=null)
+						try {
+							float hours = Float.parseFloat(input);
+							selectedActivity.registerHours(planner.getUser(), Math.abs(hours));
+							aTableModel.fireTableDataChanged();
+							break;
+						} catch(NumberFormatException e1) {
+							JOptionPane.showMessageDialog(this,
+									"Could not parse number. Example input: 1.5", "Parsing error", JOptionPane.ERROR_MESSAGE);
+						}
 				}
 			} else currentMenuLabel.setText(noSelect); 
 			break;
@@ -423,8 +434,12 @@ public class MainWindow extends JFrame implements ActionListener {
 				currentMenuLabel.setText("Act.:"+selectedProject.getProjectNumber().toString());
 			} else currentMenuLabel.setText(noSelect);
 			break;
-		case HELP:
+		case START:
+			currentMenuLabel.setText("Start");
 			((CardLayout)viewPane.getLayout()).show(viewPane, helpViewName);
+			options.clear();
+			options.addAll(Arrays.asList(Options.ACTIVITIES, Options.PROJECTS));
+			updateOptions();
 			break;
 		default:
 			System.err.println("Unhandled menu option!: " + command);//No selection or unhandled
