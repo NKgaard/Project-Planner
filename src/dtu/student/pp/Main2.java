@@ -40,17 +40,13 @@ public class Main2 {
 		planner = new ProjectPlanner(
 				initials,
 				state);
+		
+		state.createDeveloper("JOHN");
+		state.createDeveloper("BOB");
+		state.createDeveloper("KIM");
+		state.createDeveloper("EVE");
 		state.createSpecialActivity("Sick");
-		state.createSpecialActivity("Test");
-		Project p = planner.createProject();
-		p.setLeader(initials);
-		try {
-			NormalActivity activ = planner.createActivity(p);
-			activ.setStart(5, 2017);
-		} catch (NotProjectLeaderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		state.createSpecialActivity("Course");
 		
 		//Åbner Hovedvinduet
 		//ControlWindow2.main(planner);

@@ -342,6 +342,9 @@ public class MainWindow extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this,
 						"Project number " + newProject.getProjectNumber() + "created.",
 						"Success!", JOptionPane.PLAIN_MESSAGE);
+				options.remove(Options.MY_PROJECTS);
+				options.add(Options.PROJECTS);
+				updateOptions();
 				menuButtons[1].doClick(); //Go back to projects view.
 			}
 			break;
