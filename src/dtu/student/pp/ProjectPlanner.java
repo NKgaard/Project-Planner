@@ -111,5 +111,9 @@ public class ProjectPlanner {
 		project.setStart(startweeknumber,startyear);
 		project.setEnd(endweeknumber, endyear);
 	}
+
+	public Set<Project> getAllProjects() {
+		return state.getProjects();
+	}
 	
 }

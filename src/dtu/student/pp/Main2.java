@@ -17,6 +17,7 @@ import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.data.project.Project;
 import dtu.student.pp.exception.NotProjectLeaderException;
+import dtu.student.pp.ui.MainWindow;
 
 
 
@@ -52,7 +53,8 @@ public class Main2 {
 		}
 		
 		//Åbner Hovedvinduet
-		ControlWindow2.main(planner);
+		//ControlWindow2.main(planner);
+		MainWindow.main(planner);
 		//ingen funktionalitet endnu.
 		//tjest
 		
