@@ -53,35 +53,33 @@ import dtu.student.pp.ui.MainWindow;
 
 public class ActivityTable extends JTable {
 	
-	final MainWindow mainWindow;
+	final MainWindow listener;
 	
-	public ActivityTable(MainWindow mainWindow, ActivityTableModel model) {
-		this.mainWindow = mainWindow;
+	public ActivityTable(MainWindow listener, ActivityTableModel model) {
+		this.listener = listener;
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     	setModel(model);
-		
-		//Create sorter
-		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-		this.setRowSorter(sorter);
-		//Default to sort with new activities first
-		sorter.setSortKeys(Collections.singletonList(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
+    	//Default to sort with new activities first
+    	setAutoCreateRowSorter(true);
+		getRowSorter().setSortKeys(Collections.singletonList(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
 		
 		//Number
-		getColumnModel().getColumn(0).setPreferredWidth(30);
+		getColumnModel().getColumn(0).setMinWidth(25);
 		//Name
+		getColumnModel().getColumn(1).setMinWidth(40);
 		//Dates
 		DateTableRenderer dateRenderer = new DateTableRenderer();
 		getColumnModel().getColumn(2).setCellRenderer(dateRenderer);
 		getColumnModel().getColumn(3).setCellRenderer(dateRenderer);
-		getColumnModel().getColumn(2).setPreferredWidth(30);
-		getColumnModel().getColumn(3).setPreferredWidth(30);
+		getColumnModel().getColumn(2).setMinWidth(35);
+		getColumnModel().getColumn(3).setMinWidth(35);
 		//Number of personel
-		getColumnModel().getColumn(4).setPreferredWidth(40);
-		getColumnModel().getColumn(5).setPreferredWidth(40);
+		getColumnModel().getColumn(4).setMinWidth(45);
+		getColumnModel().getColumn(5).setMinWidth(45);
 		//Hours
-		getColumnModel().getColumn(6).setPreferredWidth(35);
+		getColumnModel().getColumn(6).setMinWidth(35);
 		//Sum of hours
-		getColumnModel().getColumn(7).setPreferredWidth(40);
+		getColumnModel().getColumn(7).setMinWidth(40);
 	}
 	
 	@Override //JTable implements listselectionlistener
@@ -89,7 +87,7 @@ public class ActivityTable extends JTable {
 		super.valueChanged(e);
 		if(getSelectedRow()!=-1) {
 			AbstractActivity activity = ((ActivityTableModel) this.getModel()).getActivityAt(convertRowIndexToModel(getSelectedRow()));
-			mainWindow.setSelectedActivity(activity);
+			listener.setSelectedActivity(activity);
 		}
 	}
 }

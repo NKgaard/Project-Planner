@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.junit.Ignore;
 
-public class ProjectNumber implements Serializable {
+public class ProjectNumber implements Serializable, Comparable<ProjectNumber> {
 	
 	final int year;
 	final int projectNumber;
@@ -38,6 +38,12 @@ public class ProjectNumber implements Serializable {
 		if (year != other.year)
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(ProjectNumber other) {
+		int last = Integer.compare(this.year, other.year);
+		return last == 0 ? Integer.compare(this.projectNumber, other.projectNumber) : last;
 	}
 	
 }

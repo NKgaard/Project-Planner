@@ -81,5 +81,12 @@ public class Project extends Interval implements Serializable {
 		return this.number.toString();
 		
 	}
+
+	public float getWorkSum() {
+		float sum = 0;
+		for(NormalActivity activ:activities)
+			sum+=activ.getHoursSum();
+		return sum;
+	}
 	
 }

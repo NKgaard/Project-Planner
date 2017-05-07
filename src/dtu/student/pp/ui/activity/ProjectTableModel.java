@@ -13,13 +13,10 @@ import dtu.student.pp.ProjectPlanner;
 import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.data.project.Project;
+import dtu.student.pp.data.project.ProjectNumber;
 
 public class ProjectTableModel extends AbstractTableModel {
-	
-	//Formatting hour numbers the correct way.
-	public static final NumberFormat nf = DecimalFormat.getInstance();
-	
-	String[] columnNames = new String[] {"#", "Name", "Start", "End", "Activities", "Sum"};//...
+	String[] columnNames = new String[] {"#", "Name", "Start", "End", "Leader", "Activ.", "Sum"};//...
     private Project[] projects = new Project[0];
     
 	public void setData(Set<Project> projects) {
@@ -27,6 +24,8 @@ public class ProjectTableModel extends AbstractTableModel {
     	this.fireTableDataChanged();
     }
     
+	
+	
     @Override
     public String getColumnName(int columnIndex) {
     	return columnNames[columnIndex];
@@ -55,7 +54,11 @@ public class ProjectTableModel extends AbstractTableModel {
             case 3:
             	return project.getEnd();
             case 4:
+            	return project.getLeader();
+            case 5:
             	return project.getActivities().size();
+            case 6:
+            	return project.getWorkSum();
             default: return "???";
         }
 
@@ -64,11 +67,13 @@ public class ProjectTableModel extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
     	switch(columnIndex) {
-    	case 0: return Integer.class;
+    	case 0: return ProjectNumber.class;
     	case 1: return String.class;
     	case 2:
     	case 3: return Calendar.class;
-    	case 4: return Integer.class;
+    	case 4: return String.class;
+    	case 5: return Integer.class;
+    	case 6: return Float.class;
     	default:return String.class;
     	}
     }

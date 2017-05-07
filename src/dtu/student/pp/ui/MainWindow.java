@@ -21,12 +21,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -40,9 +44,13 @@ import javax.swing.UnsupportedLookAndFeelException;
 import dtu.student.pp.ProjectPlanner;
 import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.activity.NormalActivity;
+import dtu.student.pp.data.comparators.Interval;
 import dtu.student.pp.data.project.Project;
+import dtu.student.pp.exception.NotProjectLeaderException;
+import dtu.student.pp.exception.UserNotStaffException;
 import dtu.student.pp.ui.activity.ActivityTable;
 import dtu.student.pp.ui.activity.ActivityTableModel;
+import dtu.student.pp.ui.activity.ProjectTable;
 import dtu.student.pp.ui.activity.ProjectTableModel;
 
 public class MainWindow extends JFrame implements ActionListener {
@@ -65,7 +73,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		NEW_ACTIVITY("New activity", "Create a new activity in this project.", 4, UserType.LEADER),
 		REPORT("Report", "Generate a project report.", 8, UserType.LEADER),
 		BECOME_LEADER("Become leader", "Become the project leader of the selected project.", 6),
-		PROJECT_ACTIVITY("Proj. Activities", "View the activities in your project", 7),
+		PROJECT_ACTIVITY("Project Activ.", "View the activities in your project", 7),
 		HELP("Help", "Go back to the starting screen", 9),
 		REG_HOURS("Register hours", "A faster way is to write directly in the table cell to the right.", 5),
 		ERROR("Error", "Should not be added as a menu option", -1);
@@ -204,7 +212,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		viewPane.add(new JScrollPane(new ActivityTable(this, aTableModel),
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), activityViewName);
-		viewPane.add(new JScrollPane(new JTable(pTableModel),
+		viewPane.add(new JScrollPane(new ProjectTable(this, pTableModel),
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), projectViewName);
 		
@@ -263,6 +271,7 @@ public class MainWindow extends JFrame implements ActionListener {
 				command.length());
 		Options selection = Options.fromString(command);
 		
+		//Misuse of enums :/
 		switch(selection) {
 		case ACTIVITIES:
 			setSelectedActivity(selectedActivity); //Go back to last selected activity
@@ -293,6 +302,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		case MY_PROJECTS:
 			//Switch out buttons
 			options.remove(Options.MY_PROJECTS);
+			options.remove(Options.BECOME_LEADER);
 			options.add(Options.PROJECTS);
 			pTableModel.setData(
 					planner.getProjectsLeading(planner.getUser())
@@ -302,14 +312,61 @@ public class MainWindow extends JFrame implements ActionListener {
 			break;
 		case NEW_ACTIVITY:
 			//MODAL DIALOG BOX WITH TEXT INPUT
+			if(selectedProject!=null) {
+				int input1 = JOptionPane.showConfirmDialog(this,
+						"Are you sure, you want to create a new activity in project "
+						+ selectedProject.getProjectNumber() + "?",
+						"New activity", JOptionPane.YES_NO_OPTION);
+				if(input1==JOptionPane.YES_OPTION) {
+					try {
+						NormalActivity newActivity = planner.createActivity(selectedProject);
+						JOptionPane.showMessageDialog(this,
+								"Successfully created activity "+newActivity.getActivityID()
+								+ " in project "+selectedProject.getProjectNumber()+".");
+						menuButtons[7].doClick(); //Go to the newly created activity
+					} catch (NotProjectLeaderException e1) {
+						JOptionPane.showMessageDialog(this, "You're not the project leader!",
+								"Error!", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}
+				}
+			} else currentMenuLabel.setText(noSelect); 
+			
 			break;
 		case NEW_PROJECT:
 			//Same
+			int input1 = JOptionPane.showConfirmDialog(this,
+					"Are you sure, you want to create a new project?",
+					"New project", JOptionPane.YES_NO_OPTION);
+			if(input1==JOptionPane.YES_OPTION) {
+				Project newProject = planner.createProject();
+				//Maybe open view/edit screen?
+				JOptionPane.showMessageDialog(this,
+						"Project number " + newProject.getProjectNumber() + "created.",
+						"Success!", JOptionPane.PLAIN_MESSAGE);
+				menuButtons[1].doClick(); //Go back to projects view.
+			}
+			
 			break;
 		case ASSISTANCE:
-			if(selectedActivity!=null) {
-				//TODO
-			} else currentMenuLabel.setText(noSelect); 
+			if(selectedActivity!=null && selectedActivity instanceof NormalActivity) {
+				Set<String> developersNotStaff = planner.getDevelopers().stream()
+				.filter(dev -> !selectedActivity.isStaff(dev))
+				.collect(Collectors.toSet());
+				Object input2 = JOptionPane.showInputDialog(this,
+						"Select the developer you want to add as assistance",
+						"Assistance", JOptionPane.QUESTION_MESSAGE,
+						null, developersNotStaff.toArray(), null);
+				if(input2!=null) {
+					try {
+						planner.registerAssistance((NormalActivity)selectedActivity, (String)input2);
+						aTableModel.fireTableDataChanged();
+					} catch (UserNotStaffException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			} else currentMenuLabel.setText(noSelect);
 			break;
 		case STAFF:
 			if(selectedActivity!=null) {
@@ -321,6 +378,25 @@ public class MainWindow extends JFrame implements ActionListener {
 				//TODO
 			} else currentMenuLabel.setText(noSelect); 
 			break;
+		case REG_HOURS:
+			if(selectedActivity!=null) {
+				String input = "";
+				while(input!=null) {
+					input = JOptionPane.showInputDialog(
+							"Set the hours worked on activity " + selectedActivity.getActivityID(),
+							selectedActivity.getHours(planner.getUser()));
+					try {
+						float hours = Float.parseFloat(input);
+						selectedActivity.registerHours(planner.getUser(), Math.abs(hours));
+						aTableModel.fireTableDataChanged();
+						break;
+					} catch(NumberFormatException e1) {
+						JOptionPane.showMessageDialog(this,
+								"Could not parse number. Example input: 1.5", "Parsing error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			} else currentMenuLabel.setText(noSelect); 
+			break;
 		case VIEW_PROJECT:
 			if(selectedProject!=null) {
 				//TODO
@@ -330,6 +406,7 @@ public class MainWindow extends JFrame implements ActionListener {
 			if(selectedProject!=null) {
 				selectedProject.setLeader(planner.getUser());
 				setSelectedProject(selectedProject); //Update buttons
+				pTableModel.fireTableDataChanged();
 			} else currentMenuLabel.setText(noSelect);
 			break;
 		case REPORT:

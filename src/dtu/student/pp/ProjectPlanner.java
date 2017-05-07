@@ -3,6 +3,7 @@ package dtu.student.pp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -114,6 +115,10 @@ public class ProjectPlanner {
 
 	public Set<Project> getAllProjects() {
 		return state.getProjects();
+	}
+
+	public Set<String> getDevelopers() {
+		return state.getDevelopers();
 	}
 	
 }
