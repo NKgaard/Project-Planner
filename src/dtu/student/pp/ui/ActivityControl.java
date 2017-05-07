@@ -1,25 +1,34 @@
-
-
 package dtu.student.pp.ui;
+
 
 
 
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import dtu.student.pp.ProjectPlanner;
+import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.activity.NormalActivity;
+import dtu.student.pp.data.comparators.Interval;
+import dtu.student.pp.data.project.Project;
+
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;
@@ -27,7 +36,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
+import java.util.*;
 
 public class ActivityControl extends JDialog {
 
@@ -41,9 +50,9 @@ public class ActivityControl extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(NormalActivity temp2, boolean check) {
 		try {
-			ActivityControl dialog = new ActivityControl();
+			ActivityControl dialog = new ActivityControl(temp2, check);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -55,10 +64,20 @@ public class ActivityControl extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ActivityControl(NormalActivity activity){};
-	public ActivityControl() {
-		setTitle("Act: XXXX From: W XX Y XXXX");
-		setBounds(100, 100, 250, 405);
+	
+	public ActivityControl(NormalActivity temp2, boolean check) {
+		
+			String name = temp2.toString();
+			int year = temp2.getStart().get(Calendar.YEAR);
+			int week = temp2.getStart().get(Calendar.WEEK_OF_YEAR);
+	
+
+		
+		
+		
+		
+		setTitle("Act: " + name + " From: W " + week + " Y " + year);
+		setBounds(100, 100, 250, 564);
 		
 		JPanel panel = new JPanel();
 		
@@ -70,23 +89,53 @@ public class ActivityControl extends JDialog {
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(null);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Activity Start Date", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(temp2.getStart().get(Calendar.WEEK_OF_YEAR), 1, 52, 1));
+		spinner.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Week:", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(0, 0, 0)));
+		
+		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(temp2.getStart().get(Calendar.YEAR), 1990, 9999, 1));
+		spinner_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Year:", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(0, 0, 0)));
+		
+		JButton btnNewButton_4 = new JButton("Set Start Date");
+		GroupLayout gl_panel_4 = new GroupLayout(panel_4);
+		gl_panel_4.setHorizontalGroup(
+			gl_panel_4.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_4.createSequentialGroup()
+					.addComponent(spinner, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(spinner_1, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))
+				.addGroup(Alignment.LEADING, gl_panel_4.createSequentialGroup()
+					.addGap(48)
+					.addComponent(btnNewButton_4)
+					.addContainerGap(53, Short.MAX_VALUE))
+		);
+		gl_panel_4.setVerticalGroup(
+			gl_panel_4.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_4.createSequentialGroup()
+					.addGroup(gl_panel_4.createParallelGroup(Alignment.LEADING)
+						.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(spinner_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnNewButton_4)
+					.addGap(9))
+		);
+		panel_4.setLayout(gl_panel_4);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)))
+						.addComponent(panel_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+						.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_3, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -96,10 +145,12 @@ public class ActivityControl extends JDialog {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
 					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGap(79))
 		);
 		
 		JButton btnNewButton_2 = new JButton("OK");
@@ -133,39 +184,49 @@ public class ActivityControl extends JDialog {
 		
 		JButton btnNewButton = new JButton("Remove");
 		
+		
 		JButton btnNewButton_1 = new JButton("Remove\r\n");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		JList list_1 = new JList();
+		
+		
+		DefaultListModel model = new DefaultListModel();
+		for (Object O:temp2.getStaff()){
+			model.addElement(O);
+		}
+		JList list_1 = new JList(model);
 		scrollPane.setViewportView(list_1);
 		
 		list_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list_1.setModel(new AbstractListModel() {
-			String[] values = new String[] {"DK", "PZ", "SKU", "VR", "ZP", "RD", "PET", "ZET", "KET"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		//list_1.setModel(new AbstractListModel() {
+		//	Object[] values = temp2.getStaff().toArray();
+		//	
+		//	public int getSize() {
+		//		return values.length;
+		//	}
+		//	public Object getElementAt(int index) {
+		//		return values[index];
+		//	}
+		//});
+		
 		scrollPane.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Staff", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
 		
-		JScrollPane scrollPane1 = new JScrollPane();
-		JList list = new JList();
-		scrollPane1.setViewportView(list);
+	
 		
+		
+		DefaultListModel model1 = new DefaultListModel();
+		for (Object O:temp2.getAssist()){
+			model1.addElement(O);
+		}
+		
+		JScrollPane scrollPane1 = new JScrollPane();
+		JList list = new JList(model1);
+		
+		scrollPane1.setViewportView(list);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"DK", "PZ", "SKU", "VR", "ZP", "RD", "PET", "ZET", "KET"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		
+		
 		scrollPane1.setBorder(new TitledBorder(null, "Assistants", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
@@ -197,19 +258,26 @@ public class ActivityControl extends JDialog {
 		panel_2.setLayout(gl_panel_2);
 		
 		JSpinner spinner_2 = new JSpinner();
+		
 		spinner_2.setModel(new SpinnerNumberModel(52, 1, 52, 1));
 		spinner_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Week:", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(0, 0, 0)));
 		
 		JSpinner spinner_3 = new JSpinner();
 		spinner_3.setModel(new SpinnerNumberModel(2017, 1990, 9999, 1));
 		spinner_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Year:", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(0, 0, 0)));
+		
+		JButton btnNewButton_5 = new JButton("Set End Date");
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addComponent(spinner_2, GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+					.addComponent(spinner_2, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(spinner_3, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))
+				.addGroup(Alignment.LEADING, gl_panel_1.createSequentialGroup()
+					.addGap(52)
+					.addComponent(btnNewButton_5)
+					.addContainerGap(55, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -217,22 +285,26 @@ public class ActivityControl extends JDialog {
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 						.addComponent(spinner_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(spinner_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(35))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnNewButton_5)
+					.addGap(24))
 		);
 		panel_1.setLayout(gl_panel_1);
 		
-		JLabel lblNewLabel = new JLabel("Activity No.");
+		JLabel lblNewLabel = new JLabel("Activity Name");
 		
 		JLabel lblNewLabel_1 = new JLabel("Disposed Time");
 		
 		textField = new JTextField();
 		textField.setHorizontalAlignment(SwingConstants.TRAILING);
-		textField.setText("1234");
+		textField.setText(temp2.toString());
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
 		textField_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		textField_1.setText("1000");
+		
+		String strAmount=String.valueOf(temp2.workLeft());
+		textField_1.setText(strAmount);
 		textField_1.setColumns(10);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -262,21 +334,92 @@ public class ActivityControl extends JDialog {
 					.addGap(20))
 		);
 		
+		//Opstartslogik til datofelterne
+		//Deaktiver datofelter hvis der ikke eksisterer datoer
+		if (temp2.getEnd() == null){
+			spinner_2.setEnabled(false);
+			spinner_3.setEnabled(false);
+			
+		} else {
+			spinner_2.setValue(temp2.getEnd().get(Calendar.WEEK_OF_YEAR));
+			spinner_3.setValue(temp2.getEnd().get(Calendar.YEAR));
+			btnNewButton_5.setEnabled(false);
+			
+		}
+		
+		if (temp2.getStart() == null){
+			spinner.setEnabled(false);
+			spinner_1.setEnabled(false);
+		} else {
+			spinner.setValue(temp2.getStart().get(Calendar.WEEK_OF_YEAR));
+			spinner_1.setValue(temp2.getStart().get(Calendar.YEAR));
+			btnNewButton_4.setEnabled(false);
+			
+			
+		}
+		//Aktiver datofelter hvis der trykkes på "set.."
+		btnNewButton_4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	
+            	//Enable de to datofelter og giv dem værdier
+            	//disable set knappen
+            	spinner.setEnabled(true);
+            	spinner.setValue(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+            	spinner_1.setEnabled(true);
+            	spinner_1.setValue(Calendar.getInstance().get(Calendar.YEAR));
+            	btnNewButton_4.setEnabled(false);
+            	
+            }
+        });
+		btnNewButton_5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	//Enable de to datofelter og giv dem værdier
+            	//disable set knappen
+            	spinner_2.setEnabled(true);
+            	spinner_2.setValue(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+            	spinner_3.setEnabled(true);
+            	spinner_3.setValue(Calendar.getInstance().get(Calendar.YEAR));
+            	btnNewButton_5.setEnabled(false);
+            	
+            }
+        });
+		
+		
+		//Tjek om bruger kan redigere i aktiviteten
+		if (check==false){
+			textField.setEditable(false);
+			btnNewButton.setEnabled(false);
+			btnNewButton_1.setEnabled(false);
+			
+			spinner.setEnabled(false);
+			spinner_1.setEnabled(false);
+			spinner_2.setEnabled(false);
+			spinner_3.setEnabled(false);
+		}
+		
+		
 		//Remove knapperne
 		btnNewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	
-            	//TODO: Remove selected staff (list_1.getSelectedValue())
-            	System.out.println(list_1.getSelectedValue());
+            	//Remove selected staff (list_1.getSelectedValue())
+            	temp2.removeStaff(list_1.getSelectedValue().toString());
+            	model.remove(list_1.getSelectedIndex());
+            	
+            	
             }
         });
 		btnNewButton_1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	
-            	//TODO: Remove selected assistant (list.getSelectedValue())
-            	System.out.println(list.getSelectedValue());
+            	//Remove selected assistant (list.getSelectedValue())
+            	temp2.removeStaff(list.getSelectedValue().toString());
+            	
+            	model1.remove(list.getSelectedIndex());
             }
         });
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -284,15 +427,33 @@ public class ActivityControl extends JDialog {
             public void actionPerformed(ActionEvent e) {
             	
             	
-            	//TODO: Save all changes and exit window
+            	//Save all changes and exit window
+            	//Gem aktivitetsnummer
+            	//Gem slutdato
+            	temp2.setName(textField.getText() + year);
+            	
+            	if(Interval.verifyTime((int) spinner.getValue(), (int) spinner_1.getValue(), (int) spinner_2.getValue(), (int) spinner_3.getValue())){
+            		if (spinner.isEnabled() && spinner_1.isEnabled()){
+            			temp2.setStart((int) spinner.getValue(), (int) spinner_1.getValue());
+            		}
+            		if (spinner_2.isEnabled() && spinner_3.isEnabled()){
+            			temp2.setEnd((int) spinner_2.getValue(), (int) spinner_3.getValue());
+            		}
+            		
+            	}
+            	
+            	
+            	dispose();
+            	
             }
         });
 		btnNewButton_3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	
+            	dispose();
             	
-            	//TODO: Discard changes and exit window
+            	//close window
             }
         });
 		
@@ -300,5 +461,8 @@ public class ActivityControl extends JDialog {
 		getContentPane().setLayout(groupLayout);
 		{
 		}
-	}
+	
+			 }	
+
+			 
 }
