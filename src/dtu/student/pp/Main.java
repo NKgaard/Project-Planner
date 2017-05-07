@@ -15,7 +15,7 @@ import java.io.ObjectOutputStream;
 import javax.swing.JOptionPane;
 
 import dtu.student.pp.PPState;
-
+import dtu.student.pp.ui.*;
 import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.data.project.Project;
 
@@ -56,12 +56,12 @@ public class Main {
 		planner.createProject();
 		planner.createProject();
 		//ActivityControl.main(null);
-		//ChooseDeveloper hej = new ChooseDeveloper(planner);
+		//Choose.developer(planner); 			
 		//DeleteProject dlt = new DeleteProject(planner);
 		//String hej = ChooseDeveloper.choiceDev(planner);
 		
 		//String hej = Choose.developer(planner);
-		//Project hej1 = Choose.project(planner);
+		Project hej1 = Choose.project(planner);
 		Project test = planner.createProject();
 		test.setLeader("dr");
 		
@@ -74,11 +74,13 @@ public class Main {
 		
 		Project test4 = planner.createProject();
 		NormalActivity test5 = planner.getState().createActivity(test4);
-		//Kæmpestor ej ok, det bar en penis
+		DeleteProject dlt = new DeleteProject(planner);
+		
+		
 		//NormalActivity test5 = Choose.activityFromProject(test);
-		NormalActivity test0 = Choose.activity(planner);
-		System.out.println(planner.getState().getActivities());
-		System.out.println(planner.getState().getProjects());
+		//NormalActivity test0 = Choose.activity(planner);
+		//System.out.println(planner.getState().getActivities());
+		//System.out.println(planner.getState().getProjects());
 		//hej.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
 		

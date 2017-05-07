@@ -17,7 +17,9 @@ import dtu.student.pp.data.project.Project;
 
 public class DeleteProject extends JDialog {
 
-	//private final JPanel contentPanel = new JPanel();
+		
+	private final JPanel contentPanel = new JPanel();
+	
 
 	/**
 	 * Launch the application.
@@ -37,21 +39,23 @@ public class DeleteProject extends JDialog {
 	 * Create the dialog.
 	 */
 	public DeleteProject(ProjectPlanner planner) {
-		Object[] test = planner.getState().getProjects().toArray();
-		Object[] possibleValues = test;
-    	Object selectedValue = JOptionPane.showInputDialog(null,
+		Object[] possibleValues = planner.getState().getProjects().toArray();
+		Object selectedValue = JOptionPane.showInputDialog(null,
     	"Choose a Project to delete", "Delete Project",
     	JOptionPane.INFORMATION_MESSAGE, null,
     	possibleValues, possibleValues[0]);
-    	  	
-    	for(Project p: planner.getState().getProjects()){
-    		if(p.getProjectNumber().toString().equals(selectedValue.toString())){
-    			planner.getState().removeProject(p);
-    			System.out.println("Project " + selectedValue.toString() + " Deleted!");
-    			break;
+		
+		planner.getState().removeProject((Project) selectedValue);
+    	  
+		System.out.println(planner.getState().getProjects().toString());
+    	//for(Project p: planner.getState().getProjects()){
+    	//	if(p.getProjectNumber().toString().equals(selectedValue.toString())){
+    	//		planner.getState().removeProject(p);
+    	//		System.out.println("Project " + selectedValue.toString() + " Deleted!");
+    	//		break;
     		 
-    		}
-    	}
+    	//	}
+    	//}
     	
     	
 	}
