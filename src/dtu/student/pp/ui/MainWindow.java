@@ -15,6 +15,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,6 +46,7 @@ import dtu.student.pp.ui.activity.ActivityTableModel;
 import dtu.student.pp.ui.activity.ProjectTableModel;
 
 public class MainWindow extends JFrame implements ActionListener {
+	private final static String noSelect = "No selection";
 	public static enum UserType {
 		LEADER, STAFF, ALL
 	}
@@ -54,18 +56,17 @@ public class MainWindow extends JFrame implements ActionListener {
 		ASSISTANCE("Assistance", "Register another developer as an assistant.", 3, UserType.STAFF), //Staff
 		STAFF("Staff", "Register a developer as staff.", 4, UserType.LEADER),
 		VIEW_ACTIVITY("View activity",
-				"View the activity. Only project leaders can modify.", 5),
-		EDIT_ACTIVITY("Edit activity",
-				"Edit the activity.", 5, UserType.LEADER),
+				"View the activity. Only project leaders can modify.", 2),
 		
 		PROJECTS("Projects", "View all projects.", 1),
 		MY_PROJECTS("My projects", "View all projects that you lead.", 1),
-		VIEW_PROJECT("View project", "Edit the selected project, if you're the leader.", 3),
-		NEW_PROJECT("New project", "Create a new project.", 4),
-		NEW_ACTIVITY("New activity", "Create a new activity in this project.", 5, UserType.LEADER),
+		VIEW_PROJECT("View project", "Edit the selected project, if you're the leader.", 2),
+		NEW_PROJECT("New project", "Create a new project.", 3),
+		NEW_ACTIVITY("New activity", "Create a new activity in this project.", 4, UserType.LEADER),
 		REPORT("Report", "Generate a project report.", 7, UserType.LEADER),
 		BECOME_LEADER("Become leader", "Become the project leader of the selected project.", 8),
-		PROJECT_ACTIVITY("Proj. Activities", "View the activities in your project", 9);
+		PROJECT_ACTIVITY("Proj. Activities", "View the activities in your project", 9),
+		ERROR("Error", "Should not be added as a menu option", -1);
 		
 		final String itemText;
 		final String description;
@@ -79,6 +80,12 @@ public class MainWindow extends JFrame implements ActionListener {
 		}
 		Options(String itemText, String description, int pos) {
 			this(itemText, description, pos, UserType.ALL);
+		}
+		public static Options fromString(String itemText) {
+			for(Options val:Options.values())
+				if(val.itemText.equals(itemText))
+					return val;
+			return ERROR;
 		}
 	}
 	private final static List<Options> activityDefault =
@@ -248,67 +255,100 @@ public class MainWindow extends JFrame implements ActionListener {
 		command = command.substring(
 				command.indexOf(" ") + 1, //Start after first space.
 				command.length());
+		Options selection = Options.fromString(command);
 		
-		if(command.equals(Options.ACTIVITIES.itemText)) {
+		switch(selection) {
+		case ACTIVITIES:
+			setSelectedActivity(selectedActivity); //Go back to last selected activity
+			aTableModel.setData(planner.getAllActivities());
 			((CardLayout)viewPane.getLayout()).show(viewPane, activityViewName);
 			options.clear();
 			options.addAll(activityDefault);
-			userType = UserType.ALL;
-			aTableModel.setData(planner.getAllActivities());
-			//userType = UserType.ALL;
+			currentMenuLabel.setText(command);
 			updateOptions();
-			//activityTable.setData();
-			
-		} else if (command.equals(Options.MY_ACTIVITIES.itemText)) {
+			break;
+		case MY_ACTIVITIES:
 			options.remove(Options.MY_ACTIVITIES);
 			options.add(Options.ACTIVITIES);
 			aTableModel.setData(
 					planner.getActivitiesStaffing(planner.getUser())
 					.collect(Collectors.toSet()));
-			//userType = UserType.ALL;
+			currentMenuLabel.setText(command);
 			updateOptions();
-			
-		} else if (command.equals(Options.PROJECTS.itemText)) {
+			break;
+		case PROJECTS:
 			((CardLayout)viewPane.getLayout()).show(viewPane, projectViewName);
 			options.clear();
 			options.addAll(projectDefault);
 			pTableModel.setData(planner.getAllProjects());
+			currentMenuLabel.setText(command);
 			updateOptions();
-		} else if (command.equals(Options.MY_PROJECTS.itemText)) {
+			break;
+		case MY_PROJECTS:
+			//Switch out buttons
 			options.remove(Options.MY_PROJECTS);
 			options.add(Options.PROJECTS);
 			pTableModel.setData(
 					planner.getProjectsLeading(planner.getUser())
 					.collect(Collectors.toSet()));
+			currentMenuLabel.setText(command);
 			updateOptions();
-		} else if (command.equals(Options.VIEW_ACTIVITY.itemText) && selectedActivity != null) {
-			//Open window to modify/view activity details.
-		} else if (command.equals(Options.VIEW_PROJECT.itemText) && selectedProject != null) {
-			//View/modify project
-		} else if (command.equals(Options.BECOME_LEADER.itemText) && selectedProject!= null) {
-			selectedProject.setLeader(planner.getUser());
-			userType = UserType.LEADER;
-			updateOptions();
-		} else if (command.equals(Options.REPORT.itemText) && selectedProject != null) {
-			//make project report of the selected project
-		} else if (command.equals(Options.ASSISTANCE.itemText) && selectedActivity != null) {
-			
-		} else if (command.equals(Options.STAFF.itemText) && selectedActivity != null) {
-			
-		} else if (command.equals(Options.NEW_ACTIVITY.itemText)) {
-			//Dialog box with text input
-		} else if (command.equals(Options.NEW_PROJECT.itemText)) {
-			
-		} else if (command.equals(Options.PROJECT_ACTIVITY.itemText) && selectedProject!=null) {
-			options.clear();
-			options.addAll(activityDefault);
-			aTableModel.setData(planner.getAllActivities()
-			.stream().filter(a ->
-			a instanceof NormalActivity && 
-			((NormalActivity) a).getParent().equals(selectedProject))
-			.collect(Collectors.toSet()));
-			((CardLayout)viewPane.getLayout()).show(viewPane, activityViewName);
+			break;
+		case NEW_ACTIVITY:
+			//MODAL DIALOG BOX WITH TEXT INPUT
+			break;
+		case NEW_PROJECT:
+			//Same
+			break;
+		case ASSISTANCE:
+			if(selectedActivity!=null) {
+				//TODO
+			} else currentMenuLabel.setText(noSelect); 
+			break;
+		case STAFF:
+			if(selectedActivity!=null) {
+				//TODO
+			} else currentMenuLabel.setText(noSelect); 
+			break;
+		case VIEW_ACTIVITY:
+			if(selectedActivity!=null) {
+				//TODO
+			} else currentMenuLabel.setText(noSelect); 
+			break;
+		case VIEW_PROJECT:
+			if(selectedProject!=null) {
+				//TODO
+			} else currentMenuLabel.setText(noSelect);
+			break;
+		case BECOME_LEADER:
+			if(selectedProject!=null) {
+				selectedProject.setLeader(planner.getUser());
+				setSelectedProject(selectedProject); //Update buttons
+			} else currentMenuLabel.setText(noSelect);
+			break;
+		case REPORT:
+			if(selectedProject!=null) {
+				
+			} else currentMenuLabel.setText(noSelect);
+			break;
+		case PROJECT_ACTIVITY:
+			if(selectedProject!=null) {
+				options.clear();
+				options.addAll(activityDefault);
+				aTableModel.setData(planner.getAllActivities()
+				.stream().filter(a ->
+				a instanceof NormalActivity && 
+				((NormalActivity) a).getParent().equals(selectedProject))
+				.collect(Collectors.toSet()));
+				((CardLayout)viewPane.getLayout()).show(viewPane, activityViewName);
+				currentMenuLabel.setText("Act.:"+selectedProject.getProjectNumber().toString());
+			} else currentMenuLabel.setText(noSelect);
+			break;
+		default:
+			System.err.println("Unhandled menu option!:" + command);//No selection or unhandled
 		}
+		
+		
 	}
 	
 	public void setSelectedActivity(AbstractActivity activity) {
@@ -334,5 +374,5 @@ public class MainWindow extends JFrame implements ActionListener {
 			userType = UserType.LEADER;
 		updateOptions();
 	}
-
+	
 }
