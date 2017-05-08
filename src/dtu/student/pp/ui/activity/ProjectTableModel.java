@@ -1,18 +1,10 @@
 package dtu.student.pp.ui.activity;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
-import dtu.student.pp.ProjectPlanner;
-import dtu.student.pp.data.activity.AbstractActivity;
-import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.data.project.Project;
 import dtu.student.pp.data.project.ProjectNumber;
 

@@ -1,6 +1,5 @@
 package dtu.student.pp;
 
-import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.exception.NotProjectLeaderException;
 import dtu.student.pp.data.project.Project;
@@ -13,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TestProjectPlanner {
 
