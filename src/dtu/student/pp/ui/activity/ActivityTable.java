@@ -2,8 +2,12 @@ package dtu.student.pp.ui.activity;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -78,8 +82,25 @@ public class ActivityTable extends JTable {
 		getColumnModel().getColumn(5).setMinWidth(45);
 		//Hours
 		getColumnModel().getColumn(6).setMinWidth(35);
+		//getColumnModel().getColumn(6).setCellRenderer(cellRenderer);
 		//Sum of hours
 		getColumnModel().getColumn(7).setMinWidth(40);
+		
+		//Add cursor to show that a field is editable
+		this.addMouseMotionListener(new MouseMotionListener(){
+			@Override
+			public void mouseDragged(MouseEvent arg0) {}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				Point point = e.getPoint();
+				int col = convertColumnIndexToModel(columnAtPoint(point));
+				int row = convertRowIndexToModel(rowAtPoint(point));
+				if(getModel().isCellEditable(row, col)) {
+					setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+				} else setCursor(Cursor.getDefaultCursor());
+			}
+		});
 	}
 	
 	@Override //JTable implements listselectionlistener

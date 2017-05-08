@@ -218,7 +218,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		
 		//Copy this line into another editor to modify
 		introduction.setText(
-				"<html><body><center><h1>Welcome to the project planner!</h1></center><p>To register your work hours <b>click <i>Activities</i> and edit the \"Hours\" field</b> of the activity you want to register it to.</p><p>Alternatively you can use Alt + the number of the button to navigate.</p><p>To create a new activity or project go to the <i>Projects</i> tab. In this tab you can also set yourself as leader of a project, which allows you to edit it in the <i>Edit Project</i> tab, and also edit it's activities back in the <i>activities</i> tab.</p></body></html>");
+				"<html><body><center><h1>Welcome to the project planner!</h1></center><p>To register your work hours <b>click <i>Activities</i> and edit the \"Hours\" field</b> of the activity you want to register it to.</p><p>Alternatively you can use Alt + the number of the button to navigate.</p><p>To create a new activity or project go to the <i>Projects</i> tab. In this tab you can also set yourself as leader of a project, which allows you to edit it in the <i>Edit Project</i> tab, and also edit it's activities back in the <i>activities</i> tab.</p><p>The date is in the format ww-YYYY, where ww is the week number.</p></body></html>");
 		
 		viewPane.add(introduction, helpViewName);
 		viewPane.add(new JScrollPane(new ActivityTable(this, aTableModel),
@@ -316,8 +316,9 @@ public class MainWindow extends JFrame implements ActionListener {
 						NormalActivity newActivity = planner.createActivity(selectedProject);
 						JOptionPane.showMessageDialog(this,
 								"Successfully created activity "+newActivity.getActivityID()
-								+ " in project "+selectedProject.getProjectNumber()+".");
-						menuButtons[7].doClick(); //Go to the newly created activity
+								+ " in project "+selectedProject.getProjectNumber()+".",
+								"New activity", JOptionPane.INFORMATION_MESSAGE);
+						menuButtons[0].doClick(); //Go to the newly created activity
 					} catch (NotProjectLeaderException e1) {
 						JOptionPane.showMessageDialog(this, "You're not the project leader!",
 								"Error!", JOptionPane.ERROR_MESSAGE);
@@ -336,7 +337,7 @@ public class MainWindow extends JFrame implements ActionListener {
 				//Maybe open view/edit screen?
 				JOptionPane.showMessageDialog(this,
 						"Project number " + newProject.getProjectNumber() + " created.",
-						"Success!", JOptionPane.PLAIN_MESSAGE);
+						"Success!", JOptionPane.INFORMATION_MESSAGE);
 				options.remove(Options.MY_PROJECTS);
 				options.add(Options.PROJECTS);
 				updateOptions();
@@ -404,9 +405,8 @@ public class MainWindow extends JFrame implements ActionListener {
 						}
 					}
 				}
-				aTableModel.fireTableDataChanged();
 				
-				//ActivityControl control = new ActivityControl(act, act.getParent().isLeader(planner.getUser()));
+				aTableModel.fireTableDataChanged();
 				
 			} else currentMenuLabel.setText(noSelect); 
 			break;
