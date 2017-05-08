@@ -48,7 +48,7 @@ public class Project extends Interval implements Serializable {
 		try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(
 				new FileOutputStream(reportName), "utf-8"))) {
 			writer.println("<html><body>");
-			writer.println("<h1>" + this.toString() + ": " + reportName + " Report</h1>");
+			writer.println("<h1>" + this.toString() + ": " + reportName + "</h1>");
 			writer.println("Total amount of hours worked on project: "+this.getWorkSum());
 
 			for (NormalActivity act:activities) {
