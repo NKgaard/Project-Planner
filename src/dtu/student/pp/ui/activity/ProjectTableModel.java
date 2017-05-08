@@ -56,7 +56,7 @@ public class ProjectTableModel extends AbstractTableModel {
             	else return null;
             case 3:
             	if(project.getEnd()!=null)
-            		return project.getEnd();
+            		return project.getEnd().getTime();
             	else return null;
             case 4:
             	return project.getLeader();

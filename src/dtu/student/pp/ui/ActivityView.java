@@ -100,6 +100,7 @@ public class ActivityView extends JDialog implements ActionListener {
 					startDatePane.remove(setStart);
 					startDatePane.add(startSpinner);
 					startDatePane.revalidate();
+					startDate = ((Date) startSpinner.getModel().getValue());
 				}
 			});
 		}
@@ -132,6 +133,7 @@ public class ActivityView extends JDialog implements ActionListener {
 					endDatePane.remove(setEnd);
 					endDatePane.add(endSpinner);
 					endDatePane.revalidate();
+					endDate = ((Date) startSpinner.getModel().getValue());
 				}
 			});
 		}

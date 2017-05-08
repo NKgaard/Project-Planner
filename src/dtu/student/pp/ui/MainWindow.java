@@ -3,6 +3,7 @@ package dtu.student.pp.ui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -381,7 +382,6 @@ public class MainWindow extends JFrame implements ActionListener {
 			break;
 		case VIEW_ACTIVITY:
 			if(selectedActivity!=null && selectedActivity instanceof NormalActivity) {
-				//TODO
 				NormalActivity act = (NormalActivity) selectedActivity;
 				
 				ActivityView view = new ActivityView(act, act.getParent().isLeader(planner.getUser()));
