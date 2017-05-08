@@ -387,10 +387,15 @@ public class MainWindow extends JFrame implements ActionListener {
 				if(!view.canceled) {
 					act.setName(view.name);
 					Calendar cal = new GregorianCalendar();
-					cal.setTime(view.startDate);
-					act.setStart(cal.get(Calendar.WEEK_OF_YEAR), cal.get(Calendar.YEAR));
-					cal.setTime(view.endDate);
-					act.setEnd(cal.get(Calendar.WEEK_OF_YEAR), cal.get(Calendar.YEAR));
+					if(view.startDate!=null) {
+						cal.setTime(view.startDate);
+						act.setStart(cal.get(Calendar.WEEK_OF_YEAR), cal.get(Calendar.YEAR));
+					}
+					if(view.endDate!=null) {
+						cal.setTime(view.endDate);
+						act.setEnd(cal.get(Calendar.WEEK_OF_YEAR), cal.get(Calendar.YEAR));
+					}
+					
 					for(String staff:view.staffToRemove) {
 						try {
 							planner.removeStaff(act, staff);

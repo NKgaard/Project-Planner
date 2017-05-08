@@ -78,7 +78,7 @@ public class ActivityView extends JDialog implements ActionListener {
 		leftPane.add(startDatePane);
 		JSpinner startSpinner = new JSpinner(new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.WEEK_OF_YEAR));
 		startSpinner.setToolTipText(toolTip);
-		startSpinner.setEditor(new JSpinner.DateEditor(startSpinner, "ww-YY"));
+		startSpinner.setEditor(new JSpinner.DateEditor(startSpinner, "ww-YYYY"));
 		((DefaultFormatter)
 				((JFormattedTextField) 
 						startSpinner.getEditor().getComponent(0))
