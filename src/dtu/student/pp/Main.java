@@ -1,29 +1,28 @@
 package dtu.student.pp;
 
 
-
 import java.io.File;
 import java.io.FileInputStream;
-
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-
+import java.util.Arrays;
+import java.util.Calendar;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import dtu.student.pp.PPState;
-import dtu.student.pp.ui.*;
+import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.data.project.Project;
-
-import dtu.student.pp.ui.Choose;
-
-
-
-
+import dtu.student.pp.exception.NotProjectLeaderException;
+import dtu.student.pp.ui.ActivityView;
+import dtu.student.pp.ui.MainWindow;
 
 
 
@@ -33,10 +32,18 @@ public class Main {
 	private static String FILEPATH = "database.txt";
 	private final PPState state;
 	private ProjectPlanner planner;
-	public ProjectPlanner pp;
+	private static ProjectPlanner pp;
 
 	Main(PPState state) {
 		this.state = state;
+		try {
+			UIManager.setLookAndFeel(
+			        UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String initials = getInitials();
 		
 		if(initials==null)
@@ -47,58 +54,34 @@ public class Main {
 				initials,
 				state);
 		
+		state.createDeveloper("JOHN");
+		state.createDeveloper("BOB");
+		state.createDeveloper("KIM");
+		state.createDeveloper("EVE");
 		
-		exit(state);
+		//Åbner Hovedvinduet
+		//ControlWindow2.main(planner);
+		//Use the system look. (Metal L&F is ugly)
 		
-		//Åbner aktivitetsvinduet - test
-		planner.createProject();
-		planner.createProject();
-		planner.createProject();
-		planner.createProject();
-		//ActivityControl.main(null);
-		//Choose.developer(planner); 			
-		//DeleteProject dlt = new DeleteProject(planner);
-		//String hej = ChooseDeveloper.choiceDev(planner);
-		
-		//String hej = Choose.developer(planner);
-		Project hej1 = Choose.project(planner);
-		Project test = planner.createProject();
-		test.setLeader("dr");
-		
-			NormalActivity test1 = planner.getState().createActivity(test);
-			NormalActivity test2 = planner.getState().createActivity(test);
-			NormalActivity test3 = planner.getState().createActivity(test);
-			NormalActivity test13 = planner.getState().createActivity(test);
-			
-		
-		
-		Project test4 = planner.createProject();
-		NormalActivity test5 = planner.getState().createActivity(test4);
-		DeleteProject dlt = new DeleteProject(planner);
-		
-		
-		//NormalActivity test5 = Choose.activityFromProject(test);
-		//NormalActivity test0 = Choose.activity(planner);
-		//System.out.println(planner.getState().getActivities());
-		//System.out.println(planner.getState().getProjects());
-		//hej.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		
-		
-		
-		
+		SwingUtilities.invokeLater(new Runnable(){
+			@Override
+			public void run() {
+				new MainWindow(planner);
+			}
+		});
 	}
 
 	private String getInitials() {
 		String initials = null;
 		
 		boolean success = false;
-		String defaultText = "Input your initials";
+		String defaultText = "Enter your initials";
 		String text = defaultText;
 		
 		while(!success) {
 			initials = JOptionPane.showInputDialog(null,
 					text,
-					"Project Planner",
+					"Project Planner login",
 					JOptionPane.PLAIN_MESSAGE);
 			
 			if(initials == null) {
@@ -125,11 +108,7 @@ public class Main {
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		if(args.length != 0) {FILEPATH = args[0];}
-		
 		new Main(load(FILEPATH));
-		
-		
-		
 	}
 
 	public static void exit(PPState state) {
@@ -169,13 +148,6 @@ public class Main {
 			result = new PPState();
 		
 		return result;
-	}
-	
-	public PPState getPPState(){
-		return state;
-	}
-	public ProjectPlanner getProjectPlanner(){
-		return planner;
 	}
 
 }

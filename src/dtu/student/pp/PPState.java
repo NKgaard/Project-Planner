@@ -45,6 +45,11 @@ public class PPState implements Serializable {
 		this.activities = activities;
 		this.projects = projects;
 		this.developers = developers;
+		
+		//Default special activities
+		createSpecialActivity("Other");
+		createSpecialActivity("Course");
+		createSpecialActivity("Sick");
 	}
 	
 	PPState() {
@@ -114,15 +119,6 @@ public class PPState implements Serializable {
 		for(NormalActivity act:p.getActivities())
 			removeActivity(act);
 		projects.remove(p);
-	}
-	
-	public boolean projectExistCheck(String check){
-		for (Project p: getProjects()){
-			if (p.getProjectNumber().toString().equals(check)){
-				return true;
-			}
-		}
-		return false;
 		
 	}
 	

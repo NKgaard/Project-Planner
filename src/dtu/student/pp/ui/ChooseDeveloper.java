@@ -16,10 +16,6 @@ import dtu.student.pp.ProjectPlanner;
 public class ChooseDeveloper extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-
-	/**
-	 * Launch the application.
-	 */
 	
 	/**
 	 *  Skal formegentlig erstattes - er erstattet af Choose.java

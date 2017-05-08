@@ -18,7 +18,7 @@ public class ActivityTableModel extends AbstractTableModel {
 	public final ProjectPlanner planner;
 	
 	//MB add a project/parent field?
-	String[] columnNames = new String[] {"#", "Name", "Start", "End", "Staff.", "Assist.", "Sum", "Hours"};
+	String[] columnNames = new String[] {"#", "Name", "Start", "End", "Staff", "Assist.", "Sum", "Hours"};
     private AbstractActivity[] activities = new AbstractActivity[0];
 	
     public ActivityTableModel(ProjectPlanner planner) {

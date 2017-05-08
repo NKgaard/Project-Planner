@@ -39,13 +39,6 @@ public class ProjectTable extends JTable {
 		getColumnModel().getColumn(3).setCellRenderer(dateRenderer);
 		getColumnModel().getColumn(2).setMinWidth(35);
 		getColumnModel().getColumn(3).setMinWidth(35);
-		//Number of personel
-		//getColumnModel().getColumn(4).setPreferredWidth(40);
-		//getColumnModel().getColumn(5).setPreferredWidth(40);
-		//Hours
-		//getColumnModel().getColumn(6).setPreferredWidth(35);
-		//Sum of hours
-		//getColumnModel().getColumn(7).setPreferredWidth(40);
 	}
 	
 	@Override //JTable implements listselectionlistener

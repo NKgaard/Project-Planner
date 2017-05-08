@@ -8,14 +8,23 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +33,7 @@ import java.util.stream.Collectors;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -41,6 +51,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import dtu.student.pp.Main;
 import dtu.student.pp.ProjectPlanner;
 import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.activity.NormalActivity;
@@ -120,7 +131,7 @@ public class MainWindow extends JFrame implements ActionListener {
 					Options.START);
 	Set<Options> options = new HashSet<Options>(10);
 	
-	JLabel currentMenuLabel = new JLabel("Menu");
+	JLabel currentMenuLabel = new JLabel("Start");
 	JButton[] menuButtons = new JButton[10];
 	JPanel viewPane = new JPanel(new CardLayout());
 	ActivityTableModel aTableModel;
@@ -136,25 +147,26 @@ public class MainWindow extends JFrame implements ActionListener {
 	private final static String helpViewName = "Intro";
 	
 	public MainWindow(ProjectPlanner planner){
+		addWindowListener(new WindowListener(){
+			@Override public void windowActivated(WindowEvent arg0) {}
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				Main.exit(planner.getState());
+			}
+			@Override public void windowClosing(WindowEvent arg0) {}
+			@Override public void windowDeactivated(WindowEvent arg0) {}
+			@Override public void windowDeiconified(WindowEvent arg0) {}
+			@Override public void windowIconified(WindowEvent arg0) {}
+			@Override public void windowOpened(WindowEvent arg0) {}
+		});
+		
 		this.planner = planner;
 		this.aTableModel = new ActivityTableModel(planner);
 		this.pTableModel = new ProjectTableModel();
-		//TODO add selection support to the project list.
-		//Use the system look. (Metal L&F is ugly)
-		try {
-			UIManager.setLookAndFeel(
-			        UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//After setting look and feel construct this object on the invokelater thread.
-		
 		//SET JFRAME OPTIONS
 		setTitle("Project Planner");
 		setMinimumSize(new Dimension(500, 370));
-		
+		this.setIconImage(((ImageIcon)UIManager.getIcon("FileChooser.detailsViewIcon")).getImage());
 		//MAIN PANEL HOLDING MENU AND VIEW
 		JPanel mainPane = new JPanel(new BorderLayout());
 		setContentPane(mainPane);
@@ -203,10 +215,10 @@ public class MainWindow extends JFrame implements ActionListener {
 		introduction.setOpaque(false); //Remove the white background.
 		introduction.setBorder(UIManager.getBorder("ScrollPane.border")); //Same border as JScrollPane
 		introduction.setContentType("text/html");
+		
+		//Copy this line into another editor to modify
 		introduction.setText(
-				  "<html><body>"
-				+ "<center><h1>Welcome to the project planner!</h1></center>"
-				+ "</body></html>");
+				"<html><body><center><h1>Welcome to the project planner!</h1></center><p>To register your work hours <b>click <i>Activities</i> and edit the \"Hours\" field</b> of the activity you want to register it to.</p><p>Alternatively you can use Alt + the number of the button to navigate.</p><p>To create a new activity or project go to the <i>Projects</i> tab. In this tab you can also set yourself as leader of a project, which allows you to edit it in the <i>Edit Project</i> tab, and also edit it's activities back in the <i>activities</i> tab.</p></body></html>");
 		
 		viewPane.add(introduction, helpViewName);
 		viewPane.add(new JScrollPane(new ActivityTable(this, aTableModel),
@@ -245,23 +257,6 @@ public class MainWindow extends JFrame implements ActionListener {
 			menuButtons[i].setVisible(buttonShown[i]);
 	}
 
-	public static void main(ProjectPlanner planner){
-		MainWindow ctrlwindow = new MainWindow(planner);
-		ctrlwindow.addWindowListener(new WindowListener(){
-			@Override public void windowActivated(WindowEvent arg0) {}
-			@Override
-			public void windowClosed(WindowEvent arg0) {
-				//Main.exit(state);
-			}
-			@Override public void windowClosing(WindowEvent arg0) {}
-			@Override public void windowDeactivated(WindowEvent arg0) {}
-			@Override public void windowDeiconified(WindowEvent arg0) {}
-			@Override public void windowIconified(WindowEvent arg0) {}
-			@Override public void windowOpened(WindowEvent arg0) {}
-		});
-			
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
@@ -270,7 +265,7 @@ public class MainWindow extends JFrame implements ActionListener {
 				command.length());
 		Options selection = Options.fromString(command);
 		
-		//Misuse of enums :/
+		//Misuse of enums? :/
 		switch(selection) {
 		case ACTIVITIES:
 			setSelectedActivity(selectedActivity); //Go back to last selected activity
@@ -340,7 +335,7 @@ public class MainWindow extends JFrame implements ActionListener {
 				Project newProject = planner.createProject();
 				//Maybe open view/edit screen?
 				JOptionPane.showMessageDialog(this,
-						"Project number " + newProject.getProjectNumber() + "created.",
+						"Project number " + newProject.getProjectNumber() + " created.",
 						"Success!", JOptionPane.PLAIN_MESSAGE);
 				options.remove(Options.MY_PROJECTS);
 				options.add(Options.PROJECTS);
@@ -388,7 +383,25 @@ public class MainWindow extends JFrame implements ActionListener {
 				//TODO
 				NormalActivity act = (NormalActivity) selectedActivity;
 				
-				ActivityControl control = new ActivityControl(act, act.getParent().isLeader(planner.getUser()));
+				ActivityView view = new ActivityView(act, act.getParent().isLeader(planner.getUser()));
+				if(!view.canceled) {
+					act.setName(view.name);
+					Calendar cal = new GregorianCalendar();
+					cal.setTime(view.startDate);
+					act.setStart(cal.get(Calendar.WEEK_OF_YEAR), cal.get(Calendar.YEAR));
+					cal.setTime(view.endDate);
+					act.setEnd(cal.get(Calendar.WEEK_OF_YEAR), cal.get(Calendar.YEAR));
+					for(String staff:view.staffToRemove) {
+						try {
+							planner.removeStaff(act, staff);
+						} catch (NotProjectLeaderException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+				aTableModel.fireTableDataChanged();
+				
+				//ActivityControl control = new ActivityControl(act, act.getParent().isLeader(planner.getUser()));
 				
 			} else currentMenuLabel.setText(noSelect); 
 			break;
