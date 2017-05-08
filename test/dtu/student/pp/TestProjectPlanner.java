@@ -144,6 +144,7 @@ public class TestProjectPlanner {
             activity1.setName("Code some cool stuff");
             activity1.setTimeEstimate((float) 5);
             pp.registerStaff(activity,"DEV1");
+            pp.registerAssistance(activity, "LEAD");
             pp.registerStaff(activity1, pp.getUser());
             pp.registerHours(activity1, (float) 3.5);
             pp.generateReport(project);

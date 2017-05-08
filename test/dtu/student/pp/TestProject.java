@@ -1,6 +1,7 @@
 package dtu.student.pp;
 
 import dtu.student.pp.data.activity.NormalActivity;
+import dtu.student.pp.data.comparators.Interval;
 import dtu.student.pp.exception.NotProjectLeaderException;
 import dtu.student.pp.data.project.Project;
 import org.junit.Before;
@@ -23,15 +24,10 @@ public class TestProject {
         //Test the creation of a new project.
         Project project = state.createProject();
         assertNotNull(project);
-
-        //Test that the new project can be queried by it's number.
-        //assertNotNull(project.getProjectNumber());
-        //assertEquals(pps.getProject(project.getProjectNumber()), project);
     }
 
     @Test
     public void testProjectNumber() {
-        //TODO Use mock tests to ensure that the project number depends on the year.
         Project project1 = state.createProject();
         Project project2 = state.createProject();
         assertNotEquals(project1.getProjectNumber(), project2.getProjectNumber());
@@ -90,6 +86,11 @@ public class TestProject {
        NormalActivity activity = state.createActivity(project);
        state.removeProject(project);
        assertFalse(state.getProjects().contains(project));
+    }
+
+    @Test
+    public void testInterval(){
+
     }
 
 
