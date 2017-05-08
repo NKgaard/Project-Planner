@@ -49,7 +49,7 @@ public class ProjectPlanner {
 	 * @Author Noah Reinert Sturis (s154407)
 	 */
 	public void registerAssistance(NormalActivity act, String assistant) throws UserNotStaffException {
-		if(act.isStaff(user))
+		if(!act.isStaff(user))
 			throw new UserNotStaffException();
 		act.registerAssistance(assistant);
 	}

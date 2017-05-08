@@ -8,8 +8,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class TestProject {
-    // 100% Coverage of the Project class (excluding 'equals' methods).
+public class TestPPState {
 
     PPState state;
 
@@ -82,8 +81,8 @@ public class TestProject {
    @Test
     public void testRemoveProject(){
        Project project = state.createProject();
-       NormalActivity activity = state.createActivity(project);
        state.removeProject(project);
        assertFalse(state.getProjects().contains(project));
     }
- }
+
+}

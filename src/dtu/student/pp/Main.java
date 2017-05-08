@@ -18,16 +18,16 @@ import dtu.student.pp.ui.MainWindow;
 
 
 /**
- * @Author Nicolai Kammersgård (s143780)
+ * @Author Nicolai Kammersgï¿½rd (s143780)
  */
 public class Main {
 	
 	private static String FILEPATH = "database.txt";
 	private final PPState state;
 	private ProjectPlanner planner;
-	
+
 	/**
-	 * @Author Nicolai Kammersgård (s143780)
+	 * @Author Nicolai Kammersgï¿½rd (s143780)
 	 */
 	Main(PPState state) {
 		this.state = state;
@@ -48,8 +48,8 @@ public class Main {
 		planner = new ProjectPlanner(
 				initials,
 				state);
-		
-		//Åbner Hovedvinduet
+
+		//ï¿½bner Hovedvinduet
 		//ControlWindow2.main(planner);
 		//Use the system look. (Metal L&F is ugly)
 		
@@ -62,7 +62,7 @@ public class Main {
 	}
 
 	/*
-	 * @Author Nicolai Kammersgård (s143780)
+	 * @Author Nicolai Kammersgï¿½rd (s143780)
 	 */
 	private String getInitials() {
 		String initials = null;
@@ -98,24 +98,24 @@ public class Main {
 		
 		return initials;
 	}
-	
+
 	/*
-	 * @Author Nicolai Kammersgård (s143780)
+	 * @Author Nicolai Kammersgï¿½rd (s143780)
 	 */
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		if(args.length != 0) {FILEPATH = args[0];}
 		new Main(load(FILEPATH));
 	}
-	
+
 	/**
-	 * @Author Nicolai Kammersgård (s143780)
+	 * @Author Nicolai Kammersgï¿½rd (s143780)
 	 */
 	public static void exit(PPState state) {
 		save(state, FILEPATH);
 	}
 	
 	/**
-	 * @Author Nicolai Kammersgård (s143780)
+	 * @Author Nicolai Kammersgï¿½rd (s143780)
 	 */
 	public static void save(PPState state, String filepath) {
 		
@@ -132,7 +132,7 @@ public class Main {
 	}
 	
 	/**
-	 * @Author Nicolai Kammersgård (s143780)
+	 * @Author Nicolai Kammersgï¿½rd (s143780)
 	 */
 	public static PPState load(String filepath) {
 		PPState result = null;
