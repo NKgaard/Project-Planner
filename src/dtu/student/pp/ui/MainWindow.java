@@ -380,6 +380,7 @@ public class MainWindow extends JFrame implements ActionListener {
 						cal.setTime(view.endDate);
 						act.setEnd(cal.get(Calendar.WEEK_OF_YEAR), cal.get(Calendar.YEAR));
 					}
+					act.setTimeEstimate(view.timeEstimate);
 					
 					for(String staff:view.staffToRemove) {
 						try {

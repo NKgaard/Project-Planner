@@ -1,30 +1,27 @@
 package dtu.student.pp;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.data.activity.SpecialActivity;
 import dtu.student.pp.data.project.Project;
 import dtu.student.pp.data.project.ProjectNumber;
-import dtu.student.pp.exception.UserNotStaffException;
 
+/**
+ * @Author Sebastian Præsius (s164198)
+ */
 public class PPState implements Serializable {
 	/**
 	 * A class to hold the state of the ProjectPlanner, so it can be stored easily.
+	 * @Author Sebastian Præsius (s164198)
 	 */
+	private static final long serialVersionUID = 5842949956872625226L;	
 	
 	//private final Calendar theTime;
 	//To create ID numbers for activities and projects.
@@ -36,6 +33,9 @@ public class PPState implements Serializable {
 	private final Set<Project> projects;
 	private final Set<String> developers;
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	PPState(Map<Integer, Integer> pCounts, int aCounts,
 			Set<AbstractActivity> activities, Set<Project> projects,
 			Set<String> developers) {
@@ -52,6 +52,9 @@ public class PPState implements Serializable {
 		createSpecialActivity("Sick");
 	}
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	PPState() {
 		//Default, fresh state.
 		this(
@@ -63,6 +66,9 @@ public class PPState implements Serializable {
 				new HashSet<String>()); //Empty set of developers.
 	}
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	private ProjectNumber getNewProjectNumber(Calendar time) {
 		int year = time.get(Calendar.YEAR);
 		
@@ -79,34 +85,48 @@ public class PPState implements Serializable {
 		}
 	}
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	private int getNewActivityID() {
 		return activityCounter++;
 	}
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	public SpecialActivity createSpecialActivity(String name) {
 		SpecialActivity a = new SpecialActivity(name, getNewActivityID());
 		activities.add(a);
 		return a;
 	}
 	
-	//TODO: Rewrite the assertion errors to assert (keyword) statements.
-	//Contract 1 - parent has set of activities. Activities have a link to the parent.
-	// So an activity may only have one parent. This is illustrated in the Project.addActivity assertions.
-	
-	//Contract 2 - All activities and projects must be unique.
-	// Therefore throw an assertion error if it already is present.
+	/**
+	 * Contract 1 - parent has set of activities. Activities have a link to the parent.
+	 *  So an activity may only have one parent. This is illustrated in the Project.addActivity assertions.
+	 *  Contract 2 - All activities and projects must be unique.
+	 *   Therefore throw an assertion error if it already is present.
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	public NormalActivity createActivity(Project parent) {
 		NormalActivity act = new NormalActivity(getNewActivityID(), parent);
 		boolean alreadyExists = activities.add(act);
 		assert alreadyExists : "This activity already exists!";
 		return act;
 	}
+	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	public void removeActivity(AbstractActivity act) {
 		act.close();
 		if(act.isNoWorkRegistered())
 			activities.remove(act);
 	}
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	public Project createProject() {
 		//If the state was passed to the project, we could enable it to remove activities.
 		Project p = new Project(getNewProjectNumber(Calendar.getInstance()));
@@ -115,6 +135,9 @@ public class PPState implements Serializable {
 		return p;
 	}
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	public void removeProject(Project p) {
 		for(NormalActivity act:p.getActivities())
 			removeActivity(act);
@@ -122,26 +145,44 @@ public class PPState implements Serializable {
 		
 	}
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	public boolean hasDeveloper(String initials) {
 		return developers.contains(initials);
 	}
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	public boolean createDeveloper(String initials) {
 		return developers.add(initials);
 	}
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	public Set<Project> getProjects() {
 		return Collections.unmodifiableSet(projects);
 	}
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	public Set<AbstractActivity> getActivities() {
 		return Collections.unmodifiableSet(activities);
 	}
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	public Set<String> getDevelopers() {
 		return Collections.unmodifiableSet(developers);
 	}
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -154,7 +195,10 @@ public class PPState implements Serializable {
 		//result = prime * result + ((theTime == null) ? 0 : theTime.hashCode());
 		return result;
 	}
-
+	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -186,14 +230,9 @@ public class PPState implements Serializable {
 				return false;
 		} else if (!projects.equals(other.projects))
 			return false;
-//		if (theTime == null) {
-//			if (other.theTime != null)
-//				return false;
-//		} else if (!theTime.equals(other.theTime))
-//			return false;
 		return true;
 	}
-		
+	
 	//public Calendar getTime() {
 	//	return (Calendar) theTime.clone();
 	//}

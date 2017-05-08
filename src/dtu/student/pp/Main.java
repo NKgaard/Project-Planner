@@ -3,37 +3,32 @@ package dtu.student.pp;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Arrays;
-import java.util.Calendar;
-
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import dtu.student.pp.PPState;
-import dtu.student.pp.data.activity.AbstractActivity;
-import dtu.student.pp.data.activity.NormalActivity;
-import dtu.student.pp.data.project.Project;
-import dtu.student.pp.exception.NotProjectLeaderException;
-import dtu.student.pp.ui.ActivityView;
 import dtu.student.pp.ui.MainWindow;
 
 
 
-
+/**
+ * @Author Nicolai Kammersgård (s143780)
+ */
 public class Main {
 	
 	private static String FILEPATH = "database.txt";
 	private final PPState state;
 	private ProjectPlanner planner;
-	private static ProjectPlanner pp;
-
+	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	Main(PPState state) {
 		this.state = state;
 		try {
@@ -54,11 +49,6 @@ public class Main {
 				initials,
 				state);
 		
-		state.createDeveloper("JOHN");
-		state.createDeveloper("BOB");
-		state.createDeveloper("KIM");
-		state.createDeveloper("EVE");
-		
 		//Åbner Hovedvinduet
 		//ControlWindow2.main(planner);
 		//Use the system look. (Metal L&F is ugly)
@@ -71,6 +61,9 @@ public class Main {
 		});
 	}
 
+	/*
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	private String getInitials() {
 		String initials = null;
 		
@@ -105,16 +98,25 @@ public class Main {
 		
 		return initials;
 	}
-
+	
+	/*
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		if(args.length != 0) {FILEPATH = args[0];}
 		new Main(load(FILEPATH));
 	}
-
+	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	public static void exit(PPState state) {
 		save(state, FILEPATH);
 	}
 	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	public static void save(PPState state, String filepath) {
 		
 		try {
@@ -129,6 +131,9 @@ public class Main {
 		
 	}
 	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	public static PPState load(String filepath) {
 		PPState result = null;
 		if(new File(filepath).exists())

@@ -6,32 +6,50 @@ import java.util.Map;
 
 
 import dtu.student.pp.data.comparators.Interval;
-import dtu.student.pp.exception.UserNotStaffException;
-
 
 public abstract class AbstractActivity extends Interval implements Serializable  {
-	//private final static String DEFAULT_NAME = "UNNAMED ACTIVITY";
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
+	private static final long serialVersionUID = -7060292105001058409L;
 	//Map to hold work hours.
 	private final Map<String, WorkHours> workHours = new HashMap<String, WorkHours>();
 	private final int activityID; //Always increment.
-	//private String name;
 	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	AbstractActivity(int activityID) {
 		this.activityID = activityID;
 	}
 	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	public int getActivityID() {
 		return activityID;
 	}
 	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	public abstract void close();
 	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	public abstract boolean isStaff(String developer);
 	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	public boolean isNoWorkRegistered() {
 		return workHours.isEmpty();
 	}
 	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	public float hoursRegistered() {
 		float result = 0;
 		if(workHours.isEmpty())
@@ -43,11 +61,10 @@ public abstract class AbstractActivity extends Interval implements Serializable 
 		return result;
 	}
 	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	public final void registerHours(String developer, float hours) {
-		//Can maybe notify observers when hours are registered.
-		
-		//TODO: Check if staff here instead?
-		
 		WorkHours accumulator = workHours.get(developer);
 		if(accumulator==null)
 			workHours.put(developer, accumulator = new WorkHours());
@@ -55,6 +72,9 @@ public abstract class AbstractActivity extends Interval implements Serializable 
 		accumulator.registerHours(hours);
 	}
 	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	public float getHours(String developer) {
 		WorkHours accumulator = workHours.get(developer);
 		if(accumulator==null)
@@ -63,14 +83,24 @@ public abstract class AbstractActivity extends Interval implements Serializable 
 			return accumulator.getWork();
 	}
 	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	@Override
 	public String toString() {
 		//return getName();
 		return String.valueOf(this.activityID);
 	}
 	
-	//The id is an unique integer. This means perfect hashing.
+	/**
+	 * The id is an unique integer. This means perfect hashing.
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	@Override public int hashCode() { return activityID; }
+	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -83,7 +113,10 @@ public abstract class AbstractActivity extends Interval implements Serializable 
 			return false;
 		return true;
 	}
-
+	
+	/**
+	 * @Author Nicolai Kammersgård (s143780)
+	 */
 	public float getHoursSum() {
 		float sum = 0;
 		for(WorkHours hrs:workHours.values())

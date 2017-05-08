@@ -87,6 +87,8 @@ public class TestProject {
        state.removeProject(project);
        assertFalse(state.getProjects().contains(project));
     }
+<<<<<<< HEAD
+=======
 
     @Test
     public void testInterval(){
@@ -94,4 +96,5 @@ public class TestProject {
     }
 
 
+>>>>>>> refs/heads/master
 }

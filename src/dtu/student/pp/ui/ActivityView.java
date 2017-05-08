@@ -1,9 +1,7 @@
 package dtu.student.pp.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,19 +13,16 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.JSpinner.DateEditor;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
-import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -37,20 +32,28 @@ import javax.swing.text.DefaultFormatter;
 
 import dtu.student.pp.data.activity.NormalActivity;
 
+/**
+ * 
+ * @author Sebastian Præsius (s164198)
+ *
+ */
+@SuppressWarnings("serial")
 public class ActivityView extends JDialog implements ActionListener {
 	
 	boolean canceled = true;
 	String name = null;
 	Date startDate = null;
 	Date endDate = null;
+	float timeEstimate;
 	List<String> staffToRemove = new ArrayList<String>();
-
-	
+    /**
+	* @author Sebastian Præsius (s164198)
+	**/
 	public ActivityView(NormalActivity act, boolean isLeader) {
 		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("View activity #" + act.getActivityID() );
-		
+		timeEstimate = act.getTimeEstimate();
 		JPanel mainPane = new JPanel();
 		mainPane.setLayout(new FlowLayout());
 		
@@ -68,6 +71,17 @@ public class ActivityView extends JDialog implements ActionListener {
 		namePane.setBorder(new TitledBorder("Name"));
 		namePane.add(nameField);
 		leftPane.add(namePane);
+		
+		JPanel estimatePane = new JPanel(new BorderLayout());
+		estimatePane.setBorder(new TitledBorder("Time estimate"));
+		JSpinner estimate = new JSpinner(
+				new SpinnerNumberModel(
+						new Float(act.getTimeEstimate()), new Float(0), new Float(Float.MAX_VALUE), new Float(1)));
+		((JSpinner.NumberEditor) estimate.getEditor()).getTextField().setColumns(6);
+		estimatePane.add(estimate);
+		
+		
+		leftPane.add(estimatePane);
 		
 		leftPane.add(Box.createVerticalStrut(7));
 		
@@ -162,12 +176,14 @@ public class ActivityView extends JDialog implements ActionListener {
 					startDate = ((Date) startSpinner.getModel().getValue());
 				else if (e.getSource().equals(endSpinner.getModel()))
 					endDate = ((Date) endSpinner.getModel().getValue());
+				else if (e.getSource().equals(estimate.getModel()))
+					timeEstimate = ((Float) estimate.getModel().getValue()).floatValue();
 			}
 		};
 		
 		startSpinner.getModel().addChangeListener(spinnerListener);
 		endSpinner.getModel().addChangeListener(spinnerListener);
-		
+		estimate.getModel().addChangeListener(spinnerListener);
 		
 		
 		JPanel rightPane = new JPanel();
@@ -242,6 +258,7 @@ public class ActivityView extends JDialog implements ActionListener {
 		ok.addActionListener(this);
 		cancel.addActionListener(this);
 		
+		
 		//setContentPane(contentPane);
 		
 		selectionAssist.setVisibleRowCount(6);
@@ -258,7 +275,6 @@ public class ActivityView extends JDialog implements ActionListener {
 		if(e.getActionCommand().equals("Cancel"))
 			dispose();
 		else if (e.getActionCommand().equals("OK")) {
-			System.out.println("wat"+startDate+" "+endDate);
 			if(startDate!=null && endDate!=null) {
 				System.out.println(startDate+" "+endDate+" "+startDate.after(endDate));
 				if(startDate.after(endDate)) {
