@@ -43,7 +43,7 @@ public class Project extends Interval implements Serializable {
 	}
 
 	public void generateReport(){
-		String reportName = this.getName()==null ? "Unnamed Report.html" : this.getName() +" Report.html";
+		String reportName = this.getName()==null ? "Unnamed Project Report.html" : this.getName() +" Report.html";
 
 		try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(
 				new FileOutputStream(reportName), "utf-8"))) {
@@ -54,9 +54,9 @@ public class Project extends Interval implements Serializable {
 			for (NormalActivity act:activities) {
 				String actName = act.getName()==null ? "Unnamed Activity" : act.getName();
 				writer.println("<h2>"+actName+"</h2>");
-				writer.println("<h3>Staff - hours used:</h3>");
 				Set<String> staff = act.getStaff();
 				if (!staff.isEmpty()) {
+                    writer.println("<h3>Staff - hours used:</h3>");
 					for (String dev : staff) {
 						writer.println("<p>" + dev + " - " + act.getHours(dev) + "</p>");
 					}
@@ -68,8 +68,8 @@ public class Project extends Interval implements Serializable {
 						writer.println("<p>" + dev + " - " + act.getHours(dev) + "</p>");
 					}
 				}
-				writer.println("Hours of work used on activity so far: "+act.getHoursSum());
-				writer.println("Estimated amount of hours left: "+act.workLeft());
+				writer.println("<p>Hours of work used on activity so far: "+act.getHoursSum()+"</p>");
+				writer.println("<p>Estimated amount of hours left: "+act.workLeft()+"</p>");
 				writer.println("</body></html>");
 			}
 			writer.flush();
