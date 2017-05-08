@@ -54,8 +54,6 @@ public class TestProject {
 
         NormalActivity activity = state.createActivity(project);
 
-        project.addActivity(activity);
-
         //The new activity should be registered both in PPState and in the individual project.
         assertTrue(state.getActivities().contains(activity));
         assertTrue(project.getActivities().contains(activity));
@@ -90,4 +88,6 @@ public class TestProject {
     public void testRemoveProject(){
 
     }
+
+
 }

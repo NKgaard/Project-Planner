@@ -1,6 +1,7 @@
 package dtu.student.pp.data.project;
 
-import java.io.Serializable;
+import java.awt.*;
+import java.io.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -40,6 +41,51 @@ public class Project extends Interval implements Serializable {
 	public boolean isLeader(String user) {
 		return projectLeader != null && projectLeader.equals(user);
 	}
+
+	public void generateReport(){
+		String reportName = this.getName()==null ? "Unnamed Report.html" : this.getName() +" Report.html";
+
+		try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(
+				new FileOutputStream(reportName), "utf-8"))) {
+			writer.println("<html><body>");
+			writer.println("<h1>" + this.toString() + ": " + reportName + " Report</h1>");
+			writer.println("Total amount of hours worked on project: "+this.getWorkSum());
+
+			for (NormalActivity act:activities) {
+				String actName = act.getName()==null ? "Unnamed Activity" : act.getName();
+				writer.println("<h2>"+actName+"</h2>");
+				writer.println("<h3>Staff - hours used:</h3>");
+				Set<String> staff = act.getStaff();
+				if (!staff.isEmpty()) {
+					for (String dev : staff) {
+						writer.println("<p>" + dev + " - " + act.getHours(dev) + "</p>");
+					}
+				}
+				Set<String> assist = act.getAssist();
+				if (!assist.isEmpty()) {
+					writer.println("<h3>Assistants - hours used:</h3>");
+					for (String dev : assist) {
+						writer.println("<p>" + dev + " - " + act.getHours(dev) + "</p>");
+					}
+				}
+				writer.println("Hours of work used on activity so far: "+act.getHoursSum());
+				writer.println("Estimated amount of hours left: "+act.workLeft());
+				writer.println("</body></html>");
+			}
+			writer.flush();
+			writer.close();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			File htmlFile = new File(reportName);
+			Desktop.getDesktop().browse(htmlFile.toURI());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public int hashCode() {
@@ -73,7 +119,8 @@ public class Project extends Interval implements Serializable {
 	public void setLeader(String user) {
 		this.projectLeader = user;
 	}
-	
+
+
 	@Override
 	public String toString() {
 		//return getName();

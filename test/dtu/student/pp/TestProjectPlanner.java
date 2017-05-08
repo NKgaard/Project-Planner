@@ -131,4 +131,27 @@ public class TestProjectPlanner {
         }
     }
 
+    @Test
+    public void testGenerateReport(){
+        Project project = pp.createProject();
+        project.setName("A Test Project");
+        pp.setLeader(project);
+        try {
+            NormalActivity activity = pp.createActivity(project);
+            activity.setName("Make a cool design");
+            activity.setTimeEstimate((float) 6);
+            NormalActivity activity1 = pp.createActivity(project);
+            activity1.setName("Code some cool stuff");
+            activity1.setTimeEstimate((float) 5);
+            pp.registerStaff(activity,"DEV1");
+            pp.registerStaff(activity1, pp.getUser());
+            pp.registerHours(activity1, (float) 3.5);
+            pp.generateReport(project);
+        } catch (NotProjectLeaderException e) {
+            fail("Should not throw NotProjectLeaderException");
+        } catch (UserNotStaffException e) {
+            fail("Should not throw UserNotStaffException");
+        }
+    }
+
 }
