@@ -432,9 +432,8 @@ public class MainWindow extends JFrame implements ActionListener {
 			break;
 		case VIEW_PROJECT:
 			if(selectedProject!=null) {
-				//TODO better this
-				
 				new ProjectControl(selectedProject, selectedProject.isLeader(planner.getUser()));
+				pTableModel.fireTableDataChanged();
 			} else currentMenuLabel.setText(noSelect);
 			break;
 		case BECOME_LEADER:
