@@ -56,15 +56,15 @@ public class ActivityControl extends JDialog {
 		this.setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			String name = temp2.toString();
-			int year = temp2.getStart().get(Calendar.YEAR);
-			int week = temp2.getStart().get(Calendar.WEEK_OF_YEAR);
+			
+			
 	
 
 		
 		
 		
 		
-		setTitle("Act: " + name + " From: W " + week + " Y " + year);
+		setTitle("Activity: " + name );
 		setBounds(100, 100, 250, 564);
 		
 		JPanel panel = new JPanel();
@@ -82,11 +82,21 @@ public class ActivityControl extends JDialog {
 		panel_4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Activity Start Date", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
 		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(temp2.getStart().get(Calendar.WEEK_OF_YEAR), 1, 52, 1));
+		int startValue=Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+		if (temp2.getStart() != null){
+			startValue = temp2.getStart().get(Calendar.WEEK_OF_YEAR);
+		}
+		spinner.setModel(new SpinnerNumberModel(startValue, 1, 52, 1));
 		spinner.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Week:", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(0, 0, 0)));
 		
 		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerNumberModel(temp2.getStart().get(Calendar.YEAR), 1990, 9999, 1));
+		
+		int startValue1=Calendar.getInstance().get(Calendar.YEAR);
+		if (temp2.getStart() != null){
+			startValue1 = temp2.getStart().get(Calendar.YEAR);
+		}
+		
+		spinner_1.setModel(new SpinnerNumberModel(startValue1, 1990, 9999, 1));
 		spinner_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Year:", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(0, 0, 0)));
 		
 		JButton btnNewButton_4 = new JButton("Set Start Date");
@@ -285,7 +295,12 @@ public class ActivityControl extends JDialog {
 		
 		textField = new JTextField();
 		textField.setHorizontalAlignment(SwingConstants.TRAILING);
-		textField.setText(temp2.toString());
+		if (temp2.getName() != null){
+			textField.setText(temp2.getName());
+		} else {
+			textField.setText("Nameless");
+		}
+		
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
@@ -418,9 +433,12 @@ public class ActivityControl extends JDialog {
             	//Save all changes and exit window
             	//Gem aktivitetsnummer
             	//Gem slutdato
-            	temp2.setName(textField.getText() + year);
+            	if (textField.getText() != "Nameless"){
+            		temp2.setName(textField.getText());
+            	}
             	
-            	if(Interval.verifyTime((int) spinner.getValue(), (int) spinner_1.getValue(), (int) spinner_2.getValue(), (int) spinner_3.getValue())){
+            	
+            	//if(Interval.verifyTime((int) spinner.getValue(), (int) spinner_1.getValue(), (int) spinner_2.getValue(), (int) spinner_3.getValue())){
             		if (spinner.isEnabled() && spinner_1.isEnabled()){
             			temp2.setStart((int) spinner.getValue(), (int) spinner_1.getValue());
             		}
@@ -428,7 +446,7 @@ public class ActivityControl extends JDialog {
             			temp2.setEnd((int) spinner_2.getValue(), (int) spinner_3.getValue());
             		}
             		
-            	}
+            	//}
             	
             	
             	dispose();

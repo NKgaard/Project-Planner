@@ -38,6 +38,7 @@ public class ProjectControl extends JDialog {
 	 * Create the dialog.
 	 */
 	public ProjectControl(Project p, boolean check) {
+		
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(true);
 		String projektNummer = p.toString();
@@ -179,8 +180,13 @@ public class ProjectControl extends JDialog {
 		
 		textField = new JTextField();
 		textField.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField.setText(p.getName());
-		textField.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Project ID", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		if (p.getName() != null){
+			textField.setText(p.getName());
+		} else {
+			textField.setText("Nameless");
+		}
+		
+		textField.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Project Name", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		textField.setColumns(10);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -205,6 +211,7 @@ public class ProjectControl extends JDialog {
 				if (p.getEnd() == null){
 					spinner_2.setEnabled(false);
 					spinner_3.setEnabled(false);
+					btnNewButton.setEnabled(true);
 					
 				} else {
 					spinner_2.setValue(p.getEnd().get(Calendar.WEEK_OF_YEAR));
@@ -216,6 +223,7 @@ public class ProjectControl extends JDialog {
 				if (p.getStart() == null){
 					spinner.setEnabled(false);
 					spinner_1.setEnabled(false);
+					btnNewButton.setEnabled(true);
 				} else {
 					spinner.setValue(p.getStart().get(Calendar.WEEK_OF_YEAR));
 					spinner_1.setValue(p.getStart().get(Calendar.YEAR));
@@ -255,13 +263,23 @@ public class ProjectControl extends JDialog {
 				
 				
 				//Tjek om bruger kan redigere i aktiviteten
-				textField.setEditable(check);
-				btnNewButton.setEnabled(check);
-				btnNewButton_1.setEnabled(check);
-				spinner.setEnabled(check);
-				spinner_1.setEnabled(check);
-				spinner_2.setEnabled(check);
-				spinner_3.setEnabled(check);
+				if (check==false){
+					textField.setEditable(false);
+					btnNewButton.setEnabled(false);
+					btnNewButton_1.setEnabled(false);
+					
+					spinner.setEnabled(false);
+					spinner_1.setEnabled(false);
+					spinner_2.setEnabled(false);
+					spinner_3.setEnabled(false);
+				}
+				//textField.setEditable(check);
+				//btnNewButton.setEnabled(check);
+				//btnNewButton_1.setEnabled(check);
+				//spinner.setEnabled(check);
+				//spinner_1.setEnabled(check);
+				//spinner_2.setEnabled(check);
+				//spinner_3.setEnabled(check);
 				
 				btnNewButton_2.addActionListener(new ActionListener() {
 		            @Override
@@ -271,17 +289,30 @@ public class ProjectControl extends JDialog {
 		            	//Save all changes and exit window
 		            	//Gem aktivitetsnummer
 		            	//Gem slutdato
-		            	p.setName(textField.getText());
-		            	
-		            	if(Interval.verifyTime((int) spinner.getValue(), (int) spinner_1.getValue(), (int) spinner_2.getValue(), (int) spinner_3.getValue())){
-		            		if (spinner.isEnabled() && spinner_1.isEnabled()){
-		            			p.setStart((int) spinner.getValue(), (int) spinner_1.getValue());
-		            		}
-		            		if (spinner_2.isEnabled() && spinner_3.isEnabled()){
-		            			p.setEnd((int) spinner_2.getValue(), (int) spinner_3.getValue());
-		            		}
-		            		
+		            	if (textField.getText() != "Nameless"){
+		            		p.setName(textField.getText());
 		            	}
+		            	
+		            	
+		            	if (btnNewButton.isEnabled()==false && check){
+		            		p.setStart((int) spinner.getValue(), (int) spinner_1.getValue());
+		            	}
+		            	if (btnNewButton_1.isEnabled()==false && check){
+		            		p.setEnd((int) spinner_2.getValue(), (int) spinner_3.getValue());
+		            	}
+		            	
+		            	//if(Interval.verifyTime((int) spinner.getValue(), (int) spinner_1.getValue(), (int) spinner_2.getValue(), (int) spinner_3.getValue())){
+		            		//p.setStart((int) spinner.getValue(), (int) spinner_1.getValue());
+		            		//p.setEnd((int) spinner_2.getValue(), (int) spinner_3.getValue());
+		            		//if (spinner.isEnabled()){
+		            		//	p.setStart((int) spinner.getValue(), (int) spinner_1.getValue());
+		            		//	
+		            		//}
+		            		//if (spinner_2.isEnabled()){
+		            		//	p.setEnd((int) spinner_2.getValue(), (int) spinner_3.getValue());
+		            		//}
+		            		
+		            	//}
 		            	
 		            	
 		            	dispose();
