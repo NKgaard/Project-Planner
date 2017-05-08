@@ -31,26 +31,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.swing.AbstractListModel;
-import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 
 import dtu.student.pp.Main;
 import dtu.student.pp.ProjectPlanner;
@@ -167,7 +148,10 @@ public class MainWindow extends JFrame implements ActionListener {
 		//SET JFRAME OPTIONS
 		setTitle("Project Planner");
 		setMinimumSize(new Dimension(500, 370));
-		this.setIconImage(((ImageIcon)UIManager.getIcon("FileChooser.detailsViewIcon")).getImage());
+		Icon image = UIManager.getIcon("FileChooser.detailsViewIcon");
+		if (image instanceof ImageIcon) {
+			this.setIconImage(((ImageIcon) image).getImage());
+		}
 		//MAIN PANEL HOLDING MENU AND VIEW
 		JPanel mainPane = new JPanel(new BorderLayout());
 		setContentPane(mainPane);
@@ -445,7 +429,7 @@ public class MainWindow extends JFrame implements ActionListener {
 			break;
 		case REPORT:
 			if(selectedProject!=null) {
-				
+				selectedProject.generateReport();
 			} else currentMenuLabel.setText(noSelect);
 			break;
 		case PROJECT_ACTIVITY:

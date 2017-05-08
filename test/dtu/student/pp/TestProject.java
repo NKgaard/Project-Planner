@@ -86,7 +86,10 @@ public class TestProject {
 
    @Test
     public void testRemoveProject(){
-
+       Project project = state.createProject();
+       NormalActivity activity = state.createActivity(project);
+       state.removeProject(project);
+       assertFalse(state.getProjects().contains(project));
     }
 
 

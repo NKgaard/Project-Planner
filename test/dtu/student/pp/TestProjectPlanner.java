@@ -54,7 +54,7 @@ public class TestProjectPlanner {
             NormalActivity activity = pp.createActivity(project);
             assertNotNull(activity);
         } catch (NotProjectLeaderException e){
-            fail("Should not throw NorProjectLeaderException");
+            fail("Should not throw NotProjectLeaderException");
         }
     }
 
