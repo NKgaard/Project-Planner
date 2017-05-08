@@ -113,6 +113,12 @@ public class ProjectPlanner {
 		project.setEnd(endweeknumber, endyear);
 	}
 
+	public void generateReport(Project project) throws NotProjectLeaderException {
+		if(!project.isLeader(user))
+			throw new NotProjectLeaderException();
+		project.generateReport();
+	}
+
 	public Set<Project> getAllProjects() {
 		return state.getProjects();
 	}
