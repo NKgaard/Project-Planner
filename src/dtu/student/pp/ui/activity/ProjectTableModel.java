@@ -16,7 +16,13 @@ import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.data.project.Project;
 import dtu.student.pp.data.project.ProjectNumber;
 
+/**
+ * 
+ * @author Sebastian Præsius (s164198)
+ *
+ */
 public class ProjectTableModel extends AbstractTableModel {
+	private static final long serialVersionUID = 1670033627829009566L;
 	String[] columnNames = new String[] {"#", "Name", "Start", "End", "Leader", "Activ.", "Sum"};//...
     private Project[] projects = new Project[0];
     

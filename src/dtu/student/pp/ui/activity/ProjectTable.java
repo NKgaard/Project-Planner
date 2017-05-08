@@ -13,10 +13,14 @@ import javax.swing.table.TableRowSorter;
 import dtu.student.pp.data.project.Project;
 import dtu.student.pp.ui.MainWindow;
 
+@SuppressWarnings("serial")
 public class ProjectTable extends JTable {
 	
 	final MainWindow listener;
 	
+	/**
+	 * @Author Sebastian Præsius (s164198)
+	 */
 	public ProjectTable(MainWindow listener, ProjectTableModel model) {
 		this.listener = listener;
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

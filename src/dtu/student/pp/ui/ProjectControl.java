@@ -2,7 +2,6 @@ package dtu.student.pp.ui;
 
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
@@ -13,29 +12,26 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JSpinner.DateEditor;
 import javax.swing.JTextField;
-import javax.swing.SpinnerDateModel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
-import dtu.student.pp.data.comparators.Interval;
 import dtu.student.pp.data.project.Project;
 
-import java.awt.Component;
 import javax.swing.SwingConstants;
 import javax.swing.JSpinner;
 import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.SpinnerNumberModel;
 
+@SuppressWarnings("serial")
 public class ProjectControl extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
 
 	/**
-	 * Create the dialog.
+	 * @Author Jonas Schjønnemann (s151781)
 	 */
 	public ProjectControl(Project p, boolean check) {
 		

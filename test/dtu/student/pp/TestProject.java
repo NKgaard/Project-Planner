@@ -1,7 +1,6 @@
 package dtu.student.pp;
 
 import dtu.student.pp.data.activity.NormalActivity;
-import dtu.student.pp.data.comparators.Interval;
 import dtu.student.pp.exception.NotProjectLeaderException;
 import dtu.student.pp.data.project.Project;
 import org.junit.Before;
@@ -87,14 +86,4 @@ public class TestProject {
        state.removeProject(project);
        assertFalse(state.getProjects().contains(project));
     }
-<<<<<<< HEAD
-=======
-
-    @Test
-    public void testInterval(){
-
-    }
-
-
->>>>>>> refs/heads/master
-}
+ }

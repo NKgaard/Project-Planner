@@ -2,27 +2,15 @@ package dtu.student.pp.ui;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Desktop;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -37,7 +25,6 @@ import dtu.student.pp.Main;
 import dtu.student.pp.ProjectPlanner;
 import dtu.student.pp.data.activity.AbstractActivity;
 import dtu.student.pp.data.activity.NormalActivity;
-import dtu.student.pp.data.comparators.Interval;
 import dtu.student.pp.data.project.Project;
 import dtu.student.pp.exception.NotProjectLeaderException;
 import dtu.student.pp.exception.UserNotStaffException;
@@ -46,6 +33,12 @@ import dtu.student.pp.ui.activity.ActivityTableModel;
 import dtu.student.pp.ui.activity.ProjectTable;
 import dtu.student.pp.ui.activity.ProjectTableModel;
 
+/**
+ * 
+ * @author Sebastian Præsius (s164198)
+ *
+ */
+@SuppressWarnings("serial")
 public class MainWindow extends JFrame implements ActionListener {
 	private final static String noSelect = "No selection";
 	public static enum UserType {

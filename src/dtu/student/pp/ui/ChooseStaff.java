@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import dtu.student.pp.ProjectPlanner;
@@ -22,10 +21,10 @@ import dtu.student.pp.data.activity.NormalActivity;
 import dtu.student.pp.data.activity.WorkHours;
 
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 
+@SuppressWarnings("serial")
 public class ChooseStaff extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
@@ -33,7 +32,7 @@ public class ChooseStaff extends JDialog implements ActionListener {
 	private JTable table;
 	
 	/**
-	 * Create the dialog.
+	 * @Author Jonas Schjønnemann (s151781)
 	 */
 	public ChooseStaff(ProjectPlanner planner, NormalActivity activ) {
 		setTitle("Add staff to activity ");
@@ -82,7 +81,6 @@ public class ChooseStaff extends JDialog implements ActionListener {
 				
 				for(int i=0; i<developers.length; i++) {
 					data[i][0] = developers[i];
-					WorkHours work = regHours.get(developers[i]);
 					if(regHours.containsKey(developers[i])) {
 						data[i][1] = regHours.get(developers[i]).getWork();//Autoboxing of float
 						data[i][2] = workEstimate.get(developers[i]).getWork();
